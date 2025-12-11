@@ -2,55 +2,39 @@ let cards = [];
 let index = 0;
 
 document.addEventListener("DOMContentLoaded", async () => {
-    const areas = JSON.parse(localStorage.getItem("selectedAreas") || "[]");
-    const types = JSON.parse(localStorage.getItem("selectedTypes") || "[]");
-
-    cards = await loadCards(areas);
-    cards = cards.filter(c => types.includes(c.type));
-
-    shuffle(cards);
-
-    showCard();
+  cards = await loadSelectedCards();
+  renderCard();
 });
 
-function showCard() {
-    const card = cards[index];
+function renderCard(){
+  const card = cards[index];
 
-    document.getElementById("cardFront").innerText = card.front;
-    document.getElementById("cardBack").innerText = card.back;
-    document.getElementById("cardBack").classList.add("hidden");
+  document.getElementById("frontText").textContent = card.front;
 
-    document.getElementById("showAnswer").classList.remove("hidden");
-    document.getElementById("nextCard").classList.add("hidden");
+  const ul = document.getElementById("backList");
+  ul.innerHTML = "";
+  card.back.forEach(item => {
+    const li = document.createElement("li");
+    li.textContent = item.trim();
+    ul.appendChild(li);
+  });
 
-    const examplesContainer = document.getElementById("examplesContainer");
-    const examplesList = document.getElementById("examplesList");
-    examplesList.innerHTML = "";
-    card.examples.forEach(e => {
-        const li = document.createElement("li");
-        li.innerText = e;
-        examplesList.appendChild(li);
-    });
-    examplesContainer.classList.add("hidden");
+  const ex = document.getElementById("examplesBox");
+  ex.innerHTML = card.examples.map(e => `<p>• ${e}</p>`).join("");
+  ex.classList.add("hidden");
 }
 
-document.getElementById("showAnswer").onclick = () => {
-    document.getElementById("cardBack").classList.remove("hidden");
-    document.getElementById("nextCard").classList.remove("hidden");
-    document.getElementById("showAnswer").classList.add("hidden");
-
-    document.getElementById("examplesContainer").classList.remove("hidden");
+document.getElementById("flipBtn").onclick = () => {
+  document.getElementById("flipCard").classList.toggle("flipped");
 };
 
-document.getElementById("nextCard").onclick = () => {
-    index++;
-    if (index >= cards.length) index = 0;
-    showCard();
+document.getElementById("examplesBtn").onclick = () => {
+  document.getElementById("examplesBox").classList.toggle("hidden");
 };
 
-function shuffle(arr) {
-    for (let i = arr.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
-    }
-}
+document.getElementById("nextBtn").onclick = () => {
+  index = (index + 1) % cards.length;
+  document.getElementById("flipCard").classList.remove("flipped");
+  renderCard();
+};
+
