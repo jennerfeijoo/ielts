@@ -1,18 +1,52 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>IELTS Study Hub</title>
-    <link rel="stylesheet" href="css/style.css">
+<meta charset="UTF-8">
+<title>IELTS Flashcards</title>
+<link rel="stylesheet" href="css/styles.css">
+<script defer src="js/loader.js"></script>
+<script defer src="js/study.js"></script>
 </head>
 
 <body>
-    <h1>IELTS Study Hub</h1>
 
-    <div class="menu">
-        <a class="btn" href="practice.html">Comenzar práctica</a>
-    </div>
+<h1 class="title">IELTS Flashcards</h1>
 
-    <p>Estudia vocabulario, collocations y frases de ejemplo para alcanzar Band 9.</p>
+<div class="config-container">
+
+  <h2>Selecciona qué estudiar</h2>
+
+  <form id="configForm">
+
+    <h3>Áreas temáticas</h3>
+    <label><input type="checkbox" value="education"> Education</label>
+    <label><input type="checkbox" value="tech"> Technology</label>
+    <label><input type="checkbox" value="environment"> Environment</label>
+    <label><input type="checkbox" value="society"> Society</label>
+    <label><input type="checkbox" value="economy"> Economy</label>
+
+    <h3>Tipo</h3>
+    <label><input type="checkbox" value="vocab"> Vocabulary</label>
+    <label><input type="checkbox" value="collocation"> Collocations</label>
+
+    <button class="start-btn">Comenzar</button>
+  </form>
+
+</div>
+
+<script>
+document.getElementById("configForm").addEventListener("submit", function(e){
+  e.preventDefault();
+
+  const areas = [...document.querySelectorAll("input[type='checkbox']:checked")]
+                .map(n => n.value);
+
+  localStorage.setItem("selected", JSON.stringify(areas));
+
+  window.location.href = "study.html";
+});
+</script>
+
 </body>
 </html>
+
