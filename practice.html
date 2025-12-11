@@ -1,31 +1,42 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Configurar práctica</title>
-    <link rel="stylesheet" href="css/style.css">
-    <script src="js/ui.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Configurar práctica</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/ui.js" defer></script>
 </head>
+<body class="page page--config">
+  <header class="page__header">
+    <h1 class="title">Configuración rápida</h1>
+    <p class="subtitle">Los cambios se guardan y te llevamos a la práctica.</p>
+  </header>
 
-<body>
+  <main class="config">
+    <section class="panel">
+      <h2>Áreas temáticas</h2>
+      <div class="options-grid">
+        <label class="checkbox"><input type="checkbox" name="areas" value="education" checked> Education</label>
+        <label class="checkbox"><input type="checkbox" name="areas" value="tech" checked> Technology</label>
+        <label class="checkbox"><input type="checkbox" name="areas" value="environment" checked> Environment</label>
+        <label class="checkbox"><input type="checkbox" name="areas" value="society" checked> Society</label>
+        <label class="checkbox"><input type="checkbox" name="areas" value="economy" checked> Economy</label>
+      </div>
+    </section>
 
-<h1>Selecciona qué estudiar</h1>
+    <section class="panel">
+      <h2>Tipos</h2>
+      <div class="options-grid options-grid--compact">
+        <label class="checkbox"><input type="checkbox" name="types" value="vocab" checked> Vocabulary</label>
+        <label class="checkbox"><input type="checkbox" name="types" value="collocation" checked> Collocations</label>
+      </div>
+    </section>
 
-<form id="practiceForm">
-
-    <h3>Áreas temáticas</h3>
-    <label><input type="checkbox" name="areas" value="education"> Education</label><br>
-    <label><input type="checkbox" name="areas" value="tech"> Technology</label><br>
-    <label><input type="checkbox" name="areas" value="environment"> Environment</label><br>
-    <label><input type="checkbox" name="areas" value="society"> Society</label><br>
-    <label><input type="checkbox" name="areas" value="economy"> Economy</label><br>
-
-    <h3>Tipos de tarjeta</h3>
-    <label><input type="checkbox" name="types" value="vocab"> Vocabulary</label><br>
-    <label><input type="checkbox" name="types" value="collocation"> Collocations</label><br>
-
-    <button type="submit" class="btn">Iniciar estudio</button>
-</form>
-
+    <form id="practiceForm" class="actions">
+      <button type="submit" class="btn btn--primary">Iniciar estudio</button>
+      <a class="btn btn--text" href="index.html">Volver</a>
+    </form>
+  </main>
 </body>
 </html>
