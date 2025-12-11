@@ -1,52 +1,67 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>IELTS Flashcards</title>
-<link rel="stylesheet" href="css/styles.css">
-<script defer src="js/loader.js"></script>
-<script defer src="js/study.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IELTS Flashcards</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script defer src="js/loader.js"></script>
 </head>
+<body class="page page--config">
+  <header class="page__header">
+    <h1 class="title">IELTS Flashcards</h1>
+    <p class="subtitle">Elige tus áreas y tipos de tarjeta para practicar.</p>
+  </header>
 
-<body>
+  <main class="config">
+    <section class="panel">
+      <h2>Áreas temáticas</h2>
+      <p class="panel__hint">Selecciona al menos una para cargar tarjetas.</p>
+      <div class="options-grid" id="areaOptions">
+        <label class="checkbox"><input type="checkbox" name="areas" value="education" checked> Education</label>
+        <label class="checkbox"><input type="checkbox" name="areas" value="tech" checked> Technology</label>
+        <label class="checkbox"><input type="checkbox" name="areas" value="environment" checked> Environment</label>
+        <label class="checkbox"><input type="checkbox" name="areas" value="society" checked> Society</label>
+        <label class="checkbox"><input type="checkbox" name="areas" value="economy" checked> Economy</label>
+      </div>
+    </section>
 
-<h1 class="title">IELTS Flashcards</h1>
+    <section class="panel">
+      <h2>Tipos de tarjeta</h2>
+      <div class="options-grid options-grid--compact" id="typeOptions">
+        <label class="checkbox"><input type="checkbox" name="types" value="vocab" checked> Vocabulary</label>
+        <label class="checkbox"><input type="checkbox" name="types" value="collocation" checked> Collocations</label>
+      </div>
+    </section>
 
-<div class="config-container">
+    <div class="actions">
+      <button class="btn btn--primary" id="startBtn">Comenzar práctica</button>
+    </div>
+  </main>
 
-  <h2>Selecciona qué estudiar</h2>
+  <footer class="page__footer">
+    <a class="link" href="practice.html">Versión rápida de configuración</a>
+  </footer>
 
-  <form id="configForm">
+  <script>
+    document.getElementById('startBtn').addEventListener('click', (e) => {
+      e.preventDefault();
+      const selectedAreas = Array.from(document.querySelectorAll("input[name='areas']:checked")).map(cb => cb.value);
+      const selectedTypes = Array.from(document.querySelectorAll("input[name='types']:checked")).map(cb => cb.value);
 
-    <h3>Áreas temáticas</h3>
-    <label><input type="checkbox" value="education"> Education</label>
-    <label><input type="checkbox" value="tech"> Technology</label>
-    <label><input type="checkbox" value="environment"> Environment</label>
-    <label><input type="checkbox" value="society"> Society</label>
-    <label><input type="checkbox" value="economy"> Economy</label>
+      if (!selectedAreas.length) {
+        alert('Selecciona al menos un área temática.');
+        return;
+      }
+      if (!selectedTypes.length) {
+        alert('Selecciona al menos un tipo de tarjeta.');
+        return;
+      }
 
-    <h3>Tipo</h3>
-    <label><input type="checkbox" value="vocab"> Vocabulary</label>
-    <label><input type="checkbox" value="collocation"> Collocations</label>
-
-    <button class="start-btn">Comenzar</button>
-  </form>
-
-</div>
-
-<script>
-document.getElementById("configForm").addEventListener("submit", function(e){
-  e.preventDefault();
-
-  const areas = [...document.querySelectorAll("input[type='checkbox']:checked")]
-                .map(n => n.value);
-
-  localStorage.setItem("selected", JSON.stringify(areas));
-
-  window.location.href = "study.html";
-});
-</script>
-
+      localStorage.setItem('selectedAreas', JSON.stringify(selectedAreas));
+      localStorage.setItem('selectedTypes', JSON.stringify(selectedTypes));
+      window.location.href = 'study.html';
+    });
+  </script>
 </body>
 </html>
-

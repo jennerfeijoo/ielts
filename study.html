@@ -1,42 +1,55 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>Study</title>
-<link rel="stylesheet" href="css/styles.css">
-<script src="js/loader.js" defer></script>
-<script src="js/study.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Estudio</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/loader.js" defer></script>
+  <script src="js/study.js" defer></script>
 </head>
-
-<body>
-
-<h1 class="title">Flashcard</h1>
-
-<main class="single-card-container">
-
-  <div class="card">
-    <div class="inner" id="flipCard">
-      
-      <div class="front">
-        <div class="vocab-title" id="frontText">...</div>
-      </div>
-
-      <div class="back">
-        <ul id="backList"></ul>
-      </div>
-
+<body class="page page--study">
+  <header class="page__header">
+    <div>
+      <p class="eyebrow">IELTS Flashcards</p>
+      <h1 class="title">Sesión de estudio</h1>
     </div>
-  </div>
+    <div class="header-actions">
+      <button id="restartBtn" class="btn btn--ghost">Reiniciar</button>
+      <a class="btn btn--text" href="index.html">Configurar</a>
+    </div>
+  </header>
 
-  <button id="flipBtn" class="action-btn">Voltear</button>
-  <button id="examplesBtn" class="action-btn">Mostrar ejemplos</button>
+  <main class="study">
+    <div class="status-bar">
+      <div class="counter" id="counter">0 / 0</div>
+      <div class="progress">
+        <div class="progress__bar" id="progressBar"></div>
+      </div>
+      <button id="shuffleBtn" class="btn btn--ghost">Barajar</button>
+    </div>
 
-  <div id="examplesBox" class="examples hidden"></div>
+    <section class="single-card-container">
+      <div class="card" aria-live="polite">
+        <div class="inner" id="flipCard">
+          <div class="front">
+            <div class="vocab-title" id="frontText">Cargando...</div>
+            <p class="tag" id="cardTag"></p>
+          </div>
+          <div class="back">
+            <ul id="backList"></ul>
+          </div>
+        </div>
+      </div>
 
-  <button id="nextBtn" class="next-btn">Siguiente</button>
+      <div class="card-actions">
+        <button id="flipBtn" class="btn btn--primary">Voltear</button>
+        <button id="examplesBtn" class="btn btn--secondary">Mostrar ejemplos</button>
+        <button id="nextBtn" class="btn btn--accent">Siguiente</button>
+      </div>
 
-</main>
-
+      <div id="examplesBox" class="examples hidden"></div>
+    </section>
+  </main>
 </body>
 </html>
-
