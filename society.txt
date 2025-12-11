@@ -1,0 +1,53 @@
+type;front;back;examples
+vocab;society (sociedad);modern society / contemporary social structures;Modern society faces numerous challenges related to inequality.|Contemporary social structures continue to evolve rapidly.
+vocab;people (personas);individuals / members of the public;Individuals must remain informed about public issues.|Policies should consider the needs of all members of the public.
+vocab;communities (comunidades);local populations / social groups;Local populations often struggle with limited resources.|Social groups play a crucial role in shaping cultural practices.
+vocab;families (familias);households / family units;Many households are experiencing higher financial pressure.|Family units must adapt to shifting economic conditions.
+vocab;parents (padres);guardians / caregivers;Guardians have a vital role in guiding children's behaviour.|Caregivers often experience burnout due to demanding schedules.
+vocab;children (niños);young people / minors;Young people are heavily influenced by digital media.|Minors require stable environments to thrive.
+vocab;teenagers (adolescentes);adolescents / young adults;Adolescents face intense social pressure.|Many young adults struggle with identity formation.
+vocab;older people (personas mayores);elderly citizens / ageing populations;Elderly citizens require accessible healthcare.|Ageing populations create long-term challenges for governments.
+vocab;crime (crimen);criminal activity / unlawful behaviour;Criminal activity has risen in some urban areas.|Unlawful behaviour is often driven by socioeconomic factors.
+vocab;violence (violencia);aggressive behaviour / violent conduct;Aggressive behaviour is common in overcrowded environments.|Violent conduct affects community safety.
+vocab;poverty (pobreza);economic hardship / financial deprivation;Economic hardship limits educational opportunities.|Financial deprivation increases the likelihood of social exclusion.
+vocab;homelessness (personas sin hogar);housing insecurity / lack of stable accommodation;Housing insecurity is a major societal concern.|A lack of stable accommodation leads to severe health issues.
+vocab;diversity (diversidad);cultural diversity / social heterogeneity;Cultural diversity enriches modern communities.|Social heterogeneity presents both opportunities and challenges.
+vocab;inequality (desigualdad);social inequality / systemic disparities;Social inequality remains a persistent issue.|Systemic disparities often affect marginalized communities.
+vocab;healthcare (atención médica);medical services / health provision systems;Medical services must be accessible for all citizens.|Health provision systems require more public funding.
+vocab;education level (nivel educativo);educational attainment / academic achievement;Educational attainment strongly influences employment prospects.|Academic achievement varies widely among regions.
+vocab;job opportunities (oportunidades laborales);employment prospects / career opportunities;Employment prospects depend on skill level.|Career opportunities have expanded in the digital economy.
+vocab;housing (vivienda);residential accommodation / housing conditions;Many families struggle with poor housing conditions.|Lack of affordable residential accommodation is a major issue.
+vocab;public safety (seguridad pública);community safety / societal security;Governments prioritise community safety measures.|Societal security is essential for long-term stability.
+vocab;health problems (problemas de salud);medical conditions / public health concerns;Public health concerns have increased due to sedentary lifestyles.|Medical conditions related to stress have risen sharply.
+
+collocation;help people (ayudar a las personas);support vulnerable populations / assist those in need;Social programmes support vulnerable populations.|Charities assist those in need through targeted interventions.
+collocation;reduce poverty (reducir pobreza);alleviate economic hardship / reduce financial deprivation;Governments aim to alleviate economic hardship through subsidies.|New initiatives reduce financial deprivation in rural regions.
+collocation;maintain public order (mantener orden público);ensure societal stability / uphold civic discipline;Police forces work to ensure societal stability.|Public institutions help uphold civic discipline.
+collocation;commit crimes (cometer delitos);engage in criminal behaviour / carry out unlawful acts;Individuals may engage in criminal behaviour due to peer pressure.|Some groups carry out unlawful acts to obtain financial gain.
+collocation;reduce crime rates (reducir crimen);lower crime figures / decrease criminal incidents;Increased surveillance helps lower crime figures.|Social policies can decrease criminal incidents effectively.
+collocation;improve public services (mejorar servicios públicos);enhance social welfare systems / strengthen public infrastructure;Governments invest to enhance social welfare systems.|Reforms aim to strengthen public infrastructure.
+collocation;support families (apoyar familias);provide assistance to households / strengthen family welfare;Social programmes provide assistance to households in crisis.|New policies aim to strengthen family welfare.
+collocation;protect children (proteger a los niños);safeguard minors / ensure child welfare;Schools work to safeguard minors through monitoring systems.|Laws ensure child welfare by regulating harmful content.
+collocation;encourage social harmony (promover armonía social);promote social cohesion / foster mutual understanding;Community events promote social cohesion.|Educational programmes foster mutual understanding.
+collocation;improve healthcare access (mejorar acceso a salud);expand medical coverage / ensure universal health provision;Governments aim to expand medical coverage.|Universal health provision remains a priority.
+collocation;increase crime (aumentar crimen);intensify unlawful activities / escalate criminal behaviour;Economic decline may intensify unlawful activities.|Social tensions often escalate criminal behaviour.
+collocation;fight inequality (combatir desigualdad);address systemic disparities / promote equal social opportunities;Reforms aim to address systemic disparities.|Education can promote equal social opportunities.
+collocation;provide education for all (educación para todos);ensure inclusive education / guarantee universal learning access;Policies must ensure inclusive education.|Nations aim to guarantee universal learning access.
+collocation;improve living conditions (mejorar condiciones de vida);enhance quality of life / upgrade living standards;Urban reforms enhance quality of life.|Investment in infrastructure can upgrade living standards.
+collocation;help the elderly (ayudar a los mayores);support ageing populations / assist elderly citizens;Healthcare workers support ageing populations.|Social programmes assist elderly citizens in daily tasks.
+collocation;promote gender equality (promover igualdad de género);advance gender parity / ensure equal treatment;Policies aim to advance gender parity in workplaces.|Campaigns help ensure equal treatment for women.
+collocation;reduce social isolation (reducir aislamiento social);combat loneliness / strengthen community bonds;Digital tools help combat loneliness among the elderly.|Events can strengthen community bonds.
+collocation;deal with overcrowding (abordar el hacinamiento);manage population density / ease pressure on urban systems;Local authorities manage population density through planning.|Governments must ease pressure on urban systems.
+collocation;improve public transport (mejorar transporte público);modernise transportation networks / expand accessible transit systems;Cities modernise transportation networks.|Investment aims to expand accessible transit systems.
+collocation;address homelessness (abordar la falta de vivienda);reduce housing insecurity / support displaced individuals;Policies aim to reduce housing insecurity.|Charities support displaced individuals.
+collocation;support minority groups (apoyo a minorías);empower disadvantaged communities / promote inclusion for marginalised groups;Reforms empower disadvantaged communities.|Education promotes inclusion for marginalised groups.
+collocation;increase civic participation (aumentar participación cívica);encourage public engagement / promote active citizenship;Schools encourage public engagement from a young age.|Campaigns promote active citizenship during elections.
+collocation;solve social conflicts (resolver conflictos sociales);mediate societal disputes / resolve community tensions;Authorities help mediate societal disputes.|Dialogue can resolve community tensions effectively.
+collocation;protect cultural traditions (proteger tradiciones culturales);preserve cultural heritage / maintain traditional practices;Festivals preserve cultural heritage.|Communities work to maintain traditional practices.
+collocation;improve mental health (mejorar salud mental);enhance psychological well-being / promote emotional resilience;Support groups enhance psychological well-being.|Schools promote emotional resilience among teenagers.
+collocation;support low-income families (apoyar familias de bajos ingresos);provide financial aid / deliver essential social assistance;Governments provide financial aid to struggling households.|NGOs deliver essential social assistance to vulnerable groups.
+collocation;promote healthy lifestyles (promover estilos de vida saludables);encourage health-conscious behaviour / foster long-term well-being;Campaigns encourage health-conscious behaviour.|Urban planning helps foster long-term well-being.
+collocation;protect public spaces (proteger espacios públicos);maintain communal areas / preserve shared environments;Cities must maintain communal areas clean and safe.|Environmental groups preserve shared environments.
+collocation;help refugees (ayudar a los refugiados);assist displaced populations / offer humanitarian support;NGOs assist displaced populations during crises.|Governments offer humanitarian support when needed.
+collocation;control drug use (controlar uso de drogas);regulate substance consumption / implement harm-reduction policies;New laws regulate substance consumption strictly.|Healthcare providers implement harm-reduction policies.
+collocation;manage immigration (gestionar inmigración);regulate migration flows / establish effective immigration frameworks;Governments regulate migration flows based on economic needs.|Nations establish effective immigration frameworks to ensure order.

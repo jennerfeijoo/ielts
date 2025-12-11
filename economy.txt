@@ -1,0 +1,60 @@
+type;front;back;examples
+vocab;the economy (la economía);the economic system / the national economy;The national economy depends heavily on international trade.|A stable economic system is essential for long-term growth.
+vocab;jobs (empleos);employment opportunities / the labour market;Employment opportunities vary widely across regions.|The labour market has become increasingly competitive.
+vocab;workers (trabajadores);employees / the workforce;Employees often face unpredictable contract conditions.|The workforce is undergoing rapid technological transformation.
+vocab;companies (empresas);corporations / business enterprises;Corporations play a crucial role in shaping economic performance.|Business enterprises drive innovation in many sectors.
+vocab;money (dinero);financial resources / economic capital;Many families struggle to access adequate financial resources.|Small firms often lack sufficient economic capital.
+vocab;prices (precios);consumer prices / market costs;Consumer prices have risen due to inflation.|Market costs fluctuate depending on global conditions.
+vocab;cost of living (costo de vida);living expenses / household expenditure levels;Living expenses have increased dramatically.|Household expenditure levels vary based on income.
+vocab;inflation (inflación);rising price levels / economic inflationary pressure;Economic inflationary pressure affects purchasing power.|Rising price levels create financial instability.
+vocab;salary (salario);wage level / employee remuneration;Employee remuneration differs between industries.|The wage level in tech sectors is notably high.
+vocab;income (ingreso);earnings / household income;Household income is strongly linked to education levels.|Many people rely on multiple jobs to supplement their earnings.
+vocab;poverty (pobreza);economic hardship / financial deprivation;Economic hardship limits access to basic services.|Financial deprivation remains a widespread concern.
+vocab;rich and poor (ricos y pobres);high-income and low-income groups / socioeconomic extremes;Societies often struggle with socioeconomic extremes.|Policies aim to support both high-income and low-income groups.
+vocab;government spending (gasto público);public expenditure / state investment;Public expenditure must be carefully managed.|State investment drives large-scale infrastructure development.
+vocab;taxes (impuestos);taxation / fiscal charges;Taxation is used to support essential services.|Fiscal charges have increased over the past decade.
+vocab;trade (comercio);international trade / global economic exchange;International trade supports economic interdependence.|Global economic exchange has expanded significantly.
+vocab;investment (inversión);capital investment / financial injection;Capital investment strengthens national industries.|A financial injection can help revive struggling sectors.
+vocab;unemployment (desempleo);joblessness / lack of employment opportunities;High joblessness leads to social instability.|A lack of employment opportunities harms local communities.
+vocab;budget (presupuesto);fiscal plan / financial allocation;A strong fiscal plan prevents overspending.|Governments determine financial allocation annually.
+vocab;debt (deuda);financial liabilities / public debt;Rising public debt concerns many economists.|Companies seek to reduce financial liabilities.
+vocab;business growth (crecimiento empresarial);corporate expansion / business development;Corporate expansion creates new jobs.|Business development increases competition.
+
+collocation;create jobs (crear empleos);generate employment opportunities / boost the labour market;Investment in infrastructure can generate employment opportunities.|New industries help boost the labour market.
+collocation;boost the economy (impulsar la economía);stimulate economic growth / revitalise economic activity;Lower taxes can stimulate economic growth.|Government support may revitalise economic activity.
+collocation;reduce unemployment (reducir el desempleo);lower joblessness rates / expand employment prospects;New policies can lower joblessness rates.|Training programmes expand employment prospects.
+collocation;raise salaries (aumentar salarios);increase wage levels / improve employee compensation;New agreements aim to increase wage levels.|Companies must improve employee compensation to retain workers.
+collocation;control inflation (controlar la inflación);manage inflationary pressures / stabilise price levels;Central banks work to manage inflationary pressures.|Policies attempt to stabilise price levels.
+collocation;attract investors (atraer inversores);draw financial investment / appeal to potential investors;Lower regulations can draw financial investment.|Strong innovation ecosystems appeal to potential investors.
+collocation;reduce poverty (reducir pobreza);alleviate economic hardship / decrease financial deprivation;Well-funded programmes alleviate economic hardship.|New policies decrease financial deprivation nationwide.
+collocation;increase taxes (incrementar impuestos);raise taxation levels / introduce higher fiscal charges;Governments raise taxation levels to fund welfare programmes.|Some countries introduce higher fiscal charges to reduce debt.
+collocation;lower taxes (reducir impuestos);reduce taxation / decrease fiscal burdens;Some argue that governments should reduce taxation.|Lower fiscal burdens help businesses grow.
+collocation;encourage spending (fomentar el gasto);stimulate consumer spending / promote economic circulation;Discounts can stimulate consumer spending.|Financial incentives promote economic circulation.
+collocation;cut public spending (reducir gasto público);reduce government expenditure / implement fiscal austerity;Some administrations reduce government expenditure to control debt.|Nations implement fiscal austerity during crises.
+collocation;support small businesses (apoyar pequeños negocios);assist small enterprises / strengthen local business growth;Grants assist small enterprises in difficult periods.|Local campaigns strengthen local business growth.
+collocation;invest in infrastructure (invertir en infraestructura);expand national infrastructure / develop large-scale public projects;Governments expand national infrastructure to support growth.|Large-scale public projects create thousands of jobs.
+collocation;free trade (libre comercio);unrestricted trade policies / open economic exchange;Some nations adopt unrestricted trade policies.|Open economic exchange increases competitiveness.
+collocation;economic stability (estabilidad económica);macroeconomic stability / sustained economic balance;Macroeconomic stability is essential for investor confidence.|Nations aim to maintain sustained economic balance.
+collocation;reduce inequality (reducir desigualdad);narrow socioeconomic gaps / improve income distribution;New policies seek to narrow socioeconomic gaps.|Tax reforms aim to improve income distribution.
+collocation;promote innovation (promover innovación);foster technological innovation / support research-driven development;Governments foster technological innovation through grants.|Funding supports research-driven development.
+collocation;strengthen the economy (fortalecer la economía);reinforce economic resilience / enhance national competitiveness;Exports reinforce economic resilience.|Education reforms enhance national competitiveness.
+collocation;reduce national debt (reducir deuda nacional);lower public debt / decrease national liabilities;Balanced budgets help lower public debt.|Fiscal discipline is required to decrease national liabilities.
+collocation;expand markets (expandir mercados);increase market reach / develop global commercial networks;E-commerce allows businesses to increase market reach.|Companies develop global commercial networks to grow.
+collocation;create wealth (crear riqueza);generate economic value / accumulate national capital;Entrepreneurship generates economic value.|Nations accumulate national capital through strategic investments.
+collocation;support the workforce (apoyar la fuerza laboral);strengthen labour protections / provide worker support schemes;Policies strengthen labour protections in vulnerable industries.|Governments provide worker support schemes during downturns.
+collocation;increase productivity (incrementar productividad);enhance economic output / optimise work efficiency;Automation enhances economic output.|Training programmes help optimise work efficiency.
+collocation;stabilise the market (estabilizar el mercado);regulate financial volatility / ensure market predictability;Governments regulate financial volatility to protect investors.|Banking reforms ensure market predictability.
+collocation;protect consumers (proteger consumidores);safeguard consumer rights / ensure fair trading practices;New regulations safeguard consumer rights.|Policies ensure fair trading practices in digital markets.
+collocation;manage public funds (gestionar fondos públicos);allocate government resources responsibly / regulate fiscal expenditure;Authorities must allocate government resources responsibly.|Laws regulate fiscal expenditure to ensure transparency.
+collocation;increase exports (aumentar exportaciones);expand export capacity / improve international competitiveness;Industries expand export capacity by upgrading technology.|Nations improve international competitiveness through training.
+collocation;reduce imports (reducir importaciones);limit foreign purchases / adopt self-sufficiency policies;Some countries limit foreign purchases to protect local industries.|Governments adopt self-sufficiency policies in agriculture.
+collocation;support unemployed people (apoyar a desempleados);provide welfare benefits / offer retraining programmes;Governments provide welfare benefits to the jobless.|Retraining programmes offer new employment pathways.
+collocation;improve financial stability (mejorar estabilidad financiera);strengthen economic foundations / stabilise national finances;Reforms strengthen economic foundations.|Tax policies stabilise national finances.
+collocation;encourage saving (fomentar ahorro);promote personal financial responsibility / incentivise long-term savings;Banks promote personal financial responsibility.|Governments incentivise long-term savings through tax policies.
+collocation;manage inflation (gestionar inflación);control rising prices / moderate inflationary pressures;Central banks control rising prices.|Policies moderate inflationary pressures.
+collocation;increase investment (incrementar inversión);attract capital inflows / stimulate large-scale investment;Lower interest rates attract capital inflows.|Governments stimulate large-scale investment through subsidies.
+collocation;increase competition (aumentar competencia);promote market competitiveness / encourage fair competition;Regulations promote market competitiveness.|Policies encourage fair competition among companies.
+collocation;reduce corruption (reducir corrupción);combat institutional corruption / improve governance standards;Anti-corruption agencies combat institutional corruption.|Reforms aim to improve governance standards.
+collocation;support economic growth (apoyar crecimiento económico);promote sustainable growth / strengthen economic performance;Infrastructure upgrades promote sustainable growth.|Education reforms strengthen economic performance.
+collocation;reduce business costs (reducir costos empresariales);lower operational expenses / minimise production costs;Automation lowers operational expenses.|Efficient technology minimises production costs.
+collocation;increase foreign investment (incrementar inversión extranjera);attract international investors / stimulate cross-border investment;Stability attracts international investors.|Policies stimulate cross-border investment.
