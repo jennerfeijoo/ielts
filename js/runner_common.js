@@ -130,7 +130,6 @@ export async function bootModule({ moduleName, manifestPath }) {
     }
 
     const cur = engine.getCurrent();
-    const val = engine.getResponse(cur.key);
 
     // Navigation buttons for section
     const navQs = getNavQuestions();
@@ -139,10 +138,7 @@ export async function bootModule({ moduleName, manifestPath }) {
       if (idx >= 0) { engine.goToIndex(idx); renderAll(); }
     });
 
-    renderQuestion(cur, el.question, val, (newVal) => {
-      engine.setResponse(cur.key, newVal);
-      renderAllNavOnly();
-    });
+    renderQuestion(el.question, cur, engine, { onAnswerChange: renderAllNavOnly });
 
     el.sectionSelect.value = String(engine.sectionIndex);
     el.status.textContent = `${moduleName.toUpperCase()} • ${currentTest.title ?? ""} • ${cur.label}`;
