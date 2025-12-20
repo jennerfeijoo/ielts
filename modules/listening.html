@@ -49,7 +49,24 @@
       <div class="card">
         <div class="pane">
           <header>
-            <div><strong>Audio</strong> <span class="small">(optional)</span></div>
+            <div><strong>Transcript viewer</strong> <span class="small">(auto-loaded from section HTML)</span></div>
+            <div class="row">
+              <input type="file" id="materialFile" accept="text/html,text/plain" />
+            </div>
+          </header>
+          <div class="body">
+            <iframe id="materialFrame" class="embed" title="Transcript"></iframe>
+            <div class="small">
+              This panel displays the current section transcript or material HTML. You can also load a local HTML file.
+            </div>
+          </div>
+        </div>
+
+        <div style="height:14px"></div>
+
+        <div class="pane">
+          <header>
+            <div><strong>Audio</strong> <span class="small">(Listening only; optional)</span></div>
             <div class="row">
               <input type="file" id="audioFile" accept="audio/*" />
             </div>

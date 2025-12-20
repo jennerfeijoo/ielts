@@ -16,7 +16,7 @@ const setValue = (engine, key, value) => {
 
 export function renderQuestion(container, q, engine, opts = {}) {
   if (!container || !q) return;
-  const { onAnswerChange, flagged = false } = opts;
+  const { onAnswerChange } = opts;
   const callChange = () => { if (typeof onAnswerChange === "function") onAnswerChange(); };
   container.innerHTML = "";
 
@@ -28,8 +28,7 @@ export function renderQuestion(container, q, engine, opts = {}) {
 
   const title = document.createElement("div");
   title.className = "row";
-  const flagBadge = flagged ? `<div class="badge danger">Flagged</div>` : "";
-  title.innerHTML = `<div class="badge"><strong>${q.label ?? ""}</strong></div>${flagBadge}${q.hint ? `<div class="small">${q.hint}</div>` : ""}`;
+  title.innerHTML = `<div class="badge"><strong>${q.label ?? ""}</strong></div>${q.hint ? `<div class="small">${q.hint}</div>` : ""}`;
   wrap.appendChild(title);
 
   if (q.prompt) {
@@ -299,7 +298,7 @@ export function renderQuestion(container, q, engine, opts = {}) {
   wrap.appendChild(fallback);
 }
 
-export function renderNav(navEl, questions, responses, currentKey, onPick, flagged=new Set()) {
+export function renderNav(navEl, questions, responses, currentKey, onPick) {
   if (!navEl) return;
   navEl.innerHTML = "";
   for (const q of questions) {
