@@ -21,8 +21,8 @@ export async function bootModule({ moduleName, manifestPath }) {
     timer: document.getElementById("timer"),
     status: document.getElementById("status"),
     results: document.getElementById("results"),
-    pdfFile: document.getElementById("pdfFile"),
-    pdfFrame: document.getElementById("pdfFrame"),
+    materialFile: document.getElementById("materialFile") ?? document.getElementById("pdfFile"),
+    materialFrame: document.getElementById("materialFrame") ?? document.getElementById("pdfFrame"),
     audioFile: document.getElementById("audioFile"),
     audio: document.getElementById("audio")
   };
@@ -39,6 +39,36 @@ export async function bootModule({ moduleName, manifestPath }) {
   let engine = null;
   let timer = null;
   let currentTest = null;
+
+  const resolveAssetPath = (p) => {
+    if (!p) return null;
+    if (/^https?:\/\//i.test(p)) return p;
+    return `../${p}`;
+  };
+
+  const syncSectionResources = () => {
+    const section = currentTest.sections?.[engine.sectionIndex];
+
+    // Section material (HTML/text)
+    if (el.materialFrame) {
+      const target = resolveAssetPath(section?.materialHtml ?? currentTest.assets?.materialHtml ?? null);
+      if (target) {
+        if (el.materialFrame.getAttribute("src") !== target) el.materialFrame.src = target;
+      } else {
+        el.materialFrame.removeAttribute("src");
+      }
+    }
+
+    // Audio (if provided)
+    if (el.audio) {
+      const audioPath = resolveAssetPath(section?.audio ?? currentTest.assets?.audio ?? null);
+      if (audioPath) {
+        if (el.audio.getAttribute("src") !== audioPath) el.audio.src = audioPath;
+      } else {
+        el.audio.removeAttribute("src");
+      }
+    }
+  };
 
   const loadTest = async (path) => {
     currentTest = await loadJSON(`../${path}`);
@@ -65,15 +95,6 @@ export async function bootModule({ moduleName, manifestPath }) {
     });
     el.sectionSelect.value = String(engine.sectionIndex);
 
-    // Auto-load PDF/audio if configured
-    const pdf = currentTest.assets?.pdf;
-    if (pdf) el.pdfFrame.src = `../${pdf}`;
-    else el.pdfFrame.removeAttribute("src");
-
-    const audio = currentTest.sections?.[engine.sectionIndex]?.audio;
-    if (audio && el.audio) el.audio.src = `../${audio}`;
-    else if (el.audio) el.audio.removeAttribute("src");
-
     renderAll();
     el.results.textContent = "Submit to see results.";
   };
@@ -95,6 +116,8 @@ export async function bootModule({ moduleName, manifestPath }) {
   };
 
   const renderAll = () => {
+    syncSectionResources();
+
     // Ensure engine.qIndex corresponds to current section; if not, jump to first q of section
     const secId = currentTest.sections?.[engine.sectionIndex]?.id;
     const secQs = engine.questionFlat.filter(q => q.sectionId === secId);
@@ -123,10 +146,6 @@ export async function bootModule({ moduleName, manifestPath }) {
 
     el.sectionSelect.value = String(engine.sectionIndex);
     el.status.textContent = `${moduleName.toUpperCase()} • ${currentTest.title ?? ""} • ${cur.label}`;
-
-    // Keep audio in sync with section
-    const audio = currentTest.sections?.[engine.sectionIndex]?.audio;
-    if (audio && el.audio) el.audio.src = el.audio.src.includes(audio) ? el.audio.src : `../${audio}`;
   };
 
   const renderAllNavOnly = () => {
@@ -179,9 +198,6 @@ export async function bootModule({ moduleName, manifestPath }) {
     const firstIdx = engine.questionFlat.findIndex(q => q.sectionId === secId);
     engine.goToIndex(firstIdx < 0 ? 0 : firstIdx);
 
-    // Load section audio if any
-    const audio = currentTest.sections?.[engine.sectionIndex]?.audio;
-    if (audio && el.audio) el.audio.src = `../${audio}`;
     renderAll();
   });
 
@@ -200,11 +216,11 @@ export async function bootModule({ moduleName, manifestPath }) {
     renderResults(false);
   });
 
-  // Local PDF load
-  el.pdfFile?.addEventListener("change", (e) => {
+  // Local material load (HTML/text)
+  el.materialFile?.addEventListener("change", (e) => {
     const file = e.target.files?.[0];
-    if (!file) return;
-    el.pdfFrame.src = blobURLFromFile(file);
+    if (!file || !el.materialFrame) return;
+    el.materialFrame.src = blobURLFromFile(file);
   });
 
   // Local audio load
