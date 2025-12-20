@@ -16,6 +16,7 @@ export async function bootModule({ moduleName, manifestPath }) {
     question: document.getElementById("question"),
     prevBtn: document.getElementById("prevBtn"),
     nextBtn: document.getElementById("nextBtn"),
+    flagBtn: document.getElementById("flagBtn"),
     resetBtn: document.getElementById("resetBtn"),
     submitBtn: document.getElementById("submitBtn"),
     timer: document.getElementById("timer"),
@@ -63,40 +64,18 @@ export async function bootModule({ moduleName, manifestPath }) {
     try { localStorage.setItem(flagsKey, JSON.stringify(Array.from(flags))); } catch { /* ignore */ }
   };
 
+  const updateFlagBtn = () => {
+    if (!el.flagBtn || !engine) return;
+    const curKey = engine.getCurrent()?.key;
+    const isFlagged = curKey ? flags.has(curKey) : false;
+    el.flagBtn.textContent = isFlagged ? "Unflag" : "Flag for review";
+    el.flagBtn.classList.toggle("danger", isFlagged);
+  };
+
   const updateTimerBadge = (remaining) => {
     if (!el.timer) return;
     if (remaining <= 300) el.timer.classList.add("danger");
     else el.timer.classList.remove("danger");
-  };
-
-  const syncSectionResources = () => {
-    const section = currentTest.sections?.[engine.sectionIndex];
-
-    // Section material (HTML/text)
-    if (el.materialFrame) {
-      const target = resolveAssetPath(section?.materialHtml ?? currentTest.assets?.materialHtml ?? null);
-      if (target) {
-        if (el.materialFrame.getAttribute("src") !== target) el.materialFrame.src = target;
-      } else {
-        el.materialFrame.removeAttribute("src");
-      }
-    }
-
-    // Audio (if provided)
-    if (el.audio) {
-      const audioPath = resolveAssetPath(section?.audio ?? currentTest.assets?.audio ?? null);
-      if (audioPath) {
-        if (el.audio.getAttribute("src") !== audioPath) el.audio.src = audioPath;
-      } else {
-        el.audio.removeAttribute("src");
-      }
-    }
-  };
-
-  const resolveAssetPath = (p) => {
-    if (!p) return null;
-    if (/^https?:\/\//i.test(p)) return p;
-    return `../${p}`;
   };
 
   const syncSectionResources = () => {
@@ -198,6 +177,7 @@ export async function bootModule({ moduleName, manifestPath }) {
 
     el.sectionSelect.value = String(engine.sectionIndex);
     el.status.textContent = `${moduleName.toUpperCase()} • ${currentTest.title ?? ""} • ${cur.label}`;
+    updateFlagBtn();
   };
 
   const renderAllNavOnly = () => {
@@ -207,6 +187,7 @@ export async function bootModule({ moduleName, manifestPath }) {
       const idx = engine.questionFlat.findIndex(q => q.key === k);
       if (idx >= 0) { engine.goToIndex(idx); renderAll(); }
     }, flags);
+    updateFlagBtn();
   };
 
   const renderResults = (auto=false) => {
@@ -255,6 +236,14 @@ export async function bootModule({ moduleName, manifestPath }) {
 
   el.prevBtn.addEventListener("click", () => { engine.prev(); renderAll(); });
   el.nextBtn.addEventListener("click", () => { engine.next(); renderAll(); });
+  el.flagBtn?.addEventListener("click", () => {
+    const curKey = engine.getCurrent()?.key;
+    if (!curKey) return;
+    if (flags.has(curKey)) flags.delete(curKey);
+    else flags.add(curKey);
+    saveFlags();
+    renderAllNavOnly();
+  });
 
   el.resetBtn.addEventListener("click", () => {
     if (!confirm("Reset all answers for this module and test?")) return;
