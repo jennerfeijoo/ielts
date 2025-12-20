@@ -67,7 +67,7 @@ export function renderQuestion(container, q, engine, opts = {}) {
   const type = q.type;
   const currentRaw = canonicalVal(engine, q.key);
   const current = Array.isArray(currentRaw) ? currentRaw : (typeof currentRaw === "string" ? currentRaw : "");
-  const letters = q.letters ?? ["A","B","C","D"];
+  const letters = q.letters ?? ["A","B","C","D","E","F","G","H","I","J"];
   const selectValues = (optionsList.length
     ? optionsList.map(o => o.letter ?? o.text).filter(Boolean)
     : letters
@@ -78,7 +78,7 @@ export function renderQuestion(container, q, engine, opts = {}) {
     const group = document.createElement("div");
     group.className = "row";
     group.style.gap = "8px";
-    const val = typeof current === "string" ? current : "";
+    const val = typeof current === "string" ? normalizeLetter(current) : "";
     values.forEach(v => {
       const label = document.createElement("label");
       label.style.display = "flex";
@@ -212,6 +212,18 @@ export function renderQuestion(container, q, engine, opts = {}) {
     return;
   }
 
+  if (type === "multipleChoice") {
+    const group = makeRadioGroup(selectValues);
+    body.appendChild(group);
+    clearBtn.addEventListener("click", () => {
+      setValue(engine, q.key, "");
+      group.querySelectorAll("input[type='radio']").forEach(r => { r.checked = false; });
+      callChange();
+    });
+    wrap.appendChild(clearBtn);
+    return;
+  }
+
   if (type === "multi_letter") {
     const currentArr = Array.isArray(currentRaw)
       ? currentRaw.map(normalizeLetter)
@@ -298,7 +310,7 @@ export function renderQuestion(container, q, engine, opts = {}) {
   wrap.appendChild(fallback);
 }
 
-export function renderNav(navEl, questions, responses, currentKey, onPick) {
+export function renderNav(navEl, questions, responses, currentKey, onPick, flagged=new Set()) {
   if (!navEl) return;
   navEl.innerHTML = "";
   for (const q of questions) {
