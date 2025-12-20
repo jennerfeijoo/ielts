@@ -40,6 +40,7 @@
         <hr />
         <div class="row">
           <button class="btn secondary" id="prevBtn">Previous</button>
+          <button class="btn secondary" id="flagBtn">Flag for review</button>
           <button class="btn" id="nextBtn">Next</button>
         </div>
         <div class="small" id="status"></div>
@@ -48,22 +49,7 @@
       <div class="card">
         <div class="pane">
           <header>
-            <div><strong>Reference PDF</strong> <span class="small">(optional)</span></div>
-            <div class="row">
-              <input type="file" id="pdfFile" accept="application/pdf" />
-            </div>
-          </header>
-          <div class="body">
-            <iframe id="pdfFrame" class="embed" title="PDF"></iframe>
-            <div class="small">Tip: upload the PDF to <code>assets/pdfs/</code> and the simulator will auto-load it if configured in the test JSON.</div>
-          </div>
-        </div>
-
-        <div style="height:14px"></div>
-
-        <div class="pane">
-          <header>
-            <div><strong>Audio</strong> <span class="small">(Listening only; optional)</span></div>
+            <div><strong>Audio</strong> <span class="small">(optional)</span></div>
             <div class="row">
               <input type="file" id="audioFile" accept="audio/*" />
             </div>

@@ -21,8 +21,10 @@ export async function bootModule({ moduleName, manifestPath }) {
     timer: document.getElementById("timer"),
     status: document.getElementById("status"),
     results: document.getElementById("results"),
-    pdfFile: document.getElementById("pdfFile"),
-    pdfFrame: document.getElementById("pdfFrame"),
+    flagBtn: document.getElementById("flagBtn"),
+    notesArea: document.getElementById("notesArea"),
+    materialFile: document.getElementById("materialFile") ?? document.getElementById("pdfFile"),
+    materialFrame: document.getElementById("materialFrame") ?? document.getElementById("pdfFrame"),
     audioFile: document.getElementById("audioFile"),
     audio: document.getElementById("audio")
   };
@@ -39,20 +41,101 @@ export async function bootModule({ moduleName, manifestPath }) {
   let engine = null;
   let timer = null;
   let currentTest = null;
+  let flags = new Set();
+  let flagsKey = null;
+  let notesSaveTimer = null;
+
+  const resolveAssetPath = (p) => {
+    if (!p) return null;
+    if (/^https?:\/\//i.test(p)) return p;
+    return `../${p}`;
+  };
+
+  const loadFlags = (key) => {
+    try {
+      const raw = localStorage.getItem(key);
+      if (!raw) return new Set();
+      const arr = JSON.parse(raw);
+      if (Array.isArray(arr)) return new Set(arr);
+    } catch { /* ignore */ }
+    return new Set();
+  };
+
+  const saveFlags = () => {
+    if (!flagsKey) return;
+    try { localStorage.setItem(flagsKey, JSON.stringify(Array.from(flags))); } catch { /* ignore */ }
+  };
+
+  const notesKey = () => {
+    if (!currentTest) return null;
+    const sec = currentTest.sections?.[engine?.sectionIndex ?? 0];
+    return `notes:${moduleName}:${currentTest.id ?? "test"}:${sec?.id ?? "section"}`;
+  };
+
+  const loadNotes = () => {
+    if (!el.notesArea) return;
+    const key = notesKey();
+    if (!key) return;
+    const saved = localStorage.getItem(key);
+    el.notesArea.value = saved ?? "";
+  };
+
+  const queueSaveNotes = () => {
+    if (!el.notesArea) return;
+    const key = notesKey();
+    if (!key) return;
+    clearTimeout(notesSaveTimer);
+    notesSaveTimer = setTimeout(() => {
+      try { localStorage.setItem(key, el.notesArea.value ?? ""); } catch { /* ignore */ }
+    }, 250);
+  };
+
+  const updateTimerBadge = (remaining) => {
+    if (!el.timer) return;
+    if (remaining <= 300) el.timer.classList.add("danger");
+    else el.timer.classList.remove("danger");
+  };
+
+  const syncSectionResources = () => {
+    const section = currentTest.sections?.[engine.sectionIndex];
+
+    // Section material (HTML/text)
+    if (el.materialFrame) {
+      const target = resolveAssetPath(section?.materialHtml ?? currentTest.assets?.materialHtml ?? null);
+      if (target) {
+        if (el.materialFrame.getAttribute("src") !== target) el.materialFrame.src = target;
+      } else {
+        el.materialFrame.removeAttribute("src");
+      }
+    }
+
+    // Audio (if provided)
+    if (el.audio) {
+      const audioPath = resolveAssetPath(section?.audio ?? currentTest.assets?.audio ?? null);
+      if (audioPath) {
+        if (el.audio.getAttribute("src") !== audioPath) el.audio.src = audioPath;
+      } else {
+        el.audio.removeAttribute("src");
+      }
+    }
+  };
 
   const loadTest = async (path) => {
     currentTest = await loadJSON(`../${path}`);
     const storageKey = `ielts:${moduleName}:${currentTest.id ?? path}`;
+    flagsKey = `flags:${moduleName}:${currentTest.id ?? path}`;
     engine = new ExamEngine(currentTest, storageKey);
     engine.markStarted();
+    flags = loadFlags(flagsKey);
 
     // Timer
     timer?.stop();
     timer = new CountdownTimer(currentTest.timeLimitSeconds ?? 0,
-      () => { el.timer.textContent = timer.format(); },
+      (remaining) => { el.timer.textContent = timer.format(); updateTimerBadge(remaining); },
       () => { engine.submit(); renderResults(true); }
     );
     el.timer.textContent = timer.format();
+    updateTimerBadge(timer.remaining ?? 0);
     if ((currentTest.timeLimitSeconds ?? 0) > 0) timer.start();
 
     // Sections selector
@@ -65,14 +148,7 @@ export async function bootModule({ moduleName, manifestPath }) {
     });
     el.sectionSelect.value = String(engine.sectionIndex);
 
-    // Auto-load PDF/audio if configured
-    const pdf = currentTest.assets?.pdf;
-    if (pdf) el.pdfFrame.src = `../${pdf}`;
-    else el.pdfFrame.removeAttribute("src");
-
-    const audio = currentTest.sections?.[engine.sectionIndex]?.audio;
-    if (audio && el.audio) el.audio.src = `../${audio}`;
-    else if (el.audio) el.audio.removeAttribute("src");
+    loadNotes();
 
     renderAll();
     el.results.textContent = "Submit to see results.";
@@ -95,6 +171,8 @@ export async function bootModule({ moduleName, manifestPath }) {
   };
 
   const renderAll = () => {
+    syncSectionResources();
+
     // Ensure engine.qIndex corresponds to current section; if not, jump to first q of section
     const secId = currentTest.sections?.[engine.sectionIndex]?.id;
     const secQs = engine.questionFlat.filter(q => q.sectionId === secId);
@@ -107,26 +185,24 @@ export async function bootModule({ moduleName, manifestPath }) {
     }
 
     const cur = engine.getCurrent();
-    const val = engine.getResponse(cur.key);
 
     // Navigation buttons for section
     const navQs = getNavQuestions();
     renderNav(el.qnav, navQs, engine.responses, cur.key, (k) => {
       const idx = engine.questionFlat.findIndex(q => q.key === k);
       if (idx >= 0) { engine.goToIndex(idx); renderAll(); }
-    });
+    }, flags);
 
-    renderQuestion(cur, el.question, val, (newVal) => {
-      engine.setResponse(cur.key, newVal);
-      renderAllNavOnly();
-    });
+    renderQuestion(el.question, cur, engine, { onAnswerChange: renderAllNavOnly, flagged: flags.has(cur.key) });
 
     el.sectionSelect.value = String(engine.sectionIndex);
     el.status.textContent = `${moduleName.toUpperCase()} • ${currentTest.title ?? ""} • ${cur.label}`;
 
-    // Keep audio in sync with section
-    const audio = currentTest.sections?.[engine.sectionIndex]?.audio;
-    if (audio && el.audio) el.audio.src = el.audio.src.includes(audio) ? el.audio.src : `../${audio}`;
+    if (el.flagBtn) {
+      const flagged = flags.has(cur.key);
+      el.flagBtn.textContent = flagged ? "Unflag" : "Flag for review";
+      el.flagBtn.classList.toggle("danger", flagged);
+    }
   };
 
   const renderAllNavOnly = () => {
@@ -135,7 +211,7 @@ export async function bootModule({ moduleName, manifestPath }) {
     renderNav(el.qnav, navQs, engine.responses, cur.key, (k) => {
       const idx = engine.questionFlat.findIndex(q => q.key === k);
       if (idx >= 0) { engine.goToIndex(idx); renderAll(); }
-    });
+    }, flags);
   };
 
   const renderResults = (auto=false) => {
@@ -179,9 +255,7 @@ export async function bootModule({ moduleName, manifestPath }) {
     const firstIdx = engine.questionFlat.findIndex(q => q.sectionId === secId);
     engine.goToIndex(firstIdx < 0 ? 0 : firstIdx);
 
-    // Load section audio if any
-    const audio = currentTest.sections?.[engine.sectionIndex]?.audio;
-    if (audio && el.audio) el.audio.src = `../${audio}`;
+    loadNotes();
     renderAll();
   });
 
@@ -191,6 +265,8 @@ export async function bootModule({ moduleName, manifestPath }) {
   el.resetBtn.addEventListener("click", () => {
     if (!confirm("Reset all answers for this module and test?")) return;
     engine.resetAll();
+    flags.clear();
+    saveFlags();
     renderAll();
     el.results.textContent = "Submit to see results.";
   });
@@ -200,12 +276,25 @@ export async function bootModule({ moduleName, manifestPath }) {
     renderResults(false);
   });
 
-  // Local PDF load
-  el.pdfFile?.addEventListener("change", (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    el.pdfFrame.src = blobURLFromFile(file);
+  el.flagBtn?.addEventListener("click", () => {
+    const cur = engine.getCurrent();
+    if (!cur) return;
+    if (flags.has(cur.key)) flags.delete(cur.key);
+    else flags.add(cur.key);
+    saveFlags();
+    renderAllNavOnly();
+    renderAll();
   });
+
+  // Local material load (HTML/text)
+  el.materialFile?.addEventListener("change", (e) => {
+    const file = e.target.files?.[0];
+    if (!file || !el.materialFrame) return;
+    el.materialFrame.src = blobURLFromFile(file);
+  });
+
+  // Notes
+  el.notesArea?.addEventListener("input", queueSaveNotes);
 
   // Local audio load
   el.audioFile?.addEventListener("change", (e) => {
