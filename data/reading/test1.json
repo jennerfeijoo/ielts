@@ -1,134 +1,166 @@
-import { Engine } from "./engine.js";
-import { renderQuestion, updateNav } from "./ui.js";
-
-const el = {
-  testSelect: document.getElementById("testSelect"),
-  sectionSelect: document.getElementById("sectionSelect"),
-  qnav: document.getElementById("qnav"),
-  question: document.getElementById("question"),
-  prevBtn: document.getElementById("prevBtn"),
-  nextBtn: document.getElementById("nextBtn"),
-  submitBtn: document.getElementById("submitBtn"),
-  resetBtn: document.getElementById("resetBtn"),
-  status: document.getElementById("status"),
-  results: document.getElementById("results"),
-  timer: document.getElementById("timer"),
-  frame: document.getElementById("pdfFrame")
-};
-
-let engine = null;
-let currentTest = null;
-let manifest = null;
-
-/* ---------------------------
-   Load passage HTML per section
----------------------------- */
-function loadSectionMaterial(sectionIndex) {
-  if (!el.frame || !currentTest) return;
-
-  const material =
-    currentTest.sections?.[sectionIndex]?.materialHtml;
-
-  if (!material) {
-    el.frame.removeAttribute("src");
-    return;
+{
+  "id": "reading-test1",
+  "module": "reading",
+  "title": "Test 1 – Reading",
+  "timeLimitSeconds": 3600,
+  "sections": [
+    {
+      "id": "R1",
+      "title": "Passage 1 – The development of the London underground railway",
+      "materialHtml": "assets/passages/test1/passage1.html",
+      "questions": [
+        {
+          "key": "1",
+          "label": "Q1",
+          "shortLabel": "1",
+          "type": "text",
+          "hint": "ONE WORD AND/OR A NUMBER",
+          "prompt": "What problem did the ring of overground stations create for travellers crossing the City?"
+        },
+        {
+          "key": "2",
+          "label": "Q2",
+          "shortLabel": "2",
+          "type": "tfng",
+          "hint": "TRUE / FALSE / NOT GIVEN",
+          "prompt": "Pearson believed an underground line would let workers move to new suburbs."
+        },
+        {
+          "key": "3",
+          "label": "Q3",
+          "shortLabel": "3",
+          "type": "text",
+          "hint": "ONE WORD AND/OR A NUMBER",
+          "prompt": "Approximately how long was the first planned line between Paddington and Farringdon Street?"
+        },
+        {
+          "key": "4",
+          "label": "Q4",
+          "shortLabel": "4",
+          "type": "text",
+          "hint": "ONE WORD AND/OR A NUMBER",
+          "prompt": "What construction method was used to build the early tunnels?"
+        },
+        {
+          "key": "5",
+          "label": "Q5",
+          "shortLabel": "5",
+          "type": "text",
+          "hint": "ONE WORD AND/OR A NUMBER",
+          "prompt": "In what year did the Metropolitan line open?"
+        }
+      ]
+    },
+    {
+      "id": "R2",
+      "title": "Passage 2 – Stadiums: past, present and future",
+      "materialHtml": "assets/passages/test1/passage2.html",
+      "questions": [
+        {
+          "key": "6",
+          "label": "Q6",
+          "shortLabel": "6",
+          "type": "text",
+          "hint": "ONE WORD AND/OR A NUMBER",
+          "prompt": "Which civilisation built the amphitheatre at Arles?"
+        },
+        {
+          "key": "7",
+          "label": "Q7",
+          "shortLabel": "7",
+          "type": "tfng",
+          "hint": "TRUE / FALSE / NOT GIVEN",
+          "prompt": "The Verona arena is now known for opera performances."
+        },
+        {
+          "key": "8",
+          "label": "Q8",
+          "shortLabel": "8",
+          "type": "text",
+          "hint": "ONE WORD AND/OR A NUMBER",
+          "prompt": "In which town is the Piazza dell’Anfiteatro located?"
+        },
+        {
+          "key": "9",
+          "label": "Q9",
+          "shortLabel": "9",
+          "type": "tfng",
+          "hint": "TRUE / FALSE / NOT GIVEN",
+          "prompt": "Modern stadiums are usually built in central city areas with mixed-use facilities."
+        },
+        {
+          "key": "10",
+          "label": "Q10",
+          "shortLabel": "10",
+          "type": "text",
+          "hint": "ONE WORD AND/OR A NUMBER",
+          "prompt": "What renewable technology on the Kaohsiung Stadium canopy generates electricity?"
+        }
+      ]
+    },
+    {
+      "id": "R3",
+      "title": "Passage 3 – To catch a king",
+      "materialHtml": "assets/passages/test1/passage3.html",
+      "questions": [
+        {
+          "key": "11",
+          "label": "Q11",
+          "shortLabel": "11",
+          "type": "text",
+          "hint": "ONE WORD AND/OR A NUMBER",
+          "prompt": "For how many weeks was Charles II on the run after the Battle of Worcester?"
+        },
+        {
+          "key": "12",
+          "label": "Q12",
+          "shortLabel": "12",
+          "type": "text",
+          "hint": "ONE WORD AND/OR A NUMBER",
+          "prompt": "Under which type of tree did Charles II hide in Boscobel Wood?"
+        },
+        {
+          "key": "13",
+          "label": "Q13",
+          "shortLabel": "13",
+          "type": "text",
+          "hint": "ONE WORD AND/OR A NUMBER",
+          "prompt": "Which diarist did Charles II ask to record his escape story?"
+        },
+        {
+          "key": "14",
+          "label": "Q14",
+          "shortLabel": "14",
+          "type": "tfng",
+          "hint": "TRUE / FALSE / NOT GIVEN",
+          "prompt": "Charles II frequently recounted his escape after he returned to the throne."
+        },
+        {
+          "key": "15",
+          "label": "Q15",
+          "shortLabel": "15",
+          "type": "text",
+          "hint": "ONE WORD AND/OR A NUMBER",
+          "prompt": "What order of chivalry did Charles II plan to commemorate his escape?"
+        }
+      ]
+    }
+  ],
+  "answerKey": {
+    "1": { "accepted": ["congestion", "traffic congestion", "heavy traffic"] },
+    "2": { "accepted": "TRUE" },
+    "3": { "accepted": ["5 km", "five km", "5 kilometres", "5 kilometers", "about 5 km", "almost 5 km"] },
+    "4": { "accepted": ["cut and cover", "cut-and-cover"] },
+    "5": { "accepted": ["1863", "10 january 1863", "january 10 1863", "10/01/1863"] },
+    "6": { "accepted": ["romans", "roman empire"] },
+    "7": { "accepted": "TRUE" },
+    "8": { "accepted": ["lucca"] },
+    "9": { "accepted": "FALSE" },
+    "10": { "accepted": ["photovoltaic panels", "solar panels", "solar", "pv panels"] },
+    "11": { "accepted": ["six weeks", "6 weeks"] },
+    "12": { "accepted": ["oak", "oak tree"] },
+    "13": { "accepted": ["samuel pepys", "pepys"] },
+    "14": { "accepted": "TRUE" },
+    "15": { "accepted": ["knights of the royal oak", "royal oak", "order of the royal oak"] }
   }
-
-  // reading.html lives in /pages/, assets are one level up
-  el.frame.src = `../${material}`;
 }
-
-/* ---------------------------
-   Load test JSON
----------------------------- */
-async function loadTest(path) {
-  const res = await fetch(`../${path}`);
-  currentTest = await res.json();
-
-  engine = new Engine(currentTest);
-  engine.start();
-
-  // Populate sections
-  el.sectionSelect.innerHTML = "";
-  currentTest.sections.forEach((s, i) => {
-    const opt = document.createElement("option");
-    opt.value = i;
-    opt.textContent = s.title;
-    el.sectionSelect.appendChild(opt);
-  });
-
-  el.sectionSelect.value = "0";
-  engine.sectionIndex = 0;
-
-  loadSectionMaterial(0);
-  render();
-}
-
-/* ---------------------------
-   Render UI
----------------------------- */
-function render() {
-  const q = engine.currentQuestion();
-  renderQuestion(el.question, q, engine);
-  updateNav(el.qnav, engine);
-  el.status.textContent = engine.progressText();
-}
-
-/* ---------------------------
-   Events
----------------------------- */
-el.sectionSelect.addEventListener("change", () => {
-  engine.sectionIndex = Number(el.sectionSelect.value);
-  loadSectionMaterial(engine.sectionIndex);
-  render();
-});
-
-el.prevBtn.addEventListener("click", () => {
-  engine.prev();
-  render();
-});
-
-el.nextBtn.addEventListener("click", () => {
-  engine.next();
-  render();
-});
-
-el.submitBtn.addEventListener("click", () => {
-  const result = engine.submit();
-  el.results.textContent =
-    `Score: ${result.score} / ${result.maxScore}`;
-});
-
-el.resetBtn.addEventListener("click", () => {
-  if (!currentTest) return;
-  engine.reset();
-  loadSectionMaterial(engine.sectionIndex);
-  render();
-});
-
-/* ---------------------------
-   Init
----------------------------- */
-async function init() {
-  const res = await fetch("../data/manifest.json");
-  manifest = await res.json();
-
-  el.testSelect.innerHTML = "";
-  manifest.reading.forEach(t => {
-    const opt = document.createElement("option");
-    opt.value = t.path;
-    opt.textContent = t.title;
-    el.testSelect.appendChild(opt);
-  });
-
-  el.testSelect.addEventListener("change", () => {
-    loadTest(el.testSelect.value);
-  });
-
-  if (manifest.reading.length > 0) {
-    el.testSelect.value = manifest.reading[0].path;
-    await loadTest(manifest.reading[0].path);
-  }
-}
-
-init();
