@@ -14,40 +14,104 @@
           "label": "Q1",
           "shortLabel": "1",
           "type": "text",
-          "hint": "ONE WORD AND/OR A NUMBER",
-          "prompt": "What problem did the ring of overground stations create for travellers crossing the City?"
+          "hint": "ONE WORD ONLY",
+          "prompt": "The ________ of London increased rapidly between 1800 and 1850."
         },
         {
           "key": "2",
           "label": "Q2",
           "shortLabel": "2",
-          "type": "tfng",
-          "hint": "TRUE / FALSE / NOT GIVEN",
-          "prompt": "Pearson believed an underground line would let workers move to new suburbs."
+          "type": "text",
+          "hint": "ONE WORD ONLY",
+          "prompt": "Building the railway would make it possible to move people to better housing in the ________."
         },
         {
           "key": "3",
           "label": "Q3",
           "shortLabel": "3",
           "type": "text",
-          "hint": "ONE WORD AND/OR A NUMBER",
-          "prompt": "Approximately how long was the first planned line between Paddington and Farringdon Street?"
+          "hint": "ONE WORD ONLY",
+          "prompt": "A number of ________ agreed with Pearson’s idea."
         },
         {
           "key": "4",
           "label": "Q4",
           "shortLabel": "4",
           "type": "text",
-          "hint": "ONE WORD AND/OR A NUMBER",
-          "prompt": "What construction method was used to build the early tunnels?"
+          "hint": "ONE WORD ONLY",
+          "prompt": "The company initially had problems getting the ________ needed for the project."
         },
         {
           "key": "5",
           "label": "Q5",
           "shortLabel": "5",
           "type": "text",
-          "hint": "ONE WORD AND/OR A NUMBER",
-          "prompt": "In what year did the Metropolitan line open?"
+          "hint": "ONE WORD ONLY",
+          "prompt": "Negative articles about the project appeared in the ________."
+        },
+        {
+          "key": "6",
+          "label": "Q6",
+          "shortLabel": "6",
+          "type": "text",
+          "hint": "ONE WORD ONLY",
+          "prompt": "With the completion of the brick arch, the tunnel was covered with ________."
+        },
+        {
+          "key": "7",
+          "label": "Q7",
+          "shortLabel": "7",
+          "type": "tfng",
+          "hint": "TRUE / FALSE / NOT GIVEN",
+          "prompt": "Other countries had built underground railways before the Metropolitan line opened."
+        },
+        {
+          "key": "8",
+          "label": "Q8",
+          "shortLabel": "8",
+          "type": "tfng",
+          "hint": "TRUE / FALSE / NOT GIVEN",
+          "prompt": "More people than predicted travelled on the Metropolitan line on the first day."
+        },
+        {
+          "key": "9",
+          "label": "Q9",
+          "shortLabel": "9",
+          "type": "tfng",
+          "hint": "TRUE / FALSE / NOT GIVEN",
+          "prompt": "The use of ventilation shafts failed to prevent pollution in the tunnels."
+        },
+        {
+          "key": "10",
+          "label": "Q10",
+          "shortLabel": "10",
+          "type": "tfng",
+          "hint": "TRUE / FALSE / NOT GIVEN",
+          "prompt": "A different approach from the ‘cut and cover’ technique was required in London’s central area."
+        },
+        {
+          "key": "11",
+          "label": "Q11",
+          "shortLabel": "11",
+          "type": "tfng",
+          "hint": "TRUE / FALSE / NOT GIVEN",
+          "prompt": "The windows on City & South London trains were at eye level."
+        },
+        {
+          "key": "12",
+          "label": "Q12",
+          "shortLabel": "12",
+          "type": "tfng",
+          "hint": "TRUE / FALSE / NOT GIVEN",
+          "prompt": "The City & South London Railway was a financial success."
+        },
+        {
+          "key": "13",
+          "label": "Q13",
+          "shortLabel": "13",
+          "type": "tfng",
+          "hint": "TRUE / FALSE / NOT GIVEN",
+          "prompt": "Trains on the ‘Tuppenny Tube’ nearly always ran on time."
         }
       ]
     },
@@ -57,44 +121,108 @@
       "materialHtml": "assets/passages/test1/passage2.html",
       "questions": [
         {
-          "key": "6",
-          "label": "Q6",
-          "shortLabel": "6",
+          "key": "14",
+          "label": "Q14",
+          "shortLabel": "14",
+          "type": "matching",
+          "hint": "Which section contains the following information? Write the correct letter, A–G.",
+          "prompt": "a mention of negative attitudes towards stadium building projects"
+        },
+        {
+          "key": "15",
+          "label": "Q15",
+          "shortLabel": "15",
+          "type": "matching",
+          "hint": "Which section contains the following information? Write the correct letter, A–G.",
+          "prompt": "figures demonstrating the environmental benefits of a certain stadium"
+        },
+        {
+          "key": "16",
+          "label": "Q16",
+          "shortLabel": "16",
+          "type": "matching",
+          "hint": "Which section contains the following information? Write the correct letter, A–G.",
+          "prompt": "examples of the wide range of facilities available at some new stadiums"
+        },
+        {
+          "key": "17",
+          "label": "Q17",
+          "shortLabel": "17",
+          "type": "matching",
+          "hint": "Which section contains the following information? Write the correct letter, A–G.",
+          "prompt": "reference to the disadvantages of the stadiums built during a certain era"
+        },
+        {
+          "key": "18",
+          "label": "Q18",
+          "shortLabel": "18",
           "type": "text",
-          "hint": "ONE WORD AND/OR A NUMBER",
-          "prompt": "Which civilisation built the amphitheatre at Arles?"
+          "hint": "ONE WORD ONLY",
+          "prompt": "The amphitheatre of Arles, for example, was converted first into a ________."
         },
         {
-          "key": "7",
-          "label": "Q7",
-          "shortLabel": "7",
-          "type": "tfng",
-          "hint": "TRUE / FALSE / NOT GIVEN",
-          "prompt": "The Verona arena is now known for opera performances."
-        },
-        {
-          "key": "8",
-          "label": "Q8",
-          "shortLabel": "8",
+          "key": "19",
+          "label": "Q19",
+          "shortLabel": "19",
           "type": "text",
-          "hint": "ONE WORD AND/OR A NUMBER",
-          "prompt": "In which town is the Piazza dell’Anfiteatro located?"
+          "hint": "ONE WORD ONLY",
+          "prompt": "The amphitheatre of Arles was finally converted into an arena where spectators could watch ________."
         },
         {
-          "key": "9",
-          "label": "Q9",
-          "shortLabel": "9",
-          "type": "tfng",
-          "hint": "TRUE / FALSE / NOT GIVEN",
-          "prompt": "Modern stadiums are usually built in central city areas with mixed-use facilities."
-        },
-        {
-          "key": "10",
-          "label": "Q10",
-          "shortLabel": "10",
+          "key": "20",
+          "label": "Q20",
+          "shortLabel": "20",
           "type": "text",
-          "hint": "ONE WORD AND/OR A NUMBER",
-          "prompt": "What renewable technology on the Kaohsiung Stadium canopy generates electricity?"
+          "hint": "ONE WORD ONLY",
+          "prompt": "The arena in Verona is famous today as a venue where ________ is performed."
+        },
+        {
+          "key": "21",
+          "label": "Q21",
+          "shortLabel": "21",
+          "type": "text",
+          "hint": "ONE WORD ONLY",
+          "prompt": "The site of Lucca’s amphitheatre has also been used for many purposes over the centuries, including the storage of ________."
+        },
+        {
+          "key": "22",
+          "label": "Q22",
+          "shortLabel": "22",
+          "type": "text",
+          "hint": "ONE WORD ONLY",
+          "prompt": "The site of Lucca’s amphitheatre is now a market square with ________ and homes incorporated into the remains of the Roman amphitheatre."
+        },
+        {
+          "key": "23",
+          "label": "Q23",
+          "shortLabel": "23",
+          "type": "multipleChoice",
+          "hint": "Choose ONE letter, A–E.",
+          "prompt": "When comparing twentieth-century stadiums to ancient amphitheatres in Section D, which negative feature does the writer mention? (Choose one of the two correct answers.)"
+        },
+        {
+          "key": "24",
+          "label": "Q24",
+          "shortLabel": "24",
+          "type": "multipleChoice",
+          "hint": "Choose ONE letter, A–E.",
+          "prompt": "When comparing twentieth-century stadiums to ancient amphitheatres in Section D, which negative feature does the writer mention? (Choose the other correct answer.)"
+        },
+        {
+          "key": "25",
+          "label": "Q25",
+          "shortLabel": "25",
+          "type": "multipleChoice",
+          "hint": "Choose ONE letter, A–E.",
+          "prompt": "Which advantage of modern stadium design does the writer mention? (Choose one of the two correct answers.)"
+        },
+        {
+          "key": "26",
+          "label": "Q26",
+          "shortLabel": "26",
+          "type": "multipleChoice",
+          "hint": "Choose ONE letter, A–E.",
+          "prompt": "Which advantage of modern stadium design does the writer mention? (Choose the other correct answer.)"
         }
       ]
     },
@@ -104,63 +232,160 @@
       "materialHtml": "assets/passages/test1/passage3.html",
       "questions": [
         {
-          "key": "11",
-          "label": "Q11",
-          "shortLabel": "11",
-          "type": "text",
-          "hint": "ONE WORD AND/OR A NUMBER",
-          "prompt": "For how many weeks was Charles II on the run after the Battle of Worcester?"
+          "key": "27",
+          "label": "Q27",
+          "shortLabel": "27",
+          "type": "multipleChoice",
+          "hint": "Choose the correct letter, A–J.",
+          "prompt": "Charles II then formed a ________ with the Scots."
         },
         {
-          "key": "12",
-          "label": "Q12",
-          "shortLabel": "12",
-          "type": "text",
-          "hint": "ONE WORD AND/OR A NUMBER",
-          "prompt": "Under which type of tree did Charles II hide in Boscobel Wood?"
+          "key": "28",
+          "label": "Q28",
+          "shortLabel": "28",
+          "type": "multipleChoice",
+          "hint": "Choose the correct letter, A–J.",
+          "prompt": "In order to become King of Scots, he abandoned an important ________ that was held by his father and had contributed to his father’s death."
         },
         {
-          "key": "13",
-          "label": "Q13",
-          "shortLabel": "13",
-          "type": "text",
-          "hint": "ONE WORD AND/OR A NUMBER",
-          "prompt": "Which diarist did Charles II ask to record his escape story?"
+          "key": "29",
+          "label": "Q29",
+          "shortLabel": "29",
+          "type": "multipleChoice",
+          "hint": "Choose the correct letter, A–J.",
+          "prompt": "The battle led to a ________ for the Parliamentarians."
         },
         {
-          "key": "14",
-          "label": "Q14",
-          "shortLabel": "14",
-          "type": "tfng",
-          "hint": "TRUE / FALSE / NOT GIVEN",
-          "prompt": "Charles II frequently recounted his escape after he returned to the throne."
+          "key": "30",
+          "label": "Q30",
+          "shortLabel": "30",
+          "type": "multipleChoice",
+          "hint": "Choose the correct letter, A–J.",
+          "prompt": "A ________ was offered for Charles’s capture."
         },
         {
-          "key": "15",
-          "label": "Q15",
-          "shortLabel": "15",
-          "type": "text",
-          "hint": "ONE WORD AND/OR A NUMBER",
-          "prompt": "What order of chivalry did Charles II plan to commemorate his escape?"
+          "key": "31",
+          "label": "Q31",
+          "shortLabel": "31",
+          "type": "multipleChoice",
+          "hint": "Choose the correct letter, A–J.",
+          "prompt": "After six weeks spent in hiding, he eventually managed to reach the ________ of continental Europe."
+        },
+        {
+          "key": "32",
+          "label": "Q32",
+          "shortLabel": "32",
+          "type": "ynng",
+          "hint": "YES / NO / NOT GIVEN",
+          "prompt": "Charles chose Pepys for the task because he considered him to be trustworthy."
+        },
+        {
+          "key": "33",
+          "label": "Q33",
+          "shortLabel": "33",
+          "type": "ynng",
+          "hint": "YES / NO / NOT GIVEN",
+          "prompt": "Charles’s personal recollection of the escape lacked sufficient detail."
+        },
+        {
+          "key": "34",
+          "label": "Q34",
+          "shortLabel": "34",
+          "type": "ynng",
+          "hint": "YES / NO / NOT GIVEN",
+          "prompt": "Charles indicated to Pepys that he had planned his escape before the battle."
+        },
+        {
+          "key": "35",
+          "label": "Q35",
+          "shortLabel": "35",
+          "type": "ynng",
+          "hint": "YES / NO / NOT GIVEN",
+          "prompt": "The inclusion of Charles’s account is a positive aspect of the book."
+        },
+        {
+          "key": "36",
+          "label": "Q36",
+          "shortLabel": "36",
+          "type": "multipleChoice",
+          "hint": "Choose the correct letter, A, B, C or D.",
+          "prompt": "What is the reviewer’s main purpose in the first paragraph?"
+        },
+        {
+          "key": "37",
+          "label": "Q37",
+          "shortLabel": "37",
+          "type": "multipleChoice",
+          "hint": "Choose the correct letter, A, B, C or D.",
+          "prompt": "Why does the reviewer include examples of the fugitives’ behaviour in the third paragraph?"
+        },
+        {
+          "key": "38",
+          "label": "Q38",
+          "shortLabel": "38",
+          "type": "multipleChoice",
+          "hint": "Choose the correct letter, A, B, C or D.",
+          "prompt": "What point does the reviewer make about Charles II in the fourth paragraph?"
+        },
+        {
+          "key": "39",
+          "label": "Q39",
+          "shortLabel": "39",
+          "type": "multipleChoice",
+          "hint": "Choose the correct letter, A, B, C or D.",
+          "prompt": "What does the reviewer say about Charles Spencer in the fifth paragraph?"
+        },
+        {
+          "key": "40",
+          "label": "Q40",
+          "shortLabel": "40",
+          "type": "multipleChoice",
+          "hint": "Choose the correct letter, A, B, C or D.",
+          "prompt": "When the reviewer says the book ‘doesn’t quite hit the mark’, she is making the point that"
         }
       ]
     }
   ],
   "answerKey": {
-    "1": { "accepted": ["congestion", "traffic congestion", "heavy traffic"] },
-    "2": { "accepted": "TRUE" },
-    "3": { "accepted": ["5 km", "five km", "5 kilometres", "5 kilometers", "about 5 km", "almost 5 km"] },
-    "4": { "accepted": ["cut and cover", "cut-and-cover"] },
-    "5": { "accepted": ["1863", "10 january 1863", "january 10 1863", "10/01/1863"] },
-    "6": { "accepted": ["romans", "roman empire"] },
-    "7": { "accepted": "TRUE" },
-    "8": { "accepted": ["lucca"] },
-    "9": { "accepted": "FALSE" },
-    "10": { "accepted": ["photovoltaic panels", "solar panels", "solar", "pv panels"] },
-    "11": { "accepted": ["six weeks", "6 weeks"] },
-    "12": { "accepted": ["oak", "oak tree"] },
-    "13": { "accepted": ["samuel pepys", "pepys"] },
-    "14": { "accepted": "TRUE" },
-    "15": { "accepted": ["knights of the royal oak", "royal oak", "order of the royal oak"] }
+    "1": { "accepted": ["population"] },
+    "2": { "accepted": ["suburbs"] },
+    "3": { "accepted": ["businessmen"] },
+    "4": { "accepted": ["funding"] },
+    "5": { "accepted": ["press"] },
+    "6": { "accepted": ["soil"] },
+    "7": { "accepted": "FALSE" },
+    "8": { "accepted": "NOT GIVEN" },
+    "9": { "accepted": "TRUE" },
+    "10": { "accepted": "TRUE" },
+    "11": { "accepted": "FALSE" },
+    "12": { "accepted": "FALSE" },
+    "13": { "accepted": "NOT GIVEN" },
+    "14": { "accepted": "A" },
+    "15": { "accepted": "F" },
+    "16": { "accepted": "E" },
+    "17": { "accepted": "D" },
+    "18": { "accepted": ["fortress"] },
+    "19": { "accepted": ["bullfights"] },
+    "20": { "accepted": ["opera"] },
+    "21": { "accepted": ["salt"] },
+    "22": { "accepted": ["shops"] },
+    "23": { "accepted": ["C", "D"] },
+    "24": { "accepted": ["C", "D"] },
+    "25": { "accepted": ["B", "E"] },
+    "26": { "accepted": ["B", "E"] },
+    "27": { "accepted": "H" },
+    "28": { "accepted": "J" },
+    "29": { "accepted": "F" },
+    "30": { "accepted": "B" },
+    "31": { "accepted": "D" },
+    "32": { "accepted": "NOT GIVEN" },
+    "33": { "accepted": "NO" },
+    "34": { "accepted": "NO" },
+    "35": { "accepted": "YES" },
+    "36": { "accepted": "B" },
+    "37": { "accepted": "C" },
+    "38": { "accepted": "A" },
+    "39": { "accepted": "B" },
+    "40": { "accepted": "D" }
   }
 }
