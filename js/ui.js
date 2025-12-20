@@ -298,7 +298,7 @@ export function renderQuestion(container, q, engine, opts = {}) {
   wrap.appendChild(fallback);
 }
 
-export function renderNav(navEl, questions, responses, currentKey, onPick, flagged=new Set()) {
+export function renderNav(navEl, questions, responses, currentKey, onPick) {
   if (!navEl) return;
   navEl.innerHTML = "";
   for (const q of questions) {

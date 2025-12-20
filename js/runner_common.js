@@ -21,7 +21,6 @@ export async function bootModule({ moduleName, manifestPath }) {
     timer: document.getElementById("timer"),
     status: document.getElementById("status"),
     results: document.getElementById("results"),
-    flagBtn: document.getElementById("flagBtn"),
     materialFile: document.getElementById("materialFile") ?? document.getElementById("pdfFile"),
     materialFrame: document.getElementById("materialFrame") ?? document.getElementById("pdfFrame"),
     audioFile: document.getElementById("audioFile"),
@@ -68,6 +67,36 @@ export async function bootModule({ moduleName, manifestPath }) {
     if (!el.timer) return;
     if (remaining <= 300) el.timer.classList.add("danger");
     else el.timer.classList.remove("danger");
+  };
+
+  const syncSectionResources = () => {
+    const section = currentTest.sections?.[engine.sectionIndex];
+
+    // Section material (HTML/text)
+    if (el.materialFrame) {
+      const target = resolveAssetPath(section?.materialHtml ?? currentTest.assets?.materialHtml ?? null);
+      if (target) {
+        if (el.materialFrame.getAttribute("src") !== target) el.materialFrame.src = target;
+      } else {
+        el.materialFrame.removeAttribute("src");
+      }
+    }
+
+    // Audio (if provided)
+    if (el.audio) {
+      const audioPath = resolveAssetPath(section?.audio ?? currentTest.assets?.audio ?? null);
+      if (audioPath) {
+        if (el.audio.getAttribute("src") !== audioPath) el.audio.src = audioPath;
+      } else {
+        el.audio.removeAttribute("src");
+      }
+    }
+  };
+
+  const resolveAssetPath = (p) => {
+    if (!p) return null;
+    if (/^https?:\/\//i.test(p)) return p;
+    return `../${p}`;
   };
 
   const syncSectionResources = () => {
@@ -169,12 +198,6 @@ export async function bootModule({ moduleName, manifestPath }) {
 
     el.sectionSelect.value = String(engine.sectionIndex);
     el.status.textContent = `${moduleName.toUpperCase()} • ${currentTest.title ?? ""} • ${cur.label}`;
-
-    if (el.flagBtn) {
-      const flagged = flags.has(cur.key);
-      el.flagBtn.textContent = flagged ? "Unflag" : "Flag for review";
-      el.flagBtn.classList.toggle("danger", flagged);
-    }
   };
 
   const renderAllNavOnly = () => {
@@ -245,16 +268,6 @@ export async function bootModule({ moduleName, manifestPath }) {
   el.submitBtn.addEventListener("click", () => {
     engine.submit();
     renderResults(false);
-  });
-
-  el.flagBtn?.addEventListener("click", () => {
-    const cur = engine.getCurrent();
-    if (!cur) return;
-    if (flags.has(cur.key)) flags.delete(cur.key);
-    else flags.add(cur.key);
-    saveFlags();
-    renderAllNavOnly();
-    renderAll();
   });
 
   // Local material load (HTML/text)
