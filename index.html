@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>IELTS Simulator (GitHub Pages)</title>
+  <link rel="stylesheet" href="css/main.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div>
+        <div class="h1">IELTS Simulator</div>
+        <div class="sub">Private repository workflow: upload PDFs/MP3s to <code>assets/</code>, and practice inside an exam-like UI.</div>
+      </div>
+      <div class="badge">Version 1.0</div>
+    </div>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="h1" style="font-size:20px">Modules</div>
+        <div class="sub">Start a module. Progress is auto-saved in your browser.</div>
+        <hr />
+        <div class="row">
+          <a class="btn" href="modules/listening.html">Listening</a>
+          <a class="btn" href="modules/reading.html">Reading</a>
+          <a class="btn" href="modules/writing.html">Writing</a>
+          <a class="btn" href="modules/speaking.html">Speaking</a>
+        </div>
+        <hr />
+        <div class="notice">
+          This build intentionally avoids embedding copyrighted test text in JSON. Use the embedded PDF viewer and audio player,
+          then enter answers in the simulator for accurate auto-marking.
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="h1" style="font-size:20px">Assets</div>
+        <div class="sub">Binary files are added manually (GitHub upload or git push).</div>
+        <hr />
+        <div class="small">Expected folders:</div>
+        <ul class="small">
+          <li><code>assets/pdfs/</code> (test PDFs)</li>
+          <li><code>assets/audio/testX/</code> (Listening parts)</li>
+        </ul>
+        <div class="small">You can also load local PDFs/MP3 files in each module page without committing them.</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

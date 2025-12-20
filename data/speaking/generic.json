@@ -1,0 +1,25 @@
+{
+  "part1Questions": [
+    "Do you work or study?",
+    "What do you like about where you live?",
+    "How often do you use public transport?",
+    "Do you prefer mornings or evenings?",
+    "What kind of music do you enjoy?",
+    "Do you like reading books?"
+  ],
+  "part2": {
+    "cue": "Describe a time when you learned something quickly.",
+    "points": [
+      "what you learned",
+      "why you needed to learn it",
+      "how you learned it",
+      "how you felt about it"
+    ]
+  },
+  "part3Questions": [
+    "How important is lifelong learning in modern societies?",
+    "What factors motivate adults to study?",
+    "Should employers support staff training?",
+    "How has technology changed education?"
+  ]
+}

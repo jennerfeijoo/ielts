@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Listening – IELTS Simulator</title>
+  <link rel="stylesheet" href="../css/main.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div>
+        <div class="h1">Listening</div>
+        <div class="sub"><a href="../index.html">Home</a></div>
+      </div>
+      <div class="row">
+        <span class="badge" id="timer">--:--</span>
+        <button class="btn secondary" id="resetBtn">Reset</button>
+        <button class="btn danger" id="submitBtn">Submit</button>
+      </div>
+    </div>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="row">
+          <div style="min-width:280px; flex:1">
+            <label>Test</label>
+            <select id="testSelect"></select>
+          </div>
+          <div style="min-width:240px; flex:1">
+            <label>Section</label>
+            <select id="sectionSelect"></select>
+          </div>
+        </div>
+
+        <hr />
+        <div class="qnav" id="qnav"></div>
+        <hr />
+        <div id="question"></div>
+        <hr />
+        <div class="row">
+          <button class="btn secondary" id="prevBtn">Previous</button>
+          <button class="btn" id="nextBtn">Next</button>
+        </div>
+        <div class="small" id="status"></div>
+      </div>
+
+      <div class="card">
+        <div class="pane">
+          <header>
+            <div><strong>Reference PDF</strong> <span class="small">(optional)</span></div>
+            <div class="row">
+              <input type="file" id="pdfFile" accept="application/pdf" />
+            </div>
+          </header>
+          <div class="body">
+            <iframe id="pdfFrame" class="embed" title="PDF"></iframe>
+            <div class="small">Tip: upload the PDF to <code>assets/pdfs/</code> and the simulator will auto-load it if configured in the test JSON.</div>
+          </div>
+        </div>
+
+        <div style="height:14px"></div>
+
+        <div class="pane">
+          <header>
+            <div><strong>Audio</strong> <span class="small">(Listening only; optional)</span></div>
+            <div class="row">
+              <input type="file" id="audioFile" accept="audio/*" />
+            </div>
+          </header>
+          <div class="body">
+            <audio id="audio" controls style="width:100%"></audio>
+            <div class="small">Upload MP3s to <code>assets/audio/</code> or load them locally.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <div class="h1" style="font-size:18px">Results</div>
+      <div class="sub">Auto-marking applies only to Listening and Reading (Task writing and speaking are not auto-scored).</div>
+      <hr />
+      <div id="results" class="small">Submit to see results.</div>
+    </div>
+
+  </div>
+
+  <script type="module" src="../js/listening.js"></script>
+</body>
+</html>

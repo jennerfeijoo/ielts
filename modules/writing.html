@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Writing – IELTS Simulator</title>
+  <link rel="stylesheet" href="../css/main.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div>
+        <div class="h1">Writing</div>
+        <div class="sub"><a href="../index.html">Home</a></div>
+      </div>
+      <div class="row">
+        <span class="badge" id="timer">--:--</span>
+        <button class="btn secondary" id="resetBtn">Reset</button>
+      </div>
+    </div>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="row">
+          <div style="min-width:280px; flex:1">
+            <label>Prompt set</label>
+            <select id="promptSelect"></select>
+          </div>
+          <div style="min-width:240px; flex:1">
+            <label>Task</label>
+            <select id="taskSelect"></select>
+          </div>
+        </div>
+        <hr />
+        <div class="notice" id="promptBox">Select a task.</div>
+        <hr />
+        <label>Your response</label>
+        <textarea id="essay"></textarea>
+        <div class="row" style="justify-content:space-between; margin-top:10px">
+          <div class="badge">Words: <span id="wordCount">0</span></div>
+          <div class="small">Auto-save is enabled.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="pane">
+          <header>
+            <div><strong>Reference PDF</strong> <span class="small">(optional)</span></div>
+            <div class="row">
+              <input type="file" id="pdfFile" accept="application/pdf" />
+            </div>
+          </header>
+          <div class="body">
+            <iframe id="pdfFrame" class="embed" title="PDF"></iframe>
+            <div class="small">Upload the writing prompt PDF to <code>assets/pdfs/</code> or load locally here.</div>
+          </div>
+        </div>
+        <div class="notice" style="margin-top:14px">
+          Writing is not auto-scored. Export your response and paste into ChatGPT for TR/LR/CC/GRA scoring.
+        </div>
+        <div class="row" style="margin-top:10px">
+          <button class="btn" id="exportBtn">Export response (.txt)</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="../js/writing.js"></script>
+</body>
+</html>

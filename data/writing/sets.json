@@ -1,0 +1,9 @@
+{
+  "sets": [
+    {
+      "id": "test1",
+      "title": "Test 1",
+      "path": "data/writing/test1.json"
+    }
+  ]
+}

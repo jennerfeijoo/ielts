@@ -1,0 +1,9 @@
+{
+  "sets": [
+    {
+      "id": "generic",
+      "title": "Generic Speaking Set",
+      "path": "data/speaking/generic.json"
+    }
+  ]
+}

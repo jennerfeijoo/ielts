@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Speaking – IELTS Simulator</title>
+  <link rel="stylesheet" href="../css/main.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div>
+        <div class="h1">Speaking</div>
+        <div class="sub"><a href="../index.html">Home</a></div>
+      </div>
+      <div class="row">
+        <button class="btn secondary" id="resetBtn">Reset</button>
+      </div>
+    </div>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <label>Speaking set</label>
+        <select id="setSelect"></select>
+        <hr />
+
+        <div class="pane">
+          <header>
+            <div><strong>Part 1</strong></div>
+            <button class="btn secondary" id="p1Btn">New questions</button>
+          </header>
+          <div class="body" id="p1"></div>
+        </div>
+
+        <div style="height:14px"></div>
+
+        <div class="pane">
+          <header>
+            <div><strong>Part 2 (Cue Card)</strong></div>
+            <div class="badge" id="cueTimer">1:00</div>
+          </header>
+          <div class="body" id="p2"></div>
+          <div class="body">
+            <div class="row">
+              <button class="btn" id="startCue">Start 1:00 prep</button>
+              <button class="btn secondary" id="resetCue">Reset</button>
+            </div>
+          </div>
+        </div>
+
+        <div style="height:14px"></div>
+
+        <div class="pane">
+          <header>
+            <div><strong>Part 3</strong></div>
+            <button class="btn secondary" id="p3Btn">New questions</button>
+          </header>
+          <div class="body" id="p3"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="pane">
+          <header>
+            <div><strong>Recording</strong> <span class="small">(optional)</span></div>
+          </header>
+          <div class="body">
+            <div class="row">
+              <button class="btn" id="recStart">Start recording</button>
+              <button class="btn secondary" id="recStop">Stop</button>
+              <a class="btn secondary" id="recDownload" download="speaking.webm" style="display:none">Download</a>
+            </div>
+            <div class="small" id="recStatus">Your recording stays local in the browser.</div>
+          </div>
+        </div>
+
+        <div class="pane" style="margin-top:14px">
+          <header>
+            <div><strong>Reference PDF</strong> <span class="small">(optional)</span></div>
+            <input type="file" id="pdfFile" accept="application/pdf" />
+          </header>
+          <div class="body">
+            <iframe id="pdfFrame" class="embed" title="PDF"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="../js/speaking.js"></script>
+</body>
+</html>

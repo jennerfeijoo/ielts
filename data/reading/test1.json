@@ -1,0 +1,712 @@
+{
+  "id": "reading-test1",
+  "module": "reading",
+  "title": "Test 1 \u2013 Reading (Academic)",
+  "timeLimitSeconds": 3600,
+  "assets": {
+    "pdf": "assets/pdfs/test1.pdf"
+  },
+  "sections": [
+    {
+      "id": "R1",
+      "title": "Passage 1 (Q1\u201313)",
+      "questions": [
+        {
+          "key": "1",
+          "label": "Q1",
+          "shortLabel": "1",
+          "type": "text",
+          "hint": "ONE WORD ONLY"
+        },
+        {
+          "key": "2",
+          "label": "Q2",
+          "shortLabel": "2",
+          "type": "text",
+          "hint": "ONE WORD ONLY"
+        },
+        {
+          "key": "3",
+          "label": "Q3",
+          "shortLabel": "3",
+          "type": "text",
+          "hint": "ONE WORD ONLY"
+        },
+        {
+          "key": "4",
+          "label": "Q4",
+          "shortLabel": "4",
+          "type": "text",
+          "hint": "ONE WORD ONLY"
+        },
+        {
+          "key": "5",
+          "label": "Q5",
+          "shortLabel": "5",
+          "type": "text",
+          "hint": "ONE WORD ONLY"
+        },
+        {
+          "key": "6",
+          "label": "Q6",
+          "shortLabel": "6",
+          "type": "text",
+          "hint": "ONE WORD ONLY"
+        },
+        {
+          "key": "7",
+          "label": "Q7",
+          "shortLabel": "7",
+          "type": "tfng",
+          "hint": "TRUE/FALSE/NOT GIVEN"
+        },
+        {
+          "key": "8",
+          "label": "Q8",
+          "shortLabel": "8",
+          "type": "tfng",
+          "hint": "TRUE/FALSE/NOT GIVEN"
+        },
+        {
+          "key": "9",
+          "label": "Q9",
+          "shortLabel": "9",
+          "type": "tfng",
+          "hint": "TRUE/FALSE/NOT GIVEN"
+        },
+        {
+          "key": "10",
+          "label": "Q10",
+          "shortLabel": "10",
+          "type": "tfng",
+          "hint": "TRUE/FALSE/NOT GIVEN"
+        },
+        {
+          "key": "11",
+          "label": "Q11",
+          "shortLabel": "11",
+          "type": "tfng",
+          "hint": "TRUE/FALSE/NOT GIVEN"
+        },
+        {
+          "key": "12",
+          "label": "Q12",
+          "shortLabel": "12",
+          "type": "tfng",
+          "hint": "TRUE/FALSE/NOT GIVEN"
+        },
+        {
+          "key": "13",
+          "label": "Q13",
+          "shortLabel": "13",
+          "type": "tfng",
+          "hint": "TRUE/FALSE/NOT GIVEN"
+        }
+      ]
+    },
+    {
+      "id": "R2",
+      "title": "Passage 2 (Q14\u201326)",
+      "questions": [
+        {
+          "key": "14",
+          "label": "Q14",
+          "shortLabel": "14",
+          "type": "single_letter",
+          "letters": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G"
+          ],
+          "hint": "Match (A\u2013G)"
+        },
+        {
+          "key": "15",
+          "label": "Q15",
+          "shortLabel": "15",
+          "type": "single_letter",
+          "letters": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G"
+          ],
+          "hint": "Match (A\u2013G)"
+        },
+        {
+          "key": "16",
+          "label": "Q16",
+          "shortLabel": "16",
+          "type": "single_letter",
+          "letters": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G"
+          ],
+          "hint": "Match (A\u2013G)"
+        },
+        {
+          "key": "17",
+          "label": "Q17",
+          "shortLabel": "17",
+          "type": "single_letter",
+          "letters": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G"
+          ],
+          "hint": "Match (A\u2013G)"
+        },
+        {
+          "key": "18",
+          "label": "Q18",
+          "shortLabel": "18",
+          "type": "text",
+          "hint": "ONE WORD ONLY"
+        },
+        {
+          "key": "19",
+          "label": "Q19",
+          "shortLabel": "19",
+          "type": "text",
+          "hint": "ONE WORD ONLY"
+        },
+        {
+          "key": "20",
+          "label": "Q20",
+          "shortLabel": "20",
+          "type": "text",
+          "hint": "ONE WORD ONLY"
+        },
+        {
+          "key": "21",
+          "label": "Q21",
+          "shortLabel": "21",
+          "type": "text",
+          "hint": "ONE WORD ONLY"
+        },
+        {
+          "key": "22",
+          "label": "Q22",
+          "shortLabel": "22",
+          "type": "text",
+          "hint": "ONE WORD ONLY"
+        },
+        {
+          "key": "23-24",
+          "label": "Q23\u201324",
+          "shortLabel": "23\u201324",
+          "type": "multi_letter",
+          "letters": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E"
+          ],
+          "expectedCount": 2,
+          "hint": "Choose TWO letters (either order)"
+        },
+        {
+          "key": "25-26",
+          "label": "Q25\u201326",
+          "shortLabel": "25\u201326",
+          "type": "multi_letter",
+          "letters": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E"
+          ],
+          "expectedCount": 2,
+          "hint": "Choose TWO letters (either order)"
+        }
+      ]
+    },
+    {
+      "id": "R3",
+      "title": "Passage 3 (Q27\u201340)",
+      "questions": [
+        {
+          "key": "27",
+          "label": "Q27",
+          "shortLabel": "27",
+          "type": "single_letter",
+          "letters": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I",
+            "J"
+          ],
+          "hint": "Match (A\u2013J)"
+        },
+        {
+          "key": "28",
+          "label": "Q28",
+          "shortLabel": "28",
+          "type": "single_letter",
+          "letters": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I",
+            "J"
+          ],
+          "hint": "Match (A\u2013J)"
+        },
+        {
+          "key": "29",
+          "label": "Q29",
+          "shortLabel": "29",
+          "type": "single_letter",
+          "letters": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I",
+            "J"
+          ],
+          "hint": "Match (A\u2013J)"
+        },
+        {
+          "key": "30",
+          "label": "Q30",
+          "shortLabel": "30",
+          "type": "single_letter",
+          "letters": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I",
+            "J"
+          ],
+          "hint": "Match (A\u2013J)"
+        },
+        {
+          "key": "31",
+          "label": "Q31",
+          "shortLabel": "31",
+          "type": "single_letter",
+          "letters": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I",
+            "J"
+          ],
+          "hint": "Match (A\u2013J)"
+        },
+        {
+          "key": "32",
+          "label": "Q32",
+          "shortLabel": "32",
+          "type": "ynng",
+          "hint": "YES/NO/NOT GIVEN"
+        },
+        {
+          "key": "33",
+          "label": "Q33",
+          "shortLabel": "33",
+          "type": "ynng",
+          "hint": "YES/NO/NOT GIVEN"
+        },
+        {
+          "key": "34",
+          "label": "Q34",
+          "shortLabel": "34",
+          "type": "ynng",
+          "hint": "YES/NO/NOT GIVEN"
+        },
+        {
+          "key": "35",
+          "label": "Q35",
+          "shortLabel": "35",
+          "type": "ynng",
+          "hint": "YES/NO/NOT GIVEN"
+        },
+        {
+          "key": "36",
+          "label": "Q36",
+          "shortLabel": "36",
+          "type": "single_letter",
+          "letters": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "hint": "Choose ONE letter"
+        },
+        {
+          "key": "37",
+          "label": "Q37",
+          "shortLabel": "37",
+          "type": "single_letter",
+          "letters": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "hint": "Choose ONE letter"
+        },
+        {
+          "key": "38",
+          "label": "Q38",
+          "shortLabel": "38",
+          "type": "single_letter",
+          "letters": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "hint": "Choose ONE letter"
+        },
+        {
+          "key": "39",
+          "label": "Q39",
+          "shortLabel": "39",
+          "type": "single_letter",
+          "letters": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "hint": "Choose ONE letter"
+        },
+        {
+          "key": "40",
+          "label": "Q40",
+          "shortLabel": "40",
+          "type": "single_letter",
+          "letters": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "hint": "Choose ONE letter"
+        }
+      ]
+    }
+  ],
+  "answerKey": {
+    "1": {
+      "type": "single",
+      "accepted": [
+        "population"
+      ],
+      "weight": 1
+    },
+    "2": {
+      "type": "single",
+      "accepted": [
+        "suburbs"
+      ],
+      "weight": 1
+    },
+    "3": {
+      "type": "single",
+      "accepted": [
+        "businessmen"
+      ],
+      "weight": 1
+    },
+    "4": {
+      "type": "single",
+      "accepted": [
+        "funding"
+      ],
+      "weight": 1
+    },
+    "5": {
+      "type": "single",
+      "accepted": [
+        "press"
+      ],
+      "weight": 1
+    },
+    "6": {
+      "type": "single",
+      "accepted": [
+        "soil"
+      ],
+      "weight": 1
+    },
+    "7": {
+      "type": "single",
+      "accepted": [
+        "FALSE"
+      ],
+      "weight": 1
+    },
+    "8": {
+      "type": "single",
+      "accepted": [
+        "NOT GIVEN",
+        "NOT-GIVEN"
+      ],
+      "weight": 1
+    },
+    "9": {
+      "type": "single",
+      "accepted": [
+        "TRUE"
+      ],
+      "weight": 1
+    },
+    "10": {
+      "type": "single",
+      "accepted": [
+        "TRUE"
+      ],
+      "weight": 1
+    },
+    "11": {
+      "type": "single",
+      "accepted": [
+        "FALSE"
+      ],
+      "weight": 1
+    },
+    "12": {
+      "type": "single",
+      "accepted": [
+        "FALSE"
+      ],
+      "weight": 1
+    },
+    "13": {
+      "type": "single",
+      "accepted": [
+        "NOT GIVEN",
+        "NOT-GIVEN"
+      ],
+      "weight": 1
+    },
+    "14": {
+      "type": "single",
+      "accepted": [
+        "A"
+      ],
+      "weight": 1
+    },
+    "15": {
+      "type": "single",
+      "accepted": [
+        "F"
+      ],
+      "weight": 1
+    },
+    "16": {
+      "type": "single",
+      "accepted": [
+        "E"
+      ],
+      "weight": 1
+    },
+    "17": {
+      "type": "single",
+      "accepted": [
+        "D"
+      ],
+      "weight": 1
+    },
+    "18": {
+      "type": "single",
+      "accepted": [
+        "fortress"
+      ],
+      "weight": 1
+    },
+    "19": {
+      "type": "single",
+      "accepted": [
+        "bullfights"
+      ],
+      "weight": 1
+    },
+    "20": {
+      "type": "single",
+      "accepted": [
+        "opera"
+      ],
+      "weight": 1
+    },
+    "21": {
+      "type": "single",
+      "accepted": [
+        "salt"
+      ],
+      "weight": 1
+    },
+    "22": {
+      "type": "single",
+      "accepted": [
+        "shops"
+      ],
+      "weight": 1
+    },
+    "27": {
+      "type": "single",
+      "accepted": [
+        "H"
+      ],
+      "weight": 1
+    },
+    "28": {
+      "type": "single",
+      "accepted": [
+        "J"
+      ],
+      "weight": 1
+    },
+    "29": {
+      "type": "single",
+      "accepted": [
+        "F"
+      ],
+      "weight": 1
+    },
+    "30": {
+      "type": "single",
+      "accepted": [
+        "B"
+      ],
+      "weight": 1
+    },
+    "31": {
+      "type": "single",
+      "accepted": [
+        "D"
+      ],
+      "weight": 1
+    },
+    "32": {
+      "type": "single",
+      "accepted": [
+        "NOT GIVEN",
+        "NOT-GIVEN"
+      ],
+      "weight": 1
+    },
+    "33": {
+      "type": "single",
+      "accepted": [
+        "NO"
+      ],
+      "weight": 1
+    },
+    "34": {
+      "type": "single",
+      "accepted": [
+        "NO"
+      ],
+      "weight": 1
+    },
+    "35": {
+      "type": "single",
+      "accepted": [
+        "YES"
+      ],
+      "weight": 1
+    },
+    "36": {
+      "type": "single",
+      "accepted": [
+        "B"
+      ],
+      "weight": 1
+    },
+    "37": {
+      "type": "single",
+      "accepted": [
+        "C"
+      ],
+      "weight": 1
+    },
+    "38": {
+      "type": "single",
+      "accepted": [
+        "A"
+      ],
+      "weight": 1
+    },
+    "39": {
+      "type": "single",
+      "accepted": [
+        "B"
+      ],
+      "weight": 1
+    },
+    "40": {
+      "type": "single",
+      "accepted": [
+        "D"
+      ],
+      "weight": 1
+    },
+    "23-24": {
+      "type": "multi_letter",
+      "acceptedSet": [
+        "C",
+        "D"
+      ],
+      "expectedCount": 2,
+      "weight": 2
+    },
+    "25-26": {
+      "type": "multi_letter",
+      "acceptedSet": [
+        "B",
+        "E"
+      ],
+      "expectedCount": 2,
+      "weight": 2
+    }
+  }
+}
