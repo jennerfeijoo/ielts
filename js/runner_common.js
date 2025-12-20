@@ -39,6 +39,59 @@ export async function bootModule({ moduleName, manifestPath }) {
   let engine = null;
   let timer = null;
   let currentTest = null;
+  let flags = new Set();
+  let flagsKey = null;
+
+  const resolveAssetPath = (p) => {
+    if (!p) return null;
+    if (/^https?:\/\//i.test(p)) return p;
+    return `../${p}`;
+  };
+
+  const loadFlags = (key) => {
+    try {
+      const raw = localStorage.getItem(key);
+      if (!raw) return new Set();
+      const arr = JSON.parse(raw);
+      if (Array.isArray(arr)) return new Set(arr);
+    } catch { /* ignore */ }
+    return new Set();
+  };
+
+  const saveFlags = () => {
+    if (!flagsKey) return;
+    try { localStorage.setItem(flagsKey, JSON.stringify(Array.from(flags))); } catch { /* ignore */ }
+  };
+
+  const updateTimerBadge = (remaining) => {
+    if (!el.timer) return;
+    if (remaining <= 300) el.timer.classList.add("danger");
+    else el.timer.classList.remove("danger");
+  };
+
+  const syncSectionResources = () => {
+    const section = currentTest.sections?.[engine.sectionIndex];
+
+    // Section material (HTML/text)
+    if (el.materialFrame) {
+      const target = resolveAssetPath(section?.materialHtml ?? currentTest.assets?.materialHtml ?? null);
+      if (target) {
+        if (el.materialFrame.getAttribute("src") !== target) el.materialFrame.src = target;
+      } else {
+        el.materialFrame.removeAttribute("src");
+      }
+    }
+
+    // Audio (if provided)
+    if (el.audio) {
+      const audioPath = resolveAssetPath(section?.audio ?? currentTest.assets?.audio ?? null);
+      if (audioPath) {
+        if (el.audio.getAttribute("src") !== audioPath) el.audio.src = audioPath;
+      } else {
+        el.audio.removeAttribute("src");
+      }
+    }
+  };
 
   const resolveAssetPath = (p) => {
     if (!p) return null;
@@ -73,16 +126,19 @@ export async function bootModule({ moduleName, manifestPath }) {
   const loadTest = async (path) => {
     currentTest = await loadJSON(`../${path}`);
     const storageKey = `ielts:${moduleName}:${currentTest.id ?? path}`;
+    flagsKey = `${storageKey}:flags`;
     engine = new ExamEngine(currentTest, storageKey);
     engine.markStarted();
+    flags = loadFlags(flagsKey);
 
     // Timer
     timer?.stop();
     timer = new CountdownTimer(currentTest.timeLimitSeconds ?? 0,
-      () => { el.timer.textContent = timer.format(); },
+      (remaining) => { el.timer.textContent = timer.format(); updateTimerBadge(remaining); },
       () => { engine.submit(); renderResults(true); }
     );
     el.timer.textContent = timer.format();
+    updateTimerBadge(timer.remaining ?? 0);
     if ((currentTest.timeLimitSeconds ?? 0) > 0) timer.start();
 
     // Sections selector
@@ -136,7 +192,7 @@ export async function bootModule({ moduleName, manifestPath }) {
     renderNav(el.qnav, navQs, engine.responses, cur.key, (k) => {
       const idx = engine.questionFlat.findIndex(q => q.key === k);
       if (idx >= 0) { engine.goToIndex(idx); renderAll(); }
-    });
+    }, flags);
 
     renderQuestion(el.question, cur, engine, { onAnswerChange: renderAllNavOnly });
 
@@ -150,7 +206,7 @@ export async function bootModule({ moduleName, manifestPath }) {
     renderNav(el.qnav, navQs, engine.responses, cur.key, (k) => {
       const idx = engine.questionFlat.findIndex(q => q.key === k);
       if (idx >= 0) { engine.goToIndex(idx); renderAll(); }
-    });
+    }, flags);
   };
 
   const renderResults = (auto=false) => {
@@ -203,6 +259,8 @@ export async function bootModule({ moduleName, manifestPath }) {
   el.resetBtn.addEventListener("click", () => {
     if (!confirm("Reset all answers for this module and test?")) return;
     engine.resetAll();
+    flags.clear();
+    saveFlags();
     renderAll();
     el.results.textContent = "Submit to see results.";
   });

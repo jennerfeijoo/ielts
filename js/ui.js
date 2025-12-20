@@ -310,6 +310,7 @@ export function renderNav(navEl, questions, responses, currentKey, onPick) {
     if (val != null && val !== "" && !(Array.isArray(val) && val.length === 0)) {
       b.classList.add("ans");
     }
+    if (flagged.has(q.key)) b.classList.add("flagged");
     if (q.key === currentKey) b.classList.add("cur");
     b.addEventListener("click", () => onPick(q.key));
     navEl.appendChild(b);
