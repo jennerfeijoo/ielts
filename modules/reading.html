@@ -48,33 +48,18 @@
       <div class="card">
         <div class="pane">
           <header>
-            <div><strong>Reference</strong> <span class="small">(auto-loaded from test content)</span></div>
-          </header>
-          <div class="body">
-            <iframe id="pdfFrame" class="embed" title="Reference"></iframe>
-            <div class="small">
-              This panel displays the current section material (e.g., passages or transcripts) as configured in the test JSON.
-            </div>
-          </div>
-        </div>
-
-        <div style="height:14px"></div>
-
-        <div class="pane">
-          <header>
-            <div><strong>Audio</strong> <span class="small">(Listening only; optional)</span></div>
+            <div><strong>Passage viewer</strong> <span class="small">(auto-loaded from section HTML)</span></div>
             <div class="row">
-              <input type="file" id="audioFile" accept="audio/*" />
+              <input type="file" id="materialFile" accept="text/html,text/plain" />
             </div>
           </header>
           <div class="body">
-            <audio id="audio" controls style="width:100%"></audio>
-            <div class="small">Upload MP3s to <code>assets/audio/</code> or load them locally.</div>
+            <iframe id="materialFrame" class="embed" title="Passage"></iframe>
+            <div class="small">
+              This panel displays the current section passage loaded from your test content (e.g., <code>assets/passages/test1/passage1.html</code>).
+            </div>
           </div>
         </div>
-
-        <!-- Hidden legacy field kept to avoid JS null errors if any script still references it -->
-        <input type="file" id="pdfFile" hidden disabled aria-hidden="true" />
       </div>
     </div>
 
