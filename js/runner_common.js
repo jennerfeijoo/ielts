@@ -277,6 +277,9 @@ export async function bootModule({ moduleName, manifestPath }) {
     el.materialFrame.src = blobURLFromFile(file);
   });
 
+  // Notes
+  el.notesArea?.addEventListener("input", queueSaveNotes);
+
   // Local audio load
   el.audioFile?.addEventListener("change", (e) => {
     const file = e.target.files?.[0];
