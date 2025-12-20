@@ -40,6 +40,7 @@
         <hr />
         <div class="row">
           <button class="btn secondary" id="prevBtn">Previous</button>
+          <button class="btn secondary" id="flagBtn">Flag for review</button>
           <button class="btn" id="nextBtn">Next</button>
         </div>
         <div class="small" id="status"></div>
@@ -48,14 +49,16 @@
       <div class="card">
         <div class="pane">
           <header>
-            <div><strong>Reference PDF</strong> <span class="small">(optional)</span></div>
+            <div><strong>Transcript viewer</strong> <span class="small">(auto-loaded from section HTML)</span></div>
             <div class="row">
-              <input type="file" id="pdfFile" accept="application/pdf" />
+              <input type="file" id="materialFile" accept="text/html,text/plain" />
             </div>
           </header>
           <div class="body">
-            <iframe id="pdfFrame" class="embed" title="PDF"></iframe>
-            <div class="small">Tip: upload the PDF to <code>assets/pdfs/</code> and the simulator will auto-load it if configured in the test JSON.</div>
+            <iframe id="materialFrame" class="embed" title="Transcript"></iframe>
+            <div class="small">
+              This panel displays the current section transcript or material HTML. You can also load a local HTML file.
+            </div>
           </div>
         </div>
 
