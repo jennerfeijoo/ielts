@@ -1,19 +1,39 @@
 {
   "id": "writing-test1",
+  "module": "writing",
+  "title": "Test 1 – Writing",
+  "timeLimitSeconds": 3600,
   "tasks": [
     {
-      "task": 1,
-      "title": "Task 1",
-      "timeLimitSeconds": 1200,
-      "minWords": 150,
-      "promptNote": "Open your Test 1 PDF and use the exact Task 1 prompt."
+      "id": "W1",
+      "taskNumber": 1,
+      "title": "WRITING TASK 1",
+      "instructions": "You should spend about 20 minutes on this task.",
+      "prompt": "The maps below show an industrial area in the town of Norbiton, and planned future development of the site.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.",
+      "requirements": "Write at least 150 words.",
+      "imageUrl": "assets/images/test1-writing-task1.png",
+      "imageAlt": "Two maps: Norbiton industrial area now and planned future development",
+      "criteria": {
+        "taskAchievement": "How well you summarize the main features and make comparisons",
+        "coherenceCohesion": "How well you organize information and use linking devices",
+        "lexicalResource": "Range and accuracy of vocabulary",
+        "grammaticalRange": "Range and accuracy of grammatical structures"
+      }
     },
     {
-      "task": 2,
-      "title": "Task 2",
-      "timeLimitSeconds": 2400,
-      "minWords": 250,
-      "promptNote": "Open your Test 1 PDF and use the exact Task 2 prompt."
+      "id": "W2",
+      "taskNumber": 2,
+      "title": "WRITING TASK 2",
+      "instructions": "You should spend about 40 minutes on this task.",
+      "prompt": "It is important for people to take risks, both in their professional lives and their personal lives.\n\nDo you think the advantages of taking risks outweigh the disadvantages?",
+      "requirements": "Write at least 250 words.",
+      "additionalInstructions": "Give reasons for your answer and include any relevant examples from your own knowledge or experience.",
+      "criteria": {
+        "taskResponse": "How well you address the prompt and develop arguments",
+        "coherenceCohesion": "How well you structure the essay and use linking devices",
+        "lexicalResource": "Range and accuracy of vocabulary",
+        "grammaticalRange": "Range and accuracy of grammatical structures"
+      }
     }
   ]
 }
