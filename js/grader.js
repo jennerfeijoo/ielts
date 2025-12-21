@@ -6,9 +6,23 @@ function toAcceptedArray(x) {
   return [x];
 }
 
+function normalizeMultipleChoiceResponse(val) {
+  if (Array.isArray(val)) return val.map(normalizeLetter).filter(Boolean);
+  if (typeof val === "string") {
+    if (val.includes(",")) return val.split(",").map(normalizeLetter).filter(Boolean);
+    const solo = normalizeLetter(val);
+    return solo ? [solo] : [];
+  }
+  return [];
+}
+
 function normByType(val, type) {
   if (type === "single_letter" || type === "tfng" || type === "ynng") return normalizeLetter(val);
   if (type === "multi_letter") return Array.isArray(val) ? val.map(normalizeLetter).sort() : [];
+  if (type === "multipleChoice") {
+    const list = normalizeMultipleChoiceResponse(val);
+    return list.length <= 1 ? (list[0] ?? "") : list;
+  }
   return normalizeText(val);
 }
 
@@ -16,6 +30,7 @@ function acceptedNormalized(accepted, type) {
   const arr = toAcceptedArray(accepted);
   if (type === "single_letter" || type === "tfng" || type === "ynng") return arr.map(normalizeLetter);
   if (type === "multi_letter") return arr.map(normalizeLetter).sort();
+  if (type === "multipleChoice") return arr.map(normalizeLetter);
   return arr.map(normalizeText);
 }
 
@@ -49,7 +64,19 @@ export function gradeModule(testJson, responses) {
     const user = responses[qKey];
     let gained = 0;
 
-    if (rule.type === "multi_letter") {
+    if (q.type === "multipleChoice") {
+      const acceptedLetters = acceptedNormalized(rule.accepted, q.type).filter(Boolean);
+      const userVals = normalizeMultipleChoiceResponse(user);
+      if (acceptedLetters.length <= 1) {
+        const userVal = userVals[0] ?? "";
+        gained = acceptedLetters.includes(userVal) ? 1 : 0;
+      } else {
+        const accSet = new Set(acceptedLetters);
+        const userSet = new Set(userVals);
+        const match = accSet.size === userSet.size && acceptedLetters.every(v => userSet.has(v));
+        gained = match ? 1 : 0;
+      }
+    } else if (rule.type === "multi_letter") {
       // partial: intersection size (no negative marking)
       const userArr = Array.isArray(user) ? user.map(normalizeLetter) : [];
       const accSet = new Set((rule.acceptedSet ?? []).map(normalizeLetter));
