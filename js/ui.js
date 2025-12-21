@@ -19,6 +19,7 @@ export function renderQuestion(container, q, engine, opts = {}) {
   const { onAnswerChange } = opts;
   const callChange = () => { if (typeof onAnswerChange === "function") onAnswerChange(); };
   container.innerHTML = "";
+  const labelText = q.label ?? (q.shortLabel ? `Q${q.shortLabel}` : (q.key ? `Q${q.key}` : ""));
 
   const wrap = document.createElement("div");
   wrap.style.display = "flex";
@@ -28,7 +29,7 @@ export function renderQuestion(container, q, engine, opts = {}) {
 
   const title = document.createElement("div");
   title.className = "row";
-  title.innerHTML = `<div class="badge"><strong>${q.label ?? ""}</strong></div>${q.hint ? `<div class="small">${q.hint}</div>` : ""}`;
+  title.innerHTML = `<div class="badge"><strong>${labelText}</strong></div>${q.hint ? `<div class="small">${q.hint}</div>` : ""}`;
   wrap.appendChild(title);
 
   if (q.prompt) {
@@ -429,10 +430,11 @@ export function renderNav(navEl, questions, responses, currentKey, onPick, flagg
   if (!navEl) return;
   navEl.innerHTML = "";
   for (const q of questions) {
+    const label = q.shortLabel ?? q.label ?? q.key ?? "";
     const b = document.createElement("button");
     b.type = "button";
     b.className = "qbtn";
-    b.textContent = q.shortLabel;
+    b.textContent = label;
     const val = responses?.[q.key];
     if (val != null && val !== "" && !(Array.isArray(val) && val.length === 0)) {
       b.classList.add("ans");
