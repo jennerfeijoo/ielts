@@ -118,10 +118,12 @@
 
     root.addEventListener("contextmenu", (e) => {
       const sel = window.getSelection();
-      const hasSelection = sel && !sel.isCollapsed && root.contains(sel.anchorNode);
-      if (!hasSelection) return;
+      const range = sel && sel.rangeCount ? sel.getRangeAt(0) : null;
+      const hasSelection = !!(range && !range.collapsed && root.contains(range.commonAncestorContainer));
       e.preventDefault();
+      e.stopPropagation();
       hideMenu();
+      if (!hasSelection) return;
       const menu = createMenu(root, sel);
       document.body.appendChild(menu);
       const rect = menu.getBoundingClientRect();
