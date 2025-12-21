@@ -1,0 +1,114 @@
+{
+  "id": "speaking-test1",
+  "module": "speaking",
+  "title": "Test 1 – Speaking",
+  "timeLimitSeconds": 900,
+  "parts": [
+    {
+      "id": "S1",
+      "partNumber": 1,
+      "title": "PART 1",
+      "instructions": "The examiner asks you about yourself, your home, work or studies and other familiar topics.",
+      "topic": "History",
+      "questions": [
+        {
+          "key": "S1-1",
+          "prompt": "What did you study in history lessons when you were at school?"
+        },
+        {
+          "key": "S1-2",
+          "prompt": "Did you enjoy studying history at school? [Why/Why not?]"
+        },
+        {
+          "key": "S1-3",
+          "prompt": "How often do you watch TV programmes about history now? [Why/Why not?]"
+        },
+        {
+          "key": "S1-4",
+          "prompt": "What period in history would you like to learn more about? [Why?]"
+        }
+      ],
+      "timeLimitSeconds": 240,
+      "assessmentCriteria": {
+        "fluencyCoherence": "Speak at length without hesitation, organize ideas logically",
+        "lexicalResource": "Use a wide range of vocabulary appropriately",
+        "grammaticalRange": "Use a variety of grammatical structures accurately",
+        "pronunciation": "Be easily understood with clear pronunciation"
+      }
+    },
+    {
+      "id": "S2",
+      "partNumber": 2,
+      "title": "PART 2",
+      "instructions": "You will have to talk about the topic for one to two minutes. You have one minute to think about what you are going to say. You can make some notes to help you if you wish.",
+      "taskCard": {
+        "prompt": "Describe the neighbourhood you lived in when you were a child.",
+        "points": [
+          "where in your town/city the neighbourhood was",
+          "what kind of people lived there",
+          "what it was like to live in this neighbourhood",
+          "and explain whether you would like to live in this neighbourhood in the future."
+        ]
+      },
+      "preparationTimeSeconds": 60,
+      "speakingTimeSeconds": 120,
+      "assessmentCriteria": {
+        "taskAchievement": "Address all parts of the prompt",
+        "coherenceCohesion": "Organize speech logically with linking devices",
+        "lexicalResource": "Use topic-specific vocabulary appropriately",
+        "grammaticalRange": "Use a variety of structures accurately",
+        "pronunciation": "Maintain clear pronunciation throughout"
+      }
+    },
+    {
+      "id": "S3",
+      "partNumber": 3,
+      "title": "PART 3",
+      "instructions": "Discussion topics related to the topic in Part 2.",
+      "topics": [
+        {
+          "name": "Neighbours",
+          "questions": [
+            {
+              "key": "S3-1",
+              "prompt": "What sort of things can neighbours do to help each other?"
+            },
+            {
+              "key": "S3-2",
+              "prompt": "How well do people generally know their neighbours in your country?"
+            },
+            {
+              "key": "S3-3",
+              "prompt": "How important do you think it is to have good neighbours?"
+            }
+          ]
+        },
+        {
+          "name": "Facilities in cities",
+          "questions": [
+            {
+              "key": "S3-4",
+              "prompt": "Which facilities are most important to people living in cities?"
+            },
+            {
+              "key": "S3-5",
+              "prompt": "How does shopping in small local shops differ from shopping in large city centre shops?"
+            },
+            {
+              "key": "S3-6",
+              "prompt": "Do you think that children should always go to the school nearest to where they live?"
+            }
+          ]
+        }
+      ],
+      "timeLimitSeconds": 300,
+      "assessmentCriteria": {
+        "discussionSkills": "Express and justify opinions, engage in discussion",
+        "fluencyCoherence": "Speak fluently with logical organization",
+        "lexicalResource": "Use a wide range of vocabulary appropriately",
+        "grammaticalRange": "Use complex structures accurately",
+        "pronunciation": "Maintain clear pronunciation"
+      }
+    }
+  ]
+}

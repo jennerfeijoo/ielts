@@ -3,461 +3,330 @@
   "module": "listening",
   "title": "Test 1 – Listening",
   "timeLimitSeconds": 1800,
-  "assets": {
-    "pdf": "assets/pdfs/test1.pdf"
-  },
   "sections": [
     {
       "id": "L1",
-      "title": "Part 1 (Q1–10)",
-      "audio": "assets/audio/test1/part1.mp3",
-      "materialHtml": "assets/transcripts/test1/part1.html",
+      "title": "PART 1 Questions 1–10",
+      "instructions": "Complete the notes below. Write ONE WORD AND/OR A NUMBER for each answer.",
+      "audioFile": "assets/audio/ELT_IELTS17_t1_audio1.mp3",
+      "audioDuration": 90,
       "questions": [
         {
           "key": "1",
-          "label": "Q1",
-          "shortLabel": "1",
           "type": "text",
-          "hint": "ONE WORD AND/OR A NUMBER",
-          "prompt": "making sure the beach does not have 1 ...... on it"
+          "prompt": "making sure the beach does not have 1 __________ on it",
+          "hint": "ONE WORD ONLY"
         },
         {
           "key": "2",
-          "label": "Q2",
-          "shortLabel": "2",
           "type": "text",
-          "hint": "ONE WORD AND/OR A NUMBER",
-          "prompt": "no 2 ......"
+          "prompt": "no 2 __________",
+          "hint": "ONE WORD ONLY"
         },
         {
           "key": "3",
-          "label": "Q3",
-          "shortLabel": "3",
           "type": "text",
-          "hint": "ONE WORD AND/OR A NUMBER",
-          "prompt": "next task is taking action to attract 3 ...... to the place"
+          "prompt": "next task is taking action to attract 3 __________ to the place",
+          "hint": "ONE WORD ONLY"
         },
         {
           "key": "4",
-          "label": "Q4",
-          "shortLabel": "4",
           "type": "text",
-          "hint": "ONE WORD AND/OR A NUMBER",
-          "prompt": "identifying types of 4 ......"
+          "prompt": "identifying types of 4 __________",
+          "hint": "ONE WORD ONLY"
         },
         {
           "key": "5",
-          "label": "Q5",
-          "shortLabel": "5",
           "type": "text",
-          "hint": "ONE WORD AND/OR A NUMBER",
-          "prompt": "building a new 5 ......"
+          "prompt": "building a new 5 __________",
+          "hint": "ONE WORD ONLY"
         },
         {
           "key": "6",
-          "label": "Q6",
-          "shortLabel": "6",
           "type": "text",
-          "hint": "ONE WORD AND/OR A NUMBER",
-          "prompt": "walk across the sands and reach the 6 ......"
+          "prompt": "walk across the sands and reach the 6 __________",
+          "hint": "ONE WORD ONLY"
         },
         {
           "key": "7",
-          "label": "Q7",
-          "shortLabel": "7",
           "type": "text",
-          "hint": "ONE WORD AND/OR A NUMBER",
-          "prompt": "wear appropriate 7 ......"
+          "prompt": "wear appropriate 7 __________",
+          "hint": "ONE WORD ONLY"
         },
         {
           "key": "8",
-          "label": "Q8",
-          "shortLabel": "8",
           "type": "text",
-          "hint": "ONE WORD AND/OR A NUMBER",
-          "prompt": "suitable for 8 ...... to participate in"
+          "prompt": "suitable for 8 __________ to participate in",
+          "hint": "ONE WORD ONLY"
         },
         {
           "key": "9",
-          "label": "Q9",
-          "shortLabel": "9",
           "type": "text",
-          "hint": "ONE WORD AND/OR A NUMBER",
-          "prompt": "making 9 ...... out of wood"
+          "prompt": "making 9 __________ out of wood",
+          "hint": "ONE WORD ONLY"
         },
         {
           "key": "10",
-          "label": "Q10",
-          "shortLabel": "10",
           "type": "text",
-          "hint": "ONE WORD AND/OR A NUMBER",
-          "prompt": "cost of session (no camping): 10 £ ......"
+          "prompt": "cost of session (no camping): 10 £ __________",
+          "hint": "NUMBER ONLY"
         }
       ]
     },
     {
       "id": "L2",
-      "title": "Part 2 (Q11–20)",
-      "audio": "assets/audio/test1/part2.mp3",
-      "materialHtml": "assets/transcripts/test1/part2.html",
+      "title": "PART 2 Questions 11–20",
+      "instructions": "Questions 11–14: Choose the correct letter, A, B or C.\nQuestions 15–16: Choose TWO letters, A–E.\nQuestions 17–18: Choose TWO letters, A–E.\nQuestions 19–20: Choose TWO letters, A–E.",
+      "audioFile": "ELT_IELTS17_t1_audio2.mp3",
+      "audioDuration": 120,
       "questions": [
         {
           "key": "11",
-          "label": "Q11",
-          "shortLabel": "11",
-          "type": "single_letter",
-          "letters": ["A", "B", "C"],
-          "hint": "Choose ONE letter",
+          "type": "multipleChoice",
           "prompt": "What is the maximum number of people who can stand on each side of the boat?",
-          "options": [
-            { "letter": "A", "text": "9" },
-            { "letter": "B", "text": "15" },
-            { "letter": "C", "text": "18" }
-          ]
+          "options": ["A 9", "B 15", "C 18"]
         },
         {
           "key": "12",
-          "label": "Q12",
-          "shortLabel": "12",
-          "type": "single_letter",
-          "letters": ["A", "B", "C"],
-          "hint": "Choose ONE letter",
+          "type": "multipleChoice",
           "prompt": "What colour are the tour boats?",
-          "options": [
-            { "letter": "A", "text": "dark red" },
-            { "letter": "B", "text": "jet black" },
-            { "letter": "C", "text": "light green" }
-          ]
+          "options": ["A dark red", "B jet black", "C light green"]
         },
         {
           "key": "13",
-          "label": "Q13",
-          "shortLabel": "13",
-          "type": "single_letter",
-          "letters": ["A", "B", "C"],
-          "hint": "Choose ONE letter",
-          "prompt": "Which lunchbox is suitable for someone who doesn’t eat meat or fish?",
-          "options": [
-            { "letter": "A", "text": "Lunchbox 1" },
-            { "letter": "B", "text": "Lunchbox 2" },
-            { "letter": "C", "text": "Lunchbox 3" }
-          ]
+          "type": "multipleChoice",
+          "prompt": "Which lunchbox is suitable for someone who doesn't eat meat or fish?",
+          "options": ["A Lunchbox 1", "B Lunchbox 2", "C Lunchbox 3"]
         },
         {
           "key": "14",
-          "label": "Q14",
-          "shortLabel": "14",
-          "type": "single_letter",
-          "letters": ["A", "B", "C"],
-          "hint": "Choose ONE letter",
+          "type": "multipleChoice",
           "prompt": "What should people do with their litter?",
-          "options": [
-            { "letter": "A", "text": "take it home" },
-            { "letter": "B", "text": "hand it to a member of staff" },
-            { "letter": "C", "text": "put it in the bins provided on the boat" }
-          ]
+          "options": ["A take it home", "B hand it to a member of staff", "C put it in the bins provided on the boat"]
         },
         {
-          "key": "15-16",
-          "label": "Q15–16",
-          "shortLabel": "15–16",
-          "type": "multi_letter",
-          "letters": ["A", "B", "C", "D", "E"],
-          "expectedCount": 2,
-          "hint": "Choose TWO letters (either order)",
-          "prompt": "Which TWO features of the lighthouse does Lou mention?"
+          "key": "15",
+          "type": "multipleChoice",
+          "prompt": "Which TWO features of the lighthouse does Lou mention? (Choose TWO)",
+          "options": ["A why it was built", "B who built it", "C how long it took to build", "D who staffed it", "E what it was built with"],
+          "multipleAnswers": true
         },
         {
-          "key": "17-18",
-          "label": "Q17–18",
-          "shortLabel": "17–18",
-          "type": "multi_letter",
-          "letters": ["A", "B", "C", "D", "E"],
-          "expectedCount": 2,
-          "hint": "Choose TWO letters (either order)",
-          "prompt": "Which TWO types of creature might come close to the boat?"
+          "key": "16",
+          "type": "multipleChoice",
+          "prompt": "Which TWO features of the lighthouse does Lou mention? (Choose the other answer)",
+          "options": ["A why it was built", "B who built it", "C how long it took to build", "D who staffed it", "E what it was built with"],
+          "multipleAnswers": true
         },
         {
-          "key": "19-20",
-          "label": "Q19–20",
-          "shortLabel": "19–20",
-          "type": "multi_letter",
-          "letters": ["A", "B", "C", "D", "E"],
-          "expectedCount": 2,
-          "hint": "Choose TWO letters (either order)",
-          "prompt": "Which TWO points does Lou make about the caves?"
+          "key": "17",
+          "type": "multipleChoice",
+          "prompt": "Which TWO types of creature might come close to the boat? (Choose TWO)",
+          "options": ["A sea eagles", "B fur seals", "C dolphins", "D whales", "E penguins"],
+          "multipleAnswers": true
+        },
+        {
+          "key": "18",
+          "type": "multipleChoice",
+          "prompt": "Which TWO types of creature might come close to the boat? (Choose the other answer)",
+          "options": ["A sea eagles", "B fur seals", "C dolphins", "D whales", "E penguins"],
+          "multipleAnswers": true
+        },
+        {
+          "key": "19",
+          "type": "multipleChoice",
+          "prompt": "Which TWO points does Lou make about the caves? (Choose TWO)",
+          "options": ["A Only large tourist boats can visit them", "B The entrances to them are often blocked", "C It is too dangerous for individuals to go near them", "D Someone will explain what is inside them", "E They cannot be reached on foot"],
+          "multipleAnswers": true
+        },
+        {
+          "key": "20",
+          "type": "multipleChoice",
+          "prompt": "Which TWO points does Lou make about the caves? (Choose the other answer)",
+          "options": ["A Only large tourist boats can visit them", "B The entrances to them are often blocked", "C It is too dangerous for individuals to go near them", "D Someone will explain what is inside them", "E They cannot be reached on foot"],
+          "multipleAnswers": true
         }
       ]
     },
     {
       "id": "L3",
-      "title": "Part 3 (Q21–30)",
-      "audio": "assets/audio/test1/part3.mp3",
-      "materialHtml": "assets/transcripts/test1/part3.html",
+      "title": "PART 3 Questions 21–30",
+      "instructions": "Questions 21–26: Choose the correct letter, A, B or C.\nQuestions 27–30: Choose FOUR answers from the box and write the correct letter, A–F, next to questions 27–30.",
+      "audioFile": "assets/audio/ELT_IELTS17_t1_audio3.mp3",
+      "audioDuration": 180,
       "questions": [
         {
           "key": "21",
-          "label": "Q21",
-          "shortLabel": "21",
-          "type": "single_letter",
-          "letters": ["A", "B", "C"],
-          "hint": "Choose ONE letter",
+          "type": "multipleChoice",
           "prompt": "What problem did both Diana and Tim have when arranging their work experience?",
-          "options": [
-            { "letter": "A", "text": "making initial contact with suitable farms" },
-            { "letter": "B", "text": "organising transport to and from the farm" },
-            { "letter": "C", "text": "finding a placement for the required length of time" }
-          ]
+          "options": ["A making initial contact with suitable farms", "B organising transport to and from the farm", "C finding a placement for the required length of time"]
         },
         {
           "key": "22",
-          "label": "Q22",
-          "shortLabel": "22",
-          "type": "single_letter",
-          "letters": ["A", "B", "C"],
-          "hint": "Choose ONE letter",
+          "type": "multipleChoice",
           "prompt": "Tim was pleased to be able to help",
-          "options": [
-            { "letter": "A", "text": "a lamb that had a broken leg." },
-            { "letter": "B", "text": "a sheep that was having difficulty giving birth." },
-            { "letter": "C", "text": "a newly born lamb that was having trouble feeding." }
-          ]
+          "options": ["A a lamb that had a broken leg", "B a sheep that was having difficulty giving birth", "C a newly born lamb that was having trouble feeding"]
         },
         {
           "key": "23",
-          "label": "Q23",
-          "shortLabel": "23",
-          "type": "single_letter",
-          "letters": ["A", "B", "C"],
-          "hint": "Choose ONE letter",
+          "type": "multipleChoice",
           "prompt": "Diana says the sheep on her farm",
-          "options": [
-            { "letter": "A", "text": "were of various different varieties." },
-            { "letter": "B", "text": "were mainly reared for their meat." },
-            { "letter": "C", "text": "had better quality wool than sheep on the hills." }
-          ]
+          "options": ["A were of various different varieties", "B were mainly reared for their meat", "C had better quality wool than sheep on the hills"]
         },
         {
           "key": "24",
-          "label": "Q24",
-          "shortLabel": "24",
-          "type": "single_letter",
-          "letters": ["A", "B", "C"],
-          "hint": "Choose ONE letter",
+          "type": "multipleChoice",
           "prompt": "What did the students learn about adding supplements to chicken feed?",
-          "options": [
-            { "letter": "A", "text": "These should only be given if specially needed." },
-            { "letter": "B", "text": "It is worth paying extra for the most effective ones." },
-            { "letter": "C", "text": "The amount given at one time should be limited." }
-          ]
+          "options": ["A These should only be given if specially needed", "B It is worth paying extra for the most effective ones", "C The amount given at one time should be limited"]
         },
         {
           "key": "25",
-          "label": "Q25",
-          "shortLabel": "25",
-          "type": "single_letter",
-          "letters": ["A", "B", "C"],
-          "hint": "Choose ONE letter",
+          "type": "multipleChoice",
           "prompt": "What happened when Diana was working with dairy cows?",
-          "options": [
-            { "letter": "A", "text": "She identified some cows incorrectly." },
-            { "letter": "B", "text": "She accidentally threw some milk away." },
-            { "letter": "C", "text": "She made a mistake when storing milk." }
-          ]
+          "options": ["A She identified some cows incorrectly", "B She accidentally threw some milk away", "C She made a mistake when storing milk"]
         },
         {
           "key": "26",
-          "label": "Q26",
-          "shortLabel": "26",
-          "type": "single_letter",
-          "letters": ["A", "B", "C"],
-          "hint": "Choose ONE letter",
+          "type": "multipleChoice",
           "prompt": "What did both farmers mention about vets and farming?",
-          "options": [
-            { "letter": "A", "text": "Vets are failing to cope with some aspects of animal health." },
-            { "letter": "B", "text": "There needs to be a fundamental change in the training of vets." },
-            { "letter": "C", "text": "Some jobs could be done by the farmer rather than by a vet." }
-          ]
+          "options": ["A Vets are failing to cope with some aspects of animal health", "B There needs to be a fundamental change in the training of vets", "C Some jobs could be done by the farmer rather than by a vet"]
         },
         {
           "key": "27",
-          "label": "Q27",
-          "shortLabel": "27",
-          "type": "single_letter",
-          "letters": ["A", "B", "C", "D", "E", "F"],
-          "hint": "Choose ONE letter (A–F)",
-          "prompt": "Medical terminology"
+          "type": "multipleChoice",
+          "prompt": "Medical terminology",
+          "options": ["A Tim found this easier than expected", "B Tim thought this was not very clearly organised", "C Diana may do some further study on this", "D They both found the reading required for this was difficult", "E Tim was shocked at something he learned on this module", "F They were both surprised how little is known about some aspects of this"]
         },
         {
           "key": "28",
-          "label": "Q28",
-          "shortLabel": "28",
-          "type": "single_letter",
-          "letters": ["A", "B", "C", "D", "E", "F"],
-          "hint": "Choose ONE letter (A–F)",
-          "prompt": "Diet and nutrition"
+          "type": "multipleChoice",
+          "prompt": "Diet and nutrition",
+          "options": ["A Tim found this easier than expected", "B Tim thought this was not very clearly organised", "C Diana may do some further study on this", "D They both found the reading required for this was difficult", "E Tim was shocked at something he learned on this module", "F They were both surprised how little is known about some aspects of this"]
         },
         {
           "key": "29",
-          "label": "Q29",
-          "shortLabel": "29",
-          "type": "single_letter",
-          "letters": ["A", "B", "C", "D", "E", "F"],
-          "hint": "Choose ONE letter (A–F)",
-          "prompt": "Animal disease"
+          "type": "multipleChoice",
+          "prompt": "Animal disease",
+          "options": ["A Tim found this easier than expected", "B Tim thought this was not very clearly organised", "C Diana may do some further study on this", "D They both found the reading required for this was difficult", "E Tim was shocked at something he learned on this module", "F They were both surprised how little is known about some aspects of this"]
         },
         {
           "key": "30",
-          "label": "Q30",
-          "shortLabel": "30",
-          "type": "single_letter",
-          "letters": ["A", "B", "C", "D", "E", "F"],
-          "hint": "Choose ONE letter (A–F)",
-          "prompt": "Wildlife medication"
+          "type": "multipleChoice",
+          "prompt": "Wildlife medication",
+          "options": ["A Tim found this easier than expected", "B Tim thought this was not very clearly organised", "C Diana may do some further study on this", "D They both found the reading required for this was difficult", "E Tim was shocked at something he learned on this module", "F They were both surprised how little is known about some aspects of this"]
         }
       ]
     },
     {
       "id": "L4",
-      "title": "Part 4 (Q31–40)",
-      "audio": "assets/audio/test1/part4.mp3",
-      "materialHtml": "assets/transcripts/test1/part4.html",
+      "title": "PART 4 Questions 31–40",
+      "instructions": "Complete the notes below. Write ONE WORD ONLY for each answer.",
+      "audioFile": "assets/audio/ELT_IELTS17_t1_audio4.mp3",
+      "audioDuration": 240,
       "questions": [
         {
           "key": "31",
-          "label": "Q31",
-          "shortLabel": "31",
           "type": "text",
-          "hint": "ONE WORD ONLY",
-          "prompt": "Mazes are a type of 31 ......"
+          "prompt": "Mazes are a type of 31 __________",
+          "hint": "ONE WORD ONLY"
         },
         {
           "key": "32",
-          "label": "Q32",
-          "shortLabel": "32",
           "type": "text",
-          "hint": "ONE WORD ONLY",
-          "prompt": "32 ...... is needed to navigate through a maze"
+          "prompt": "32 __________ is needed to navigate through a maze",
+          "hint": "ONE WORD ONLY"
         },
         {
           "key": "33",
-          "label": "Q33",
-          "shortLabel": "33",
           "type": "text",
-          "hint": "ONE WORD ONLY",
-          "prompt": "the word ‘maze’ is derived from a word meaning a feeling of 33 ......"
+          "prompt": "the word 'maze' is derived from a word meaning a feeling of 33 __________",
+          "hint": "ONE WORD ONLY"
         },
         {
           "key": "34",
-          "label": "Q34",
-          "shortLabel": "34",
           "type": "text",
-          "hint": "ONE WORD ONLY",
-          "prompt": "they have frequently been used in 34 ...... and prayer"
+          "prompt": "they have frequently been used in 34 __________ and prayer",
+          "hint": "ONE WORD ONLY"
         },
         {
           "key": "35",
-          "label": "Q35",
-          "shortLabel": "35",
           "type": "text",
-          "hint": "ONE WORD ONLY",
-          "prompt": "Ancient carvings on 35 ...... have been found across many cultures"
+          "prompt": "Ancient carvings on 35 __________ have been found across many cultures",
+          "hint": "ONE WORD ONLY"
         },
         {
           "key": "36",
-          "label": "Q36",
-          "shortLabel": "36",
           "type": "text",
-          "hint": "ONE WORD ONLY",
-          "prompt": "Ancient Greeks used the symbol on 36 ......"
+          "prompt": "Ancient Greeks used the symbol on 36 __________",
+          "hint": "ONE WORD ONLY"
         },
         {
           "key": "37",
-          "label": "Q37",
-          "shortLabel": "37",
           "type": "text",
-          "hint": "ONE WORD ONLY",
-          "prompt": "The largest surviving example of a turf labyrinth once had a big 37 ...... at its centre"
+          "prompt": "The largest surviving example of a turf labyrinth once had a big 37 __________ at its centre",
+          "hint": "ONE WORD ONLY"
         },
         {
           "key": "38",
-          "label": "Q38",
-          "shortLabel": "38",
           "type": "text",
-          "hint": "ONE WORD ONLY",
-          "prompt": "walking a maze can reduce a person’s 38 ...... rate"
+          "prompt": "walking a maze can reduce a person's 38 __________ rate",
+          "hint": "ONE WORD ONLY"
         },
         {
           "key": "39",
-          "label": "Q39",
-          "shortLabel": "39",
           "type": "text",
-          "hint": "ONE WORD ONLY",
-          "prompt": "patients who can’t walk can use ‘finger labyrinths’ made from 39 ......"
+          "prompt": "patients who can't walk can use 'finger labyrinths' made from 39 __________",
+          "hint": "ONE WORD ONLY"
         },
         {
           "key": "40",
-          "label": "Q40",
-          "shortLabel": "40",
           "type": "text",
-          "hint": "ONE WORD ONLY",
-          "prompt": "research has shown that Alzheimer’s sufferers experience less 40 ......"
+          "prompt": "research has shown that Alzheimer's sufferers experience less 40 __________",
+          "hint": "ONE WORD ONLY"
         }
       ]
     }
   ],
   "answerKey": {
-    "1": { "type": "single", "accepted": ["litter"], "weight": 1 },
-    "2": { "type": "single", "accepted": ["dogs"], "weight": 1 },
-    "3": { "type": "single", "accepted": ["insects"], "weight": 1 },
-    "4": { "type": "single", "accepted": ["butterflies"], "weight": 1 },
-    "5": { "type": "single", "accepted": ["wall"], "weight": 1 },
-    "6": { "type": "single", "accepted": ["island"], "weight": 1 },
-    "7": { "type": "single", "accepted": ["boots"], "weight": 1 },
-    "8": { "type": "single", "accepted": ["beginners"], "weight": 1 },
-    "9": { "type": "single", "accepted": ["spoons"], "weight": 1 },
-    "10": { "type": "single", "accepted": ["35", "thirty five", "thirty-five"], "weight": 1 },
-    "11": { "type": "single", "accepted": ["A"], "weight": 1 },
-    "12": { "type": "single", "accepted": ["C"], "weight": 1 },
-    "13": { "type": "single", "accepted": ["B"], "weight": 1 },
-    "14": { "type": "single", "accepted": ["B"], "weight": 1 },
-    "15-16": {
-      "type": "multi_letter",
-      "acceptedSet": ["A", "D"],
-      "expectedCount": 2,
-      "weight": 2
-    },
-    "17-18": {
-      "type": "multi_letter",
-      "acceptedSet": ["B", "C"],
-      "expectedCount": 2,
-      "weight": 2
-    },
-    "19-20": {
-      "type": "multi_letter",
-      "acceptedSet": ["D", "E"],
-      "expectedCount": 2,
-      "weight": 2
-    },
-    "21": { "type": "single", "accepted": ["A"], "weight": 1 },
-    "22": { "type": "single", "accepted": ["B"], "weight": 1 },
-    "23": { "type": "single", "accepted": ["B"], "weight": 1 },
-    "24": { "type": "single", "accepted": ["A"], "weight": 1 },
-    "25": { "type": "single", "accepted": ["C"], "weight": 1 },
-    "26": { "type": "single", "accepted": ["C"], "weight": 1 },
-    "27": { "type": "single", "accepted": ["A"], "weight": 1 },
-    "28": { "type": "single", "accepted": ["E"], "weight": 1 },
-    "29": { "type": "single", "accepted": ["F"], "weight": 1 },
-    "30": { "type": "single", "accepted": ["C"], "weight": 1 },
-    "31": { "type": "single", "accepted": ["puzzle"], "weight": 1 },
-    "32": { "type": "single", "accepted": ["logic"], "weight": 1 },
-    "33": { "type": "single", "accepted": ["confusion"], "weight": 1 },
-    "34": { "type": "single", "accepted": ["meditation"], "weight": 1 },
-    "35": { "type": "single", "accepted": ["stone"], "weight": 1 },
-    "36": { "type": "single", "accepted": ["coins"], "weight": 1 },
-    "37": { "type": "single", "accepted": ["tree"], "weight": 1 },
-    "38": { "type": "single", "accepted": ["breathing"], "weight": 1 },
-    "39": { "type": "single", "accepted": ["paper"], "weight": 1 },
-    "40": { "type": "single", "accepted": ["anxiety"], "weight": 1 }
+    "1": { "accepted": ["litter"] },
+    "2": { "accepted": ["dogs"] },
+    "3": { "accepted": ["insects"] },
+    "4": { "accepted": ["butterflies"] },
+    "5": { "accepted": ["wall"] },
+    "6": { "accepted": ["island"] },
+    "7": { "accepted": ["boots"] },
+    "8": { "accepted": ["beginners"] },
+    "9": { "accepted": ["spoons"] },
+    "10": { "accepted": ["35", "thirty five"] },
+    "11": { "accepted": "A" },
+    "12": { "accepted": "C" },
+    "13": { "accepted": "B" },
+    "14": { "accepted": "B" },
+    "15": { "accepted": ["A", "D"] },
+    "16": { "accepted": ["A", "D"] },
+    "17": { "accepted": ["B", "C"] },
+    "18": { "accepted": ["B", "C"] },
+    "19": { "accepted": ["D", "E"] },
+    "20": { "accepted": ["D", "E"] },
+    "21": { "accepted": "A" },
+    "22": { "accepted": "B" },
+    "23": { "accepted": "B" },
+    "24": { "accepted": "A" },
+    "25": { "accepted": "C" },
+    "26": { "accepted": "C" },
+    "27": { "accepted": "A" },
+    "28": { "accepted": "E" },
+    "29": { "accepted": "F" },
+    "30": { "accepted": "C" },
+    "31": { "accepted": ["puzzle"] },
+    "32": { "accepted": ["logic"] },
+    "33": { "accepted": ["confusion"] },
+    "34": { "accepted": ["meditation"] },
+    "35": { "accepted": ["stone"] },
+    "36": { "accepted": ["coins"] },
+    "37": { "accepted": ["tree"] },
+    "38": { "accepted": ["breathing"] },
+    "39": { "accepted": ["paper"] },
+    "40": { "accepted": ["anxiety"] }
   }
 }
