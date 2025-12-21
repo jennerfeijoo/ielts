@@ -24,14 +24,6 @@ export async function bootModule({ moduleName, manifestPath }) {
     audio: document.getElementById("audio"),
     notesArea: document.getElementById("notesArea")
   };
-
-  let statusBase = "";
-  let statusExtra = "";
-  const refreshStatus = () => {
-    if (!el.status) return;
-    const parts = [statusBase, statusExtra].filter(Boolean);
-    el.status.textContent = parts.join(" • ");
-  };
   const setStatus = (msg) => { statusBase = msg ?? ""; refreshStatus(); };
   const setStatusExtra = (msg) => { statusExtra = msg ?? ""; refreshStatus(); };
 
@@ -43,6 +35,33 @@ export async function bootModule({ moduleName, manifestPath }) {
 
   const manifestUrl = new URL(manifestPath, import.meta.url);
   const manifestBaseUrl = new URL(".", manifestUrl);
+  setStatus("Loading manifest...");
+  let manifest = null;
+  try {
+    manifest = await loadJSON(manifestUrl);
+  } catch (err) {
+    console.error(`Failed to load manifest from ${manifestUrl.href}`, err);
+    setStatus(`Error loading manifest: ${err.message}`);
+    throw err;
+  }
+
+  const tests = (manifest[moduleName] ?? []);
+  if (!tests.length) {
+    const err = new Error(`No tests found for module: ${moduleName}`);
+    setStatus(err.message);
+    throw err;
+  }
+
+  const setStatus = (msg) => { if (el.status) el.status.textContent = msg; };
+
+  if (!el.testSelect || !el.sectionSelect || !el.qnav || !el.question) {
+    console.error("Required layout elements not found; aborting boot.");
+    setStatus("Unable to start: missing layout elements.");
+    return;
+  }
+
+  const manifestUrl = new URL(manifestPath, import.meta.url);
+  const manifestBaseUrl = new URL("..", manifestUrl);
   setStatus("Loading manifest...");
   let manifest = null;
   try {
@@ -74,16 +93,11 @@ export async function bootModule({ moduleName, manifestPath }) {
   let flags = new Set();
   let flagsKey = null;
   let currentAudioUrl = null;
-  let audioPlayed = new Set();
 
   const resolveAssetPath = (p) => {
     if (!p) return null;
     if (/^https?:\/\//i.test(p)) return p;
-    try {
-      return new URL(p, manifestBaseUrl).href;
-    } catch {
-      return p;
-    }
+    return new URL(p, manifestBaseUrl).href;
   };
 
   const loadFlags = (key) => {
@@ -128,17 +142,12 @@ export async function bootModule({ moduleName, manifestPath }) {
     }
 
     if (el.audio) {
-      const audioPathRaw = (() => {
-        if (section?.audio) return section.audio;
-        if (Array.isArray(section?.audioFiles) && section.audioFiles.length) {
-          return section.audioFiles[engine.sectionIndex] ?? section.audioFiles[0];
-        }
-        if (currentTest.assets?.audio) return currentTest.assets.audio;
-        if (Array.isArray(currentTest.assets?.audioFiles) && currentTest.assets.audioFiles.length) {
-          return currentTest.assets.audioFiles[engine.sectionIndex] ?? currentTest.assets.audioFiles[0];
-        }
-        return null;
-      })();
+      const audioPathRaw =
+        section?.audio
+        ?? section?.audioFiles?.[engine.sectionIndex]
+        ?? currentTest.assets?.audio
+        ?? currentTest.assets?.audioFiles?.[engine.sectionIndex]
+        ?? null;
       const audioPath = resolveAssetPath(audioPathRaw);
       currentAudioUrl = audioPath ?? null;
       if (audioPath) {
@@ -147,16 +156,16 @@ export async function bootModule({ moduleName, manifestPath }) {
           el.audio.preload = "auto";
           el.audio.load();
         }
-        if (audioPlayed.has(audioPath)) {
-          el.audio.pause();
-          el.audio.currentTime = 0;
-          setStatusExtra("Audio already played. Reset test to listen again.");
-        } else {
-          setStatusExtra("");
+        setStatusExtra("");
+        if (el.audioLink) {
+          el.audioLink.href = audioPath;
+          el.audioLink.textContent = "Open audio URL";
+          if (el.audioLinkWrap) el.audioLinkWrap.style.display = "block";
         }
       } else {
         el.audio.removeAttribute("src");
         setStatusExtra("");
+        if (el.audioLinkWrap) el.audioLinkWrap.style.display = "none";
       }
     }
   };
@@ -319,7 +328,6 @@ export async function bootModule({ moduleName, manifestPath }) {
     flags.clear();
     saveFlags();
     renderAll();
-    audioPlayed.clear();
     if (el.results) el.results.textContent = "Submit to see results.";
   });
 
@@ -346,26 +354,17 @@ export async function bootModule({ moduleName, manifestPath }) {
 
   if (el.audio) {
     el.audio.preload = "auto";
+    el.audio.addEventListener("loadedmetadata", () => {
+      setStatusExtra(currentAudioUrl ? `Audio loaded: ${currentAudioUrl}` : "Audio loaded");
+    });
+    el.audio.addEventListener("canplay", () => {
+      setStatusExtra(currentAudioUrl ? `Audio ready: ${currentAudioUrl}` : "Audio ready");
+    });
     el.audio.addEventListener("error", () => {
       const code = el.audio?.error?.code ?? "unknown";
       const msg = `Audio error (code ${code})${currentAudioUrl ? ` at ${currentAudioUrl}` : ""}`;
       console.error(msg, el.audio?.error);
       setStatusExtra(msg);
-    });
-    el.audio.addEventListener("play", () => {
-      if (currentAudioUrl && audioPlayed.has(currentAudioUrl)) {
-        el.audio.pause();
-        el.audio.currentTime = 0;
-        setStatusExtra("Audio already played. Reset test to listen again.");
-        return;
-      }
-      setStatusExtra(currentAudioUrl ? `Audio playing: ${currentAudioUrl}` : "Audio playing");
-    });
-    el.audio.addEventListener("ended", () => {
-      if (currentAudioUrl) audioPlayed.add(currentAudioUrl);
-      el.audio.pause();
-      el.audio.currentTime = 0;
-      setStatusExtra("Audio finished. Reset test to replay.");
     });
   }
 
