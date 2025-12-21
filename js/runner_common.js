@@ -24,6 +24,33 @@ export async function bootModule({ moduleName, manifestPath }) {
     audio: document.getElementById("audio"),
     notesArea: document.getElementById("notesArea")
   };
+  const setStatus = (msg) => { statusBase = msg ?? ""; refreshStatus(); };
+  const setStatusExtra = (msg) => { statusExtra = msg ?? ""; refreshStatus(); };
+
+  if (!el.testSelect || !el.sectionSelect || !el.qnav || !el.question) {
+    console.error("Required layout elements not found; aborting boot.");
+    setStatus("Unable to start: missing layout elements.");
+    return;
+  }
+
+  const manifestUrl = new URL(manifestPath, import.meta.url);
+  const manifestBaseUrl = new URL(".", manifestUrl);
+  setStatus("Loading manifest...");
+  let manifest = null;
+  try {
+    manifest = await loadJSON(manifestUrl);
+  } catch (err) {
+    console.error(`Failed to load manifest from ${manifestUrl.href}`, err);
+    setStatus(`Error loading manifest: ${err.message}`);
+    throw err;
+  }
+
+  const tests = (manifest[moduleName] ?? []);
+  if (!tests.length) {
+    const err = new Error(`No tests found for module: ${moduleName}`);
+    setStatus(err.message);
+    throw err;
+  }
 
   const setStatus = (msg) => { if (el.status) el.status.textContent = msg; };
 
@@ -65,6 +92,7 @@ export async function bootModule({ moduleName, manifestPath }) {
   let currentTest = null;
   let flags = new Set();
   let flagsKey = null;
+  let currentAudioUrl = null;
 
   const resolveAssetPath = (p) => {
     if (!p) return null;
@@ -114,11 +142,30 @@ export async function bootModule({ moduleName, manifestPath }) {
     }
 
     if (el.audio) {
-      const audioPath = resolveAssetPath(section?.audio ?? currentTest.assets?.audio ?? null);
+      const audioPathRaw =
+        section?.audio
+        ?? section?.audioFiles?.[engine.sectionIndex]
+        ?? currentTest.assets?.audio
+        ?? currentTest.assets?.audioFiles?.[engine.sectionIndex]
+        ?? null;
+      const audioPath = resolveAssetPath(audioPathRaw);
+      currentAudioUrl = audioPath ?? null;
       if (audioPath) {
-        if (el.audio.getAttribute("src") !== audioPath) el.audio.src = audioPath;
+        if (el.audio.getAttribute("src") !== audioPath) {
+          el.audio.src = audioPath;
+          el.audio.preload = "auto";
+          el.audio.load();
+        }
+        setStatusExtra("");
+        if (el.audioLink) {
+          el.audioLink.href = audioPath;
+          el.audioLink.textContent = "Open audio URL";
+          if (el.audioLinkWrap) el.audioLinkWrap.style.display = "block";
+        }
       } else {
         el.audio.removeAttribute("src");
+        setStatusExtra("");
+        if (el.audioLinkWrap) el.audioLinkWrap.style.display = "none";
       }
     }
   };
@@ -303,6 +350,22 @@ export async function bootModule({ moduleName, manifestPath }) {
     if (!file || !el.audio) return;
     el.audio.src = blobURLFromFile(file);
   });
+
+  if (el.audio) {
+    el.audio.preload = "auto";
+    el.audio.addEventListener("loadedmetadata", () => {
+      setStatusExtra(currentAudioUrl ? `Audio loaded: ${currentAudioUrl}` : "Audio loaded");
+    });
+    el.audio.addEventListener("canplay", () => {
+      setStatusExtra(currentAudioUrl ? `Audio ready: ${currentAudioUrl}` : "Audio ready");
+    });
+    el.audio.addEventListener("error", () => {
+      const code = el.audio?.error?.code ?? "unknown";
+      const msg = `Audio error (code ${code})${currentAudioUrl ? ` at ${currentAudioUrl}` : ""}`;
+      console.error(msg, el.audio?.error);
+      setStatusExtra(msg);
+    });
+  }
 
   await loadTest(tests[0].path);
 }
