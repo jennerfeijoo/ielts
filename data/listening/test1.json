@@ -8,7 +8,7 @@
       "id": "L1",
       "title": "PART 1 Questions 1–10",
       "instructions": "Complete the notes below. Write ONE WORD AND/OR A NUMBER for each answer.",
-      "audioFile": "assets/audio/test1-listening-part1.mp3",
+      "audioFile": "assets/audio/ELT_IELTS17_t1_audio1.mp3",
       "audioDuration": 90,
       "questions": [
         {
@@ -77,7 +77,7 @@
       "id": "L2",
       "title": "PART 2 Questions 11–20",
       "instructions": "Questions 11–14: Choose the correct letter, A, B or C.\nQuestions 15–16: Choose TWO letters, A–E.\nQuestions 17–18: Choose TWO letters, A–E.\nQuestions 19–20: Choose TWO letters, A–E.",
-      "audioFile": "assets/audio/test1-listening-part2.mp3",
+      "audioFile": "ELT_IELTS17_t1_audio2.mp3",
       "audioDuration": 120,
       "questions": [
         {
@@ -152,7 +152,7 @@
       "id": "L3",
       "title": "PART 3 Questions 21–30",
       "instructions": "Questions 21–26: Choose the correct letter, A, B or C.\nQuestions 27–30: Choose FOUR answers from the box and write the correct letter, A–F, next to questions 27–30.",
-      "audioFile": "assets/audio/test1-listening-part3.mp3",
+      "audioFile": "assets/audio/ELT_IELTS17_t1_audio3.mp3",
       "audioDuration": 180,
       "questions": [
         {
@@ -221,7 +221,7 @@
       "id": "L4",
       "title": "PART 4 Questions 31–40",
       "instructions": "Complete the notes below. Write ONE WORD ONLY for each answer.",
-      "audioFile": "assets/audio/test1-listening-part4.mp3",
+      "audioFile": "assets/audio/ELT_IELTS17_t1_audio4.mp3",
       "audioDuration": 240,
       "questions": [
         {
