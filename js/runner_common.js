@@ -5,10 +5,6 @@ import { renderQuestion, renderNav } from "./ui.js";
 import { gradeModule, estimateBand } from "./grader.js";
 
 export async function bootModule({ moduleName, manifestPath }) {
-  const manifest = await loadJSON(manifestPath);
-  const tests = (manifest[moduleName] ?? []);
-  if (!tests.length) throw new Error(`No tests found for module: ${moduleName}`);
-
   const el = {
     testSelect: document.getElementById("testSelect"),
     sectionSelect: document.getElementById("sectionSelect"),
@@ -25,10 +21,37 @@ export async function bootModule({ moduleName, manifestPath }) {
     materialFile: document.getElementById("materialFile") ?? document.getElementById("pdfFile"),
     materialFrame: document.getElementById("materialFrame") ?? document.getElementById("pdfFrame"),
     audioFile: document.getElementById("audioFile"),
-    audio: document.getElementById("audio")
+    audio: document.getElementById("audio"),
+    notesArea: document.getElementById("notesArea")
   };
 
-  // Populate test select
+  const setStatus = (msg) => { if (el.status) el.status.textContent = msg; };
+
+  if (!el.testSelect || !el.sectionSelect || !el.qnav || !el.question) {
+    console.error("Required layout elements not found; aborting boot.");
+    setStatus("Unable to start: missing layout elements.");
+    return;
+  }
+
+  const manifestUrl = new URL(manifestPath, import.meta.url);
+  const manifestBaseUrl = new URL("..", manifestUrl);
+  setStatus("Loading manifest...");
+  let manifest = null;
+  try {
+    manifest = await loadJSON(manifestUrl);
+  } catch (err) {
+    console.error(`Failed to load manifest from ${manifestUrl.href}`, err);
+    setStatus(`Error loading manifest: ${err.message}`);
+    throw err;
+  }
+
+  const tests = (manifest[moduleName] ?? []);
+  if (!tests.length) {
+    const err = new Error(`No tests found for module: ${moduleName}`);
+    setStatus(err.message);
+    throw err;
+  }
+
   el.testSelect.innerHTML = "";
   for (const t of tests) {
     const o = document.createElement("option");
@@ -46,7 +69,7 @@ export async function bootModule({ moduleName, manifestPath }) {
   const resolveAssetPath = (p) => {
     if (!p) return null;
     if (/^https?:\/\//i.test(p)) return p;
-    return `../${p}`;
+    return new URL(p, manifestBaseUrl).href;
   };
 
   const loadFlags = (key) => {
@@ -81,7 +104,6 @@ export async function bootModule({ moduleName, manifestPath }) {
   const syncSectionResources = () => {
     const section = currentTest.sections?.[engine.sectionIndex];
 
-    // Section material (HTML/text)
     if (el.materialFrame) {
       const target = resolveAssetPath(section?.materialHtml ?? currentTest.assets?.materialHtml ?? null);
       if (target) {
@@ -91,7 +113,6 @@ export async function bootModule({ moduleName, manifestPath }) {
       }
     }
 
-    // Audio (if provided)
     if (el.audio) {
       const audioPath = resolveAssetPath(section?.audio ?? currentTest.assets?.audio ?? null);
       if (audioPath) {
@@ -103,35 +124,46 @@ export async function bootModule({ moduleName, manifestPath }) {
   };
 
   const loadTest = async (path) => {
-    currentTest = await loadJSON(`../${path}`);
+    setStatus("Loading test...");
+    const testUrl = new URL(path, manifestBaseUrl);
+    try {
+      currentTest = await loadJSON(testUrl);
+    } catch (err) {
+      console.error(`Failed to load test from ${testUrl.href}`, err);
+      setStatus(`Error loading test: ${err.message}`);
+      throw err;
+    }
+
     const storageKey = `ielts:${moduleName}:${currentTest.id ?? path}`;
     flagsKey = `${storageKey}:flags`;
     engine = new ExamEngine(currentTest, storageKey);
     engine.markStarted();
     flags = loadFlags(flagsKey);
 
-    // Timer
     timer?.stop();
     timer = new CountdownTimer(currentTest.timeLimitSeconds ?? 0,
-      (remaining) => { el.timer.textContent = timer.format(); updateTimerBadge(remaining); },
+      (remaining) => { if (el.timer) el.timer.textContent = timer.format(); updateTimerBadge(remaining); },
       () => { engine.submit(); renderResults(true); }
     );
-    el.timer.textContent = timer.format();
-    updateTimerBadge(timer.remaining ?? 0);
+    if (el.timer) {
+      el.timer.textContent = timer.format();
+      updateTimerBadge(timer.remaining ?? 0);
+    }
     if ((currentTest.timeLimitSeconds ?? 0) > 0) timer.start();
 
-    // Sections selector
-    el.sectionSelect.innerHTML = "";
-    (currentTest.sections ?? []).forEach((s, idx) => {
-      const o = document.createElement("option");
-      o.value = String(idx);
-      o.textContent = s.title ?? `Section ${idx+1}`;
-      el.sectionSelect.appendChild(o);
-    });
-    el.sectionSelect.value = String(engine.sectionIndex);
+    if (el.sectionSelect) {
+      el.sectionSelect.innerHTML = "";
+      (currentTest.sections ?? []).forEach((s, idx) => {
+        const o = document.createElement("option");
+        o.value = String(idx);
+        o.textContent = s.title ?? `Section ${idx+1}`;
+        el.sectionSelect.appendChild(o);
+      });
+      el.sectionSelect.value = String(engine.sectionIndex);
+    }
 
     renderAll();
-    el.results.textContent = "Submit to see results.";
+    if (el.results) el.results.textContent = "Submit to see results.";
   };
 
   const getNavQuestions = () => {
@@ -153,7 +185,6 @@ export async function bootModule({ moduleName, manifestPath }) {
   const renderAll = () => {
     syncSectionResources();
 
-    // Ensure engine.qIndex corresponds to current section; if not, jump to first q of section
     const secId = currentTest.sections?.[engine.sectionIndex]?.id;
     const secQs = engine.questionFlat.filter(q => q.sectionId === secId);
     if (secQs.length) {
@@ -166,7 +197,6 @@ export async function bootModule({ moduleName, manifestPath }) {
 
     const cur = engine.getCurrent();
 
-    // Navigation buttons for section
     const navQs = getNavQuestions();
     renderNav(el.qnav, navQs, engine.responses, cur.key, (k) => {
       const idx = engine.questionFlat.findIndex(q => q.key === k);
@@ -175,8 +205,8 @@ export async function bootModule({ moduleName, manifestPath }) {
 
     renderQuestion(el.question, cur, engine, { onAnswerChange: renderAllNavOnly });
 
-    el.sectionSelect.value = String(engine.sectionIndex);
-    el.status.textContent = `${moduleName.toUpperCase()} • ${currentTest.title ?? ""} • ${cur.label}`;
+    if (el.sectionSelect) el.sectionSelect.value = String(engine.sectionIndex);
+    setStatus(`${moduleName.toUpperCase()} • ${currentTest.title ?? ""} • ${cur.label}`);
     updateFlagBtn();
   };
 
@@ -192,7 +222,7 @@ export async function bootModule({ moduleName, manifestPath }) {
 
   const renderResults = (auto=false) => {
     if (!currentTest.answerKey) {
-      el.results.textContent = "This module is not auto-scored.";
+      if (el.results) el.results.textContent = "This module is not auto-scored.";
       return;
     }
     const g = gradeModule(currentTest, engine.responses);
@@ -217,15 +247,14 @@ export async function bootModule({ moduleName, manifestPath }) {
     }
     lines.push("</div>");
 
-    el.results.innerHTML = lines.join("");
+    if (el.results) el.results.innerHTML = lines.join("");
   };
 
-  // Events
-  el.testSelect.addEventListener("change", async () => {
+  el.testSelect?.addEventListener("change", async () => {
     await loadTest(el.testSelect.value);
   });
 
-  el.sectionSelect.addEventListener("change", () => {
+  el.sectionSelect?.addEventListener("change", () => {
     engine.sectionIndex = Number(el.sectionSelect.value);
     const secId = currentTest.sections?.[engine.sectionIndex]?.id;
     const firstIdx = engine.questionFlat.findIndex(q => q.sectionId === secId);
@@ -234,8 +263,8 @@ export async function bootModule({ moduleName, manifestPath }) {
     renderAll();
   });
 
-  el.prevBtn.addEventListener("click", () => { engine.prev(); renderAll(); });
-  el.nextBtn.addEventListener("click", () => { engine.next(); renderAll(); });
+  el.prevBtn?.addEventListener("click", () => { engine.prev(); renderAll(); });
+  el.nextBtn?.addEventListener("click", () => { engine.next(); renderAll(); });
   el.flagBtn?.addEventListener("click", () => {
     const curKey = engine.getCurrent()?.key;
     if (!curKey) return;
@@ -245,31 +274,30 @@ export async function bootModule({ moduleName, manifestPath }) {
     renderAllNavOnly();
   });
 
-  el.resetBtn.addEventListener("click", () => {
+  el.resetBtn?.addEventListener("click", () => {
     if (!confirm("Reset all answers for this module and test?")) return;
     engine.resetAll();
     flags.clear();
     saveFlags();
     renderAll();
-    el.results.textContent = "Submit to see results.";
+    if (el.results) el.results.textContent = "Submit to see results.";
   });
 
-  el.submitBtn.addEventListener("click", () => {
+  el.submitBtn?.addEventListener("click", () => {
     engine.submit();
     renderResults(false);
   });
 
-  // Local material load (HTML/text)
   el.materialFile?.addEventListener("change", (e) => {
     const file = e.target.files?.[0];
     if (!file || !el.materialFrame) return;
     el.materialFrame.src = blobURLFromFile(file);
   });
 
-  // Notes
-  el.notesArea?.addEventListener("input", queueSaveNotes);
+  if (el.notesArea && typeof queueSaveNotes === "function") {
+    el.notesArea.addEventListener("input", queueSaveNotes);
+  }
 
-  // Local audio load
   el.audioFile?.addEventListener("change", (e) => {
     const file = e.target.files?.[0];
     if (!file || !el.audio) return;
