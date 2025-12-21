@@ -1,4 +1,4 @@
-import { loadJSON, blobURLFromFile } from "./loader.js";
+import { loadJSON } from "./loader.js";
 import { CountdownTimer } from "./timer.js";
 
 const el = {
@@ -15,9 +15,7 @@ const el = {
   recStart: document.getElementById("recStart"),
   recStop: document.getElementById("recStop"),
   recDownload: document.getElementById("recDownload"),
-  recStatus: document.getElementById("recStatus"),
-  pdfFile: document.getElementById("pdfFile"),
-  pdfFrame: document.getElementById("pdfFrame")
+  recStatus: document.getElementById("recStatus")
 };
 
 let sets = null;
@@ -39,9 +37,9 @@ async function loadSet(path) {
 }
 
 function renderAll() {
-  el.p1.innerHTML = "<ul>" + pickN(current.part1Questions ?? [], 6).map(q => `<li>${q}</li>`).join("") + "</ul>";
+  el.p1.innerHTML = "<ol>" + pickN(current.part1Questions ?? [], 6).map(q => `<li>${q}</li>`).join("") + "</ol>";
   el.p2.innerHTML = `<div class="notice"><strong>${current.part2?.cue ?? "Cue card"}</strong><ul>${(current.part2?.points ?? []).map(p => `<li>${p}</li>`).join("")}</ul></div>`;
-  el.p3.innerHTML = "<ul>" + pickN(current.part3Questions ?? [], 6).map(q => `<li>${q}</li>`).join("") + "</ul>";
+  el.p3.innerHTML = "<ol>" + pickN(current.part3Questions ?? [], 6).map(q => `<li>${q}</li>`).join("") + "</ol>";
 
   cue?.stop();
   cue = new CountdownTimer(60, () => { el.cueTimer.textContent = cue.format(); }, () => {});
@@ -95,13 +93,6 @@ function stopRec() {
 
 el.recStart.addEventListener("click", () => startRec().catch(err => { el.recStatus.textContent = err.message; }));
 el.recStop.addEventListener("click", () => stopRec());
-
-// PDF local load
-el.pdfFile?.addEventListener("change", (e) => {
-  const file = e.target.files?.[0];
-  if (!file) return;
-  el.pdfFrame.src = blobURLFromFile(file);
-});
 
 async function init() {
   sets = await loadJSON("../data/speaking/sets.json");
