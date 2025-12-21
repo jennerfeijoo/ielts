@@ -22,9 +22,12 @@ export async function bootModule({ moduleName, manifestPath }) {
     materialFrame: document.getElementById("materialFrame") ?? document.getElementById("pdfFrame"),
     audioFile: document.getElementById("audioFile"),
     audio: document.getElementById("audio"),
+    audioLinkWrap: document.getElementById("audioLinkWrap"),
+    audioLink: document.getElementById("audioLink"),
     notesArea: document.getElementById("notesArea")
   };
 
+  // Status helpers (base + extra) used across the module runner
   let statusBase = "";
   let statusExtra = "";
   const refreshStatus = () => {
@@ -42,7 +45,9 @@ export async function bootModule({ moduleName, manifestPath }) {
   }
 
   const manifestUrl = new URL(manifestPath, import.meta.url);
+  // IMPORTANT: base should be repo root (../ from /data/manifest.json)
   const manifestBaseUrl = new URL("..", manifestUrl);
+
   setStatus("Loading manifest...");
   let manifest = null;
   try {
@@ -79,11 +84,7 @@ export async function bootModule({ moduleName, manifestPath }) {
   const resolveAssetPath = (p) => {
     if (!p) return null;
     if (/^https?:\/\//i.test(p)) return p;
-    try {
-      return new URL(p, manifestBaseUrl).href;
-    } catch {
-      return p;
-    }
+    return new URL(p, manifestBaseUrl).href;
   };
 
   const loadFlags = (key) => {
@@ -128,41 +129,90 @@ export async function bootModule({ moduleName, manifestPath }) {
     }
 
     if (el.audio) {
-      const audioPathRaw = (() => {
-        if (section?.audio) return section.audio;
-        if (Array.isArray(section?.audioFiles) && section.audioFiles.length) {
-          return section.audioFiles[engine.sectionIndex] ?? section.audioFiles[0];
-        }
-        if (currentTest.assets?.audio) return currentTest.assets.audio;
-        if (Array.isArray(currentTest.assets?.audioFiles) && currentTest.assets.audioFiles.length) {
-          return currentTest.assets.audioFiles[engine.sectionIndex] ?? currentTest.assets.audioFiles[0];
-        }
-        return null;
-      })();
+      const audioPathRaw =
+        section?.audio
+        ?? section?.audioFile
+        ?? section?.audioFiles?.[engine.sectionIndex]
+        ?? currentTest.assets?.audio
+        ?? currentTest.assets?.audioFile
+        ?? currentTest.assets?.audioFiles?.[engine.sectionIndex]
+        ?? null;
+
       const audioPath = resolveAssetPath(audioPathRaw);
       currentAudioUrl = audioPath ?? null;
+
       if (audioPath) {
-        if (el.audio.getAttribute("src") !== audioPath) {
-          el.audio.src = audioPath;
-          el.audio.preload = "auto";
-          el.audio.load();
+        if (el.audio.getAttribute("src") !== audioPath) el.audio.src = audioPath;
+
+        if (el.audioLink) {
+          el.audioLink.href = audioPath;
+          el.audioLink.textContent = "Open audio URL";
+          if (el.audioLinkWrap) el.audioLinkWrap.style.display = "block";
         }
-        if (audioPlayed.has(audioPath)) {
-          el.audio.pause();
-          el.audio.currentTime = 0;
-          setStatusExtra("Audio already played. Reset test to listen again.");
-        } else {
-          setStatusExtra("");
-        }
+        setStatusExtra("Audio ready");
       } else {
         el.audio.removeAttribute("src");
+        if (el.audioLinkWrap) el.audioLinkWrap.style.display = "none";
         setStatusExtra("");
       }
     }
   };
 
+  const render = () => {
+    const q = engine.getCurrent();
+    if (!q) return;
+
+    renderNav(el.qnav, engine.questionFlat, engine.qIndex, {
+      isAnswered: (key) => engine.responses[key] != null && `${engine.responses[key]}`.trim() !== "",
+      isFlagged: (key) => flags.has(key),
+      onJump: (idx) => { engine.goTo(idx); render(); }
+    });
+
+    renderQuestion(el.question, q, {
+      getResponse: (key) => engine.responses[key],
+      setResponse: (key, value) => { engine.setResponse(key, value); renderNav(el.qnav, engine.questionFlat, engine.qIndex, {
+        isAnswered: (k) => engine.responses[k] != null && `${engine.responses[k]}`.trim() !== "",
+        isFlagged: (k) => flags.has(k),
+        onJump: (idx) => { engine.goTo(idx); render(); }
+      }); },
+    });
+
+    if (el.sectionSelect) {
+      const sec = currentTest.sections?.[engine.sectionIndex];
+      if (sec) el.sectionSelect.value = `${engine.sectionIndex}`;
+    }
+
+    if (el.prevBtn) el.prevBtn.disabled = engine.qIndex <= 0;
+    if (el.nextBtn) el.nextBtn.disabled = engine.qIndex >= engine.questionFlat.length - 1;
+
+    updateFlagBtn();
+    syncSectionResources();
+    setStatus(`Section ${engine.sectionIndex + 1} • Q ${engine.qIndex + 1}/${engine.questionFlat.length}`);
+  };
+
+  const renderResults = (autoSubmitted = false) => {
+    if (!el.results) return;
+    const g = gradeModule(currentTest, engine.responses);
+    const band = estimateBand(moduleName, g.correct, g.total);
+
+    const flaggedCount = flags.size;
+    const answeredCount = Object.values(engine.responses).filter(v => `${v ?? ""}`.trim() !== "").length;
+
+    el.results.innerHTML = `
+      <div class="kpi">
+        <div class="item"><div class="v">${g.correct}/${g.total}</div><div class="k">Correct</div></div>
+        <div class="item"><div class="v">${band}</div><div class="k">Estimated band</div></div>
+        <div class="item"><div class="v">${answeredCount}</div><div class="k">Answered</div></div>
+        <div class="item"><div class="v">${flaggedCount}</div><div class="k">Flagged</div></div>
+        <div class="item"><div class="v">${autoSubmitted ? "Yes" : "No"}</div><div class="k">Auto submitted</div></div>
+      </div>
+    `;
+  };
+
   const loadTest = async (path) => {
     setStatus("Loading test...");
+    setStatusExtra("");
+
     const testUrl = new URL(path, manifestBaseUrl);
     try {
       currentTest = await loadJSON(testUrl);
@@ -180,196 +230,97 @@ export async function bootModule({ moduleName, manifestPath }) {
     audioPlayed = new Set();
 
     timer?.stop();
-    timer = new CountdownTimer(currentTest.timeLimitSeconds ?? 0,
+    timer = new CountdownTimer(
+      currentTest.timeLimitSeconds ?? 0,
       (remaining) => { if (el.timer) el.timer.textContent = timer.format(); updateTimerBadge(remaining); },
       () => { engine.submit(); renderResults(true); }
     );
+
     if (el.timer) {
       el.timer.textContent = timer.format();
       updateTimerBadge(timer.remaining ?? 0);
     }
-    if ((currentTest.timeLimitSeconds ?? 0) > 0) timer.start();
 
-    if (el.sectionSelect) {
-      el.sectionSelect.innerHTML = "";
-      (currentTest.sections ?? []).forEach((s, idx) => {
-        const o = document.createElement("option");
-        o.value = String(idx);
-        o.textContent = s.title ?? `Section ${idx+1}`;
-        el.sectionSelect.appendChild(o);
-      });
-      el.sectionSelect.value = String(engine.sectionIndex);
-    }
+    // Sections
+    el.sectionSelect.innerHTML = "";
+    (currentTest.sections ?? []).forEach((s, idx) => {
+      const o = document.createElement("option");
+      o.value = `${idx}`;
+      o.textContent = s.title ?? `Section ${idx + 1}`;
+      el.sectionSelect.appendChild(o);
+    });
 
-    renderAll();
-    if (el.results) el.results.textContent = "Submit to see results.";
-  };
-
-  const getNavQuestions = () => {
-    const secId = currentTest.sections?.[engine.sectionIndex]?.id;
-    return engine.questionFlat
-      .filter(q => q.sectionId === secId)
-      .map(q => ({
-        key: q.key,
-        shortLabel: q.shortLabel,
-        label: q.label,
-        hint: q.hint,
-        type: q.type,
-        letters: q.letters,
-        expectedCount: q.expectedCount,
-        prompt: q.prompt
-      }));
-  };
-
-  const renderAll = () => {
-    syncSectionResources();
-
-    const secId = currentTest.sections?.[engine.sectionIndex]?.id;
-    const secQs = engine.questionFlat.filter(q => q.sectionId === secId);
-    if (secQs.length) {
-      const cur = engine.getCurrent();
-      if (cur.sectionId !== secId) {
-        const firstIdx = engine.questionFlat.findIndex(q => q.sectionId === secId);
-        engine.goToIndex(firstIdx);
-      }
-    }
-
-    const cur = engine.getCurrent();
-
-    const navQs = getNavQuestions();
-    renderNav(el.qnav, navQs, engine.responses, cur.key, (k) => {
-      const idx = engine.questionFlat.findIndex(q => q.key === k);
-      if (idx >= 0) { engine.goToIndex(idx); renderAll(); }
-    }, flags);
-
-    renderQuestion(el.question, cur, engine, { onAnswerChange: renderAllNavOnly });
-
-    if (el.sectionSelect) el.sectionSelect.value = String(engine.sectionIndex);
-    setStatus(`${moduleName.toUpperCase()} • ${currentTest.title ?? ""} • ${cur.label}`);
-    updateFlagBtn();
-  };
-
-  const renderAllNavOnly = () => {
-    const cur = engine.getCurrent();
-    const navQs = getNavQuestions();
-    renderNav(el.qnav, navQs, engine.responses, cur.key, (k) => {
-      const idx = engine.questionFlat.findIndex(q => q.key === k);
-      if (idx >= 0) { engine.goToIndex(idx); renderAll(); }
-    }, flags);
-    updateFlagBtn();
-  };
-
-  const renderResults = (auto=false) => {
-    if (!currentTest.answerKey) {
-      if (el.results) el.results.textContent = "This module is not auto-scored.";
-      return;
-    }
-    const g = gradeModule(currentTest, engine.responses);
-    const band = estimateBand(moduleName, g.raw);
-
-    const lines = [];
-    lines.push(`<div class="kpi">
-      <div class="item"><div class="v">${g.raw}/${g.max}</div><div class="k">Raw score</div></div>
-      <div class="item"><div class="v">${band}</div><div class="k">Estimated band</div></div>
-      <div class="item"><div class="v">${auto ? "AUTO" : "MANUAL"}</div><div class="k">Submit mode</div></div>
-    </div>`);
-    lines.push("<hr />");
-    lines.push("<div class='small'>Per-question feedback (green = correct, red = incorrect):</div>");
-    lines.push("<div class='qnav' style='margin-top:10px'>");
-
-    for (const d of g.details) {
-      const ok = d.gained === d.max;
-      lines.push(`<div class="qbtn ${ok ? "ans" : "bad"}" style="cursor:default">
-        <div style="font-size:12px">${d.key}</div>
-        <div style="font-size:12px">${ok ? "✓" : "✗"}</div>
-      </div>`);
-    }
-    lines.push("</div>");
-
-    if (el.results) el.results.innerHTML = lines.join("");
+    render();
   };
 
   el.testSelect?.addEventListener("change", async () => {
     await loadTest(el.testSelect.value);
   });
 
-  el.sectionSelect?.addEventListener("change", () => {
-    engine.sectionIndex = Number(el.sectionSelect.value);
-    const secId = currentTest.sections?.[engine.sectionIndex]?.id;
-    const firstIdx = engine.questionFlat.findIndex(q => q.sectionId === secId);
-    engine.goToIndex(firstIdx < 0 ? 0 : firstIdx);
-
-    renderAll();
+  el.sectionSelect.addEventListener("change", () => {
+    if (!engine) return;
+    const idx = Number(el.sectionSelect.value);
+    if (!Number.isFinite(idx)) return;
+    engine.goToSection(idx);
+    render();
   });
 
-  el.prevBtn?.addEventListener("click", () => { engine.prev(); renderAll(); });
-  el.nextBtn?.addEventListener("click", () => { engine.next(); renderAll(); });
+  el.prevBtn?.addEventListener("click", () => { engine?.prev(); render(); });
+  el.nextBtn?.addEventListener("click", () => { engine?.next(); render(); });
+
   el.flagBtn?.addEventListener("click", () => {
-    const curKey = engine.getCurrent()?.key;
-    if (!curKey) return;
-    if (flags.has(curKey)) flags.delete(curKey);
-    else flags.add(curKey);
+    if (!engine) return;
+    const key = engine.getCurrent()?.key;
+    if (!key) return;
+    if (flags.has(key)) flags.delete(key);
+    else flags.add(key);
     saveFlags();
-    renderAllNavOnly();
+    updateFlagBtn();
+    renderNav(el.qnav, engine.questionFlat, engine.qIndex, {
+      isAnswered: (k) => engine.responses[k] != null && `${engine.responses[k]}`.trim() !== "",
+      isFlagged: (k) => flags.has(k),
+      onJump: (idx) => { engine.goTo(idx); render(); }
+    });
   });
 
   el.resetBtn?.addEventListener("click", () => {
-    if (!confirm("Reset all answers for this module and test?")) return;
-    engine.resetAll();
+    if (!engine) return;
+    if (!confirm("Reset this test? (clears answers in this browser)")) return;
+    engine.reset();
     flags.clear();
     saveFlags();
-    renderAll();
-    audioPlayed.clear();
+    render();
     if (el.results) el.results.textContent = "Submit to see results.";
   });
 
   el.submitBtn?.addEventListener("click", () => {
+    if (!engine) return;
     engine.submit();
     renderResults(false);
   });
 
   el.materialFile?.addEventListener("change", (e) => {
-    const file = e.target.files?.[0];
-    if (!file || !el.materialFrame) return;
-    el.materialFrame.src = blobURLFromFile(file);
+    const f = e.target?.files?.[0];
+    if (!f) return;
+    const url = blobURLFromFile(f);
+    if (el.materialFrame) el.materialFrame.src = url;
   });
-
-  try {
-    if (el.notesArea && typeof queueSaveNotes === "function") {
-      el.notesArea.addEventListener("input", queueSaveNotes);
-    }
-  } catch { /* optional notes handler not present */ }
 
   el.audioFile?.addEventListener("change", (e) => {
-    const file = e.target.files?.[0];
-    if (!file || !el.audio) return;
-    el.audio.src = blobURLFromFile(file);
+    const f = e.target?.files?.[0];
+    if (!f) return;
+    const url = blobURLFromFile(f);
+    if (el.audio) el.audio.src = url;
+    setStatusExtra("Local audio loaded");
   });
 
-  if (el.audio) {
-    el.audio.preload = "auto";
-    el.audio.addEventListener("error", () => {
-      const code = el.audio?.error?.code ?? "unknown";
-      const msg = `Audio error (code ${code})${currentAudioUrl ? ` at ${currentAudioUrl}` : ""}`;
-      console.error(msg, el.audio?.error);
-      setStatusExtra(msg);
-    });
-    el.audio.addEventListener("play", () => {
-      if (currentAudioUrl && audioPlayed.has(currentAudioUrl)) {
-        el.audio.pause();
-        el.audio.currentTime = 0;
-        setStatusExtra("Audio already played. Reset test to listen again.");
-        return;
-      }
-      setStatusExtra(currentAudioUrl ? `Audio playing: ${currentAudioUrl}` : "Audio playing");
-    });
-    el.audio.addEventListener("ended", () => {
-      if (currentAudioUrl) audioPlayed.add(currentAudioUrl);
-      el.audio.pause();
-      el.audio.currentTime = 0;
-      setStatusExtra("Audio finished. Reset test to replay.");
-    });
-  }
+  el.audio?.addEventListener("play", () => {
+    if (!engine) return;
+    const sec = currentTest?.sections?.[engine.sectionIndex];
+    const sid = sec?.id ?? `${engine.sectionIndex}`;
+    audioPlayed.add(sid);
+  });
 
-  await loadTest(tests[0].path);
+  // Initial load
+  await loadTest(el.testSelect.value);
 }
