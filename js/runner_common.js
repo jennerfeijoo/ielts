@@ -186,6 +186,7 @@ export async function bootModule({ moduleName, manifestPath }) {
     engine = new ExamEngine(currentTest, storageKey);
     engine.markStarted();
     flags = loadFlags(flagsKey);
+    audioPlayed = new Set();
 
     timer?.stop();
     timer = new CountdownTimer(currentTest.timeLimitSeconds ?? 0,
