@@ -22,17 +22,7 @@ export async function bootModule({ moduleName, manifestPath }) {
     materialFrame: document.getElementById("materialFrame") ?? document.getElementById("pdfFrame"),
     audioFile: document.getElementById("audioFile"),
     audio: document.getElementById("audio"),
-    audioLink: document.getElementById("audioLink"),
-    audioLinkWrap: document.getElementById("audioLinkWrap"),
     notesArea: document.getElementById("notesArea")
-  };
-
-  let statusBase = "";
-  let statusExtra = "";
-  const refreshStatus = () => {
-    if (!el.status) return;
-    const parts = [statusBase, statusExtra].filter(Boolean);
-    el.status.textContent = parts.join(" • ");
   };
   const setStatus = (msg) => { statusBase = msg ?? ""; refreshStatus(); };
   const setStatusExtra = (msg) => { statusExtra = msg ?? ""; refreshStatus(); };
@@ -45,6 +35,33 @@ export async function bootModule({ moduleName, manifestPath }) {
 
   const manifestUrl = new URL(manifestPath, import.meta.url);
   const manifestBaseUrl = new URL(".", manifestUrl);
+  setStatus("Loading manifest...");
+  let manifest = null;
+  try {
+    manifest = await loadJSON(manifestUrl);
+  } catch (err) {
+    console.error(`Failed to load manifest from ${manifestUrl.href}`, err);
+    setStatus(`Error loading manifest: ${err.message}`);
+    throw err;
+  }
+
+  const tests = (manifest[moduleName] ?? []);
+  if (!tests.length) {
+    const err = new Error(`No tests found for module: ${moduleName}`);
+    setStatus(err.message);
+    throw err;
+  }
+
+  const setStatus = (msg) => { if (el.status) el.status.textContent = msg; };
+
+  if (!el.testSelect || !el.sectionSelect || !el.qnav || !el.question) {
+    console.error("Required layout elements not found; aborting boot.");
+    setStatus("Unable to start: missing layout elements.");
+    return;
+  }
+
+  const manifestUrl = new URL(manifestPath, import.meta.url);
+  const manifestBaseUrl = new URL("..", manifestUrl);
   setStatus("Loading manifest...");
   let manifest = null;
   try {
@@ -80,11 +97,7 @@ export async function bootModule({ moduleName, manifestPath }) {
   const resolveAssetPath = (p) => {
     if (!p) return null;
     if (/^https?:\/\//i.test(p)) return p;
-    try {
-      return new URL(p, manifestBaseUrl).href;
-    } catch {
-      return p;
-    }
+    return new URL(p, manifestBaseUrl).href;
   };
 
   const loadFlags = (key) => {
