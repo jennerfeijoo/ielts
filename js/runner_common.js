@@ -1,3 +1,4 @@
+// js/runner_common.js
 import { loadJSON, blobURLFromFile } from "./loader.js";
 import { ExamEngine } from "./engine.js";
 import { CountdownTimer } from "./timer.js";
@@ -18,83 +19,70 @@ export async function bootModule({ moduleName, manifestPath }) {
     timer: document.getElementById("timer"),
     status: document.getElementById("status"),
     results: document.getElementById("results"),
-    materialFile: document.getElementById("materialFile") ?? document.getElementById("pdfFile"),
+
+    // Reading: iframe
     materialFrame: document.getElementById("materialFrame") ?? document.getElementById("pdfFrame"),
+
+    // Listening: audio
     audioFile: document.getElementById("audioFile"),
     audio: document.getElementById("audio"),
     audioLinkWrap: document.getElementById("audioLinkWrap"),
     audioLink: document.getElementById("audioLink"),
-    notesArea: document.getElementById("notesArea")
   };
 
-  // Status helpers (base + extra) used across the module runner
-  let statusBase = "";
-  let statusExtra = "";
-  const refreshStatus = () => {
-    if (!el.status) return;
-    const parts = [statusBase, statusExtra].filter(Boolean);
-    el.status.textContent = parts.join(" • ");
+  const setStatus = (msg) => {
+    if (el.status) el.status.textContent = msg ?? "";
   };
-  const setStatus = (msg) => { statusBase = msg ?? ""; refreshStatus(); };
-  const setStatusExtra = (msg) => { statusExtra = msg ?? ""; refreshStatus(); };
 
   if (!el.testSelect || !el.sectionSelect || !el.qnav || !el.question) {
-    console.error("Required layout elements not found; aborting boot.");
-    setStatus("Unable to start: missing layout elements.");
+    setStatus("Unable to start: missing required layout elements.");
     return;
   }
 
+  // manifestPath is relative to runner_common.js (js/)
   const manifestUrl = new URL(manifestPath, import.meta.url);
-  // IMPORTANT: base should be repo root (../ from /data/manifest.json)
-  const manifestBaseUrl = new URL("..", manifestUrl);
-
+  const appBaseUrl = new URL("..", manifestUrl); // site root (…/ielts/)
   setStatus("Loading manifest...");
-  let manifest = null;
-  try {
-    manifest = await loadJSON(manifestUrl);
-  } catch (err) {
-    console.error(`Failed to load manifest from ${manifestUrl.href}`, err);
-    setStatus(`Error loading manifest: ${err.message}`);
-    throw err;
-  }
 
-  const tests = (manifest[moduleName] ?? []);
+  const manifest = await loadJSON(manifestUrl);
+  const tests = manifest?.[moduleName] ?? [];
   if (!tests.length) {
-    const err = new Error(`No tests found for module: ${moduleName}`);
-    setStatus(err.message);
-    throw err;
+    setStatus(`No tests found for module: ${moduleName}`);
+    return;
   }
 
-  el.testSelect.innerHTML = "";
-  for (const t of tests) {
-    const o = document.createElement("option");
-    o.value = t.path;
-    o.textContent = t.title ?? t.id ?? t.path;
-    el.testSelect.appendChild(o);
-  }
-
-  let engine = null;
-  let timer = null;
-  let currentTest = null;
-  let flags = new Set();
-  let flagsKey = null;
-  let currentAudioUrl = null;
-  let audioPlayed = new Set();
-
-  const resolveAssetPath = (p) => {
+  // ---------- helpers ----------
+  const resolveAsset = (p) => {
     if (!p) return null;
     if (/^https?:\/\//i.test(p)) return p;
-    return new URL(p, manifestBaseUrl).href;
+    return new URL(p, appBaseUrl).href;
   };
+
+  const normalizeAudioPath = (raw) => {
+    if (!raw) return null;
+    if (/^https?:\/\//i.test(raw)) return raw;
+    // If it's just "file.mp3" (no folder), assume assets/audio/
+    if (!raw.includes("/")) return `assets/audio/${raw}`;
+    return raw;
+  };
+
+  // ---------- state ----------
+  let currentTest = null;
+  let engine = null;
+  let timer = null;
+
+  let flags = new Set();
+  let flagsKey = "";
 
   const loadFlags = (key) => {
     try {
       const raw = localStorage.getItem(key);
       if (!raw) return new Set();
       const arr = JSON.parse(raw);
-      if (Array.isArray(arr)) return new Set(arr);
-    } catch {}
-    return new Set();
+      return Array.isArray(arr) ? new Set(arr) : new Set();
+    } catch {
+      return new Set();
+    }
   };
 
   const saveFlags = () => {
@@ -104,236 +92,232 @@ export async function bootModule({ moduleName, manifestPath }) {
 
   const updateFlagBtn = () => {
     if (!el.flagBtn || !engine) return;
-    const curKey = engine.getCurrent()?.key;
-    const isFlagged = curKey ? flags.has(curKey) : false;
-    el.flagBtn.textContent = isFlagged ? "Unflag" : "Flag for review";
-    el.flagBtn.classList.toggle("danger", isFlagged);
+    const k = engine.getCurrent()?.key;
+    const on = k ? flags.has(k) : false;
+    el.flagBtn.textContent = on ? "Unflag" : "Flag for review";
+    el.flagBtn.classList.toggle("danger", on);
   };
 
-  const updateTimerBadge = (remaining) => {
-    if (!el.timer) return;
-    if (remaining <= 300) el.timer.classList.add("danger");
-    else el.timer.classList.remove("danger");
-  };
+  const getCurrentSectionId = () => engine?.getCurrent()?.sectionId ?? null;
 
-  const applySectionSelection = () => {
-    const cur = engine.getCurrent();
-    if (!cur) return;
-    const currentSectionId = cur.sectionId;
-    if (el.sectionSelect && el.sectionSelect.value !== currentSectionId) {
-      el.sectionSelect.value = currentSectionId ?? "";
-    }
-  };
+  const getSectionById = (secId) => (currentTest?.sections ?? []).find(s => s.id === secId) ?? null;
 
   const syncSectionResources = () => {
-    const cur = engine.getCurrent();
-    if (!cur) return;
-    const sectionId = cur.sectionId;
-    const section = currentTest.sections?.find(s => s.id === sectionId);
+    if (!engine || !currentTest) return;
 
+    const secId = getCurrentSectionId();
+    const section = getSectionById(secId);
+
+    // Reading: passage iframe
     if (el.materialFrame) {
-      const htmlPath = section?.materialHtml ?? currentTest.assets?.materialHtml ?? null;
-      const target = resolveAsset(htmlPath);
-      if (target) {
-        if (el.materialFrame.getAttribute("src") !== target) el.materialFrame.src = target;
-      } else {
-        el.materialFrame.removeAttribute("src");
-      }
+      const src = resolveAsset(section?.materialHtml ?? null);
+      if (src) el.materialFrame.src = src;
     }
 
+    // Listening: audio
     if (el.audio) {
-      const audioPathRaw =
-        section?.audio
-        ?? section?.audioFile
-        ?? section?.audioFiles?.[engine.sectionIndex]
-        ?? currentTest.assets?.audio
-        ?? currentTest.assets?.audioFile
-        ?? currentTest.assets?.audioFiles?.[engine.sectionIndex]
-        ?? null;
+      const raw =
+        section?.audioFile ??
+        section?.audio ??
+        (Array.isArray(section?.audioFiles) ? section.audioFiles[0] : null) ??
+        null;
 
-      const audioPath = resolveAssetPath(audioPathRaw);
-      currentAudioUrl = audioPath ?? null;
-
-      if (audioPath) {
-        if (el.audio.getAttribute("src") !== audioPath) el.audio.src = audioPath;
-
-        if (el.audioLink) {
-          el.audioLink.href = audioPath;
-          el.audioLink.textContent = "Open audio URL";
-          if (el.audioLinkWrap) el.audioLinkWrap.style.display = "block";
+      const audioUrl = resolveAsset(normalizeAudioPath(raw));
+      if (audioUrl) {
+        if (el.audio.src !== audioUrl) {
+          el.audio.src = audioUrl;
+          el.audio.preload = "auto";
+          el.audio.load();
         }
-        setStatusExtra("Audio ready");
+        if (el.audioLink && el.audioLinkWrap) {
+          el.audioLink.href = audioUrl;
+          el.audioLink.textContent = "Open audio URL";
+          el.audioLinkWrap.style.display = "block";
+        }
       } else {
         el.audio.removeAttribute("src");
         if (el.audioLinkWrap) el.audioLinkWrap.style.display = "none";
-        setStatusExtra("");
       }
     }
   };
 
-  const render = () => {
-    const q = engine.getCurrent();
-    if (!q) return;
-
-    renderNav(el.qnav, engine.questionFlat, engine.qIndex, {
-      isAnswered: (key) => engine.responses[key] != null && `${engine.responses[key]}`.trim() !== "",
-      isFlagged: (key) => flags.has(key),
-      onJump: (idx) => { engine.goTo(idx); render(); }
-    });
-
-    renderQuestion(el.question, q, {
-      getResponse: (key) => engine.responses[key],
-      setResponse: (key, value) => { engine.setResponse(key, value); renderNav(el.qnav, engine.questionFlat, engine.qIndex, {
-        isAnswered: (k) => engine.responses[k] != null && `${engine.responses[k]}`.trim() !== "",
-        isFlagged: (k) => flags.has(k),
-        onJump: (idx) => { engine.goTo(idx); render(); }
-      }); },
-    });
-
-    if (el.sectionSelect) {
-      const sec = currentTest.sections?.[engine.sectionIndex];
-      if (sec) el.sectionSelect.value = `${engine.sectionIndex}`;
-    }
-
-    if (el.prevBtn) el.prevBtn.disabled = engine.qIndex <= 0;
-    if (el.nextBtn) el.nextBtn.disabled = engine.qIndex >= engine.questionFlat.length - 1;
-
-    updateFlagBtn();
-    syncSectionResources();
-    setStatus(`Section ${engine.sectionIndex + 1} • Q ${engine.qIndex + 1}/${engine.questionFlat.length}`);
+  const questionsForCurrentSection = () => {
+    const secId = getCurrentSectionId();
+    return engine.questionFlat.filter(q => q.sectionId === secId);
   };
 
-  const renderResults = (autoSubmitted = false) => {
-    if (!el.results) return;
-    const g = gradeModule(currentTest, engine.responses);
-    const band = estimateBand(moduleName, g.correct, g.total);
+  const renderAll = () => {
+    if (!engine || !currentTest) return;
 
-    const flaggedCount = flags.size;
-    const answeredCount = Object.values(engine.responses).filter(v => `${v ?? ""}`.trim() !== "").length;
+    syncSectionResources();
+
+    // Keep section select synced to the current sectionId
+    const secId = getCurrentSectionId();
+    if (secId) el.sectionSelect.value = secId;
+
+    const cur = engine.getCurrent();
+    const navQs = questionsForCurrentSection();
+
+    renderNav(
+      el.qnav,
+      navQs,
+      engine.responses,
+      cur.key,
+      (pickedKey) => {
+        const idx = engine.questionFlat.findIndex(q => q.key === pickedKey);
+        if (idx >= 0) {
+          engine.goToIndex(idx);
+          renderAll();
+        }
+      },
+      flags
+    );
+
+    renderQuestion(el.question, cur, engine, {
+      onAnswerChange: () => {
+        // refresh nav + flag state without heavy work
+        updateFlagBtn();
+        const cur2 = engine.getCurrent();
+        const nav2 = questionsForCurrentSection();
+        renderNav(el.qnav, nav2, engine.responses, cur2.key, (pickedKey) => {
+          const idx = engine.questionFlat.findIndex(q => q.key === pickedKey);
+          if (idx >= 0) { engine.goToIndex(idx); renderAll(); }
+        }, flags);
+      }
+    });
+
+    updateFlagBtn();
+
+    setStatus(
+      `Section ${engine.sectionIndex + 1}/${(currentTest.sections ?? []).length} • ` +
+      `Q ${engine.qIndex + 1}/${engine.getTotalQuestions()}`
+    );
+  };
+
+  const renderResults = (auto = false) => {
+    if (!el.results || !currentTest || !engine) return;
+    const g = gradeModule(currentTest, engine.responses);
+    const band = estimateBand(moduleName, g.raw);
 
     el.results.innerHTML = `
       <div class="kpi">
-        <div class="item"><div class="v">${g.correct}/${g.total}</div><div class="k">Correct</div></div>
-        <div class="item"><div class="v">${band}</div><div class="k">Estimated band</div></div>
-        <div class="item"><div class="v">${answeredCount}</div><div class="k">Answered</div></div>
-        <div class="item"><div class="v">${flaggedCount}</div><div class="k">Flagged</div></div>
-        <div class="item"><div class="v">${autoSubmitted ? "Yes" : "No"}</div><div class="k">Auto submitted</div></div>
+        <div class="item"><div class="v">${g.raw}</div><div class="k">Raw score</div></div>
+        <div class="item"><div class="v">${g.max}</div><div class="k">Max</div></div>
+        <div class="item"><div class="v">${Number(band).toFixed(1)}</div><div class="k">Estimated band</div></div>
       </div>
+      <div style="height:10px"></div>
+      <div class="small">${auto ? "Time finished. " : ""}Auto-marking applies only to Listening and Reading.</div>
     `;
+  };
+
+  const populateTests = () => {
+    el.testSelect.innerHTML = "";
+    for (const t of tests) {
+      const opt = document.createElement("option");
+      opt.value = t.path;
+      opt.textContent = t.title ?? t.id ?? t.path;
+      el.testSelect.appendChild(opt);
+    }
+  };
+
+  const populateSections = () => {
+    el.sectionSelect.innerHTML = "";
+    (currentTest.sections ?? []).forEach((s, idx) => {
+      const opt = document.createElement("option");
+      opt.value = s.id; // IMPORTANT: value is section.id
+      opt.textContent = s.title ?? `Section ${idx + 1}`;
+      el.sectionSelect.appendChild(opt);
+    });
+
+    // sync select to current section
+    const secId = getCurrentSectionId();
+    if (secId) el.sectionSelect.value = secId;
   };
 
   const loadTest = async (path) => {
     setStatus("Loading test...");
-    setStatusExtra("");
-
-    const testUrl = new URL(path, manifestBaseUrl);
-    try {
-      currentTest = await loadJSON(testUrl);
-    } catch (err) {
-      console.error(`Failed to load test from ${testUrl.href}`, err);
-      setStatus(`Error loading test: ${err.message}`);
-      throw err;
-    }
+    const testUrl = new URL(path, appBaseUrl);
+    currentTest = await loadJSON(testUrl);
 
     const storageKey = `ielts:${moduleName}:${currentTest.id ?? path}`;
     flagsKey = `${storageKey}:flags`;
+
     engine = new ExamEngine(currentTest, storageKey);
     engine.markStarted();
-    flags = loadFlags(flagsKey);
-    audioPlayed = new Set();
+    // ensure sectionIndex matches qIndex after load
+    engine.goToIndex(engine.qIndex);
 
+    flags = loadFlags(flagsKey);
+
+    // timer
     timer?.stop();
     timer = new CountdownTimer(
       currentTest.timeLimitSeconds ?? 0,
-      (remaining) => { if (el.timer) el.timer.textContent = timer.format(); updateTimerBadge(remaining); },
+      () => { if (el.timer) el.timer.textContent = timer.format(); },
       () => { engine.submit(); renderResults(true); }
     );
+    if (el.timer) el.timer.textContent = timer.format();
+    if ((currentTest.timeLimitSeconds ?? 0) > 0) timer.start();
 
-    if (el.timer) {
-      el.timer.textContent = timer.format();
-      updateTimerBadge(timer.remaining ?? 0);
-    }
+    populateSections();
+    if (el.results) el.results.textContent = "Submit to see results.";
 
-    // Sections
-    el.sectionSelect.innerHTML = "";
-    (currentTest.sections ?? []).forEach((s, idx) => {
-      const o = document.createElement("option");
-      o.value = `${idx}`;
-      o.textContent = s.title ?? `Section ${idx + 1}`;
-      el.sectionSelect.appendChild(o);
-    });
-
-    render();
+    renderAll();
   };
 
-  el.testSelect?.addEventListener("change", async () => {
+  // ---------- wire UI ----------
+  populateTests();
+  await loadTest(el.testSelect.value);
+
+  el.testSelect.addEventListener("change", async () => {
     await loadTest(el.testSelect.value);
   });
 
   el.sectionSelect.addEventListener("change", () => {
-    if (!engine) return;
-    const idx = Number(el.sectionSelect.value);
-    if (!Number.isFinite(idx)) return;
-    engine.goToSection(idx);
-    render();
+    const secId = el.sectionSelect.value; // section.id
+    const firstIdx = engine.questionFlat.findIndex(q => q.sectionId === secId);
+    if (firstIdx >= 0) {
+      engine.goToIndex(firstIdx);
+      renderAll();
+    }
   });
 
-  el.prevBtn?.addEventListener("click", () => { engine?.prev(); render(); });
-  el.nextBtn?.addEventListener("click", () => { engine?.next(); render(); });
+  el.prevBtn?.addEventListener("click", () => { engine.prev(); renderAll(); });
+  el.nextBtn?.addEventListener("click", () => { engine.next(); renderAll(); });
 
   el.flagBtn?.addEventListener("click", () => {
-    if (!engine) return;
-    const key = engine.getCurrent()?.key;
-    if (!key) return;
-    if (flags.has(key)) flags.delete(key);
-    else flags.add(key);
+    const k = engine.getCurrent()?.key;
+    if (!k) return;
+    if (flags.has(k)) flags.delete(k);
+    else flags.add(k);
     saveFlags();
-    updateFlagBtn();
-    renderNav(el.qnav, engine.questionFlat, engine.qIndex, {
-      isAnswered: (k) => engine.responses[k] != null && `${engine.responses[k]}`.trim() !== "",
-      isFlagged: (k) => flags.has(k),
-      onJump: (idx) => { engine.goTo(idx); render(); }
-    });
+    renderAll();
   });
 
   el.resetBtn?.addEventListener("click", () => {
-    if (!engine) return;
-    if (!confirm("Reset this test? (clears answers in this browser)")) return;
-    engine.reset();
+    engine.resetAll();
     flags.clear();
     saveFlags();
-    render();
     if (el.results) el.results.textContent = "Submit to see results.";
+    renderAll();
   });
 
   el.submitBtn?.addEventListener("click", () => {
-    if (!engine) return;
     engine.submit();
     renderResults(false);
   });
 
-  el.materialFile?.addEventListener("change", (e) => {
-    const f = e.target?.files?.[0];
-    if (!f) return;
-    const url = blobURLFromFile(f);
-    if (el.materialFrame) el.materialFrame.src = url;
-  });
-
   el.audioFile?.addEventListener("change", (e) => {
-    const f = e.target?.files?.[0];
-    if (!f) return;
-    const url = blobURLFromFile(f);
-    if (el.audio) el.audio.src = url;
-    setStatusExtra("Local audio loaded");
+    const f = e.target.files?.[0];
+    if (!f || !el.audio) return;
+    el.audio.src = blobURLFromFile(f);
+    el.audio.load();
   });
 
-  el.audio?.addEventListener("play", () => {
-    if (!engine) return;
-    const sec = currentTest?.sections?.[engine.sectionIndex];
-    const sid = sec?.id ?? `${engine.sectionIndex}`;
-    audioPlayed.add(sid);
-  });
-
-  // Initial load
-  await loadTest(el.testSelect.value);
+  if (el.audio) {
+    el.audio.addEventListener("error", () => {
+      const code = el.audio?.error?.code ?? "unknown";
+      setStatus(`Audio error (code ${code}). Check the MP3 URL/path.`);
+    });
+  }
 }
