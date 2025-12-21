@@ -126,7 +126,8 @@
           "shortLabel": "14",
           "type": "matching",
           "hint": "Which section contains the following information? Write the correct letter, A–G.",
-          "prompt": "a mention of negative attitudes towards stadium building projects"
+          "prompt": "a mention of negative attitudes towards stadium building projects",
+          "allowedLetters": ["A", "B", "C", "D", "E", "F", "G"]
         },
         {
           "key": "15",
@@ -134,7 +135,8 @@
           "shortLabel": "15",
           "type": "matching",
           "hint": "Which section contains the following information? Write the correct letter, A–G.",
-          "prompt": "figures demonstrating the environmental benefits of a certain stadium"
+          "prompt": "figures demonstrating the environmental benefits of a certain stadium",
+          "allowedLetters": ["A", "B", "C", "D", "E", "F", "G"]
         },
         {
           "key": "16",
@@ -142,7 +144,8 @@
           "shortLabel": "16",
           "type": "matching",
           "hint": "Which section contains the following information? Write the correct letter, A–G.",
-          "prompt": "examples of the wide range of facilities available at some new stadiums"
+          "prompt": "examples of the wide range of facilities available at some new stadiums",
+          "allowedLetters": ["A", "B", "C", "D", "E", "F", "G"]
         },
         {
           "key": "17",
@@ -150,7 +153,8 @@
           "shortLabel": "17",
           "type": "matching",
           "hint": "Which section contains the following information? Write the correct letter, A–G.",
-          "prompt": "reference to the disadvantages of the stadiums built during a certain era"
+          "prompt": "reference to the disadvantages of the stadiums built during a certain era",
+          "allowedLetters": ["A", "B", "C", "D", "E", "F", "G"]
         },
         {
           "key": "18",
@@ -197,32 +201,60 @@
           "label": "Q23",
           "shortLabel": "23",
           "type": "multipleChoice",
-          "hint": "Choose ONE letter, A–E.",
-          "prompt": "When comparing twentieth-century stadiums to ancient amphitheatres in Section D, which negative feature does the writer mention? (Choose one of the two correct answers.)"
+          "hint": "Choose TWO letters, A–E. (Select one of the two correct answers.)",
+          "prompt": "When comparing twentieth-century stadiums to ancient amphitheatres in Section D, which TWO negative features does the writer mention?",
+          "options": [
+            { "value": "A", "text": "They are less imaginatively designed." },
+            { "value": "B", "text": "They are less spacious." },
+            { "value": "C", "text": "They are in less convenient locations." },
+            { "value": "D", "text": "They are less versatile." },
+            { "value": "E", "text": "They are made of less durable materials." }
+          ]
         },
         {
           "key": "24",
           "label": "Q24",
           "shortLabel": "24",
           "type": "multipleChoice",
-          "hint": "Choose ONE letter, A–E.",
-          "prompt": "When comparing twentieth-century stadiums to ancient amphitheatres in Section D, which negative feature does the writer mention? (Choose the other correct answer.)"
+          "hint": "Choose TWO letters, A–E. (Select the other correct answer.)",
+          "prompt": "When comparing twentieth-century stadiums to ancient amphitheatres in Section D, which TWO negative features does the writer mention?",
+          "options": [
+            { "value": "A", "text": "They are less imaginatively designed." },
+            { "value": "B", "text": "They are less spacious." },
+            { "value": "C", "text": "They are in less convenient locations." },
+            { "value": "D", "text": "They are less versatile." },
+            { "value": "E", "text": "They are made of less durable materials." }
+          ]
         },
         {
           "key": "25",
           "label": "Q25",
           "shortLabel": "25",
           "type": "multipleChoice",
-          "hint": "Choose ONE letter, A–E.",
-          "prompt": "Which advantage of modern stadium design does the writer mention? (Choose one of the two correct answers.)"
+          "hint": "Choose TWO letters, A–E. (Select one of the two correct answers.)",
+          "prompt": "Which TWO advantages of modern stadium design does the writer mention?",
+          "options": [
+            { "value": "A", "text": "offering improved amenities for the enjoyment of sports events" },
+            { "value": "B", "text": "bringing community life back into the city environment" },
+            { "value": "C", "text": "facilitating research into solar and wind energy solutions" },
+            { "value": "D", "text": "enabling local residents to reduce their consumption of electricity" },
+            { "value": "E", "text": "providing a suitable site for the installation of renewable power generators" }
+          ]
         },
         {
           "key": "26",
           "label": "Q26",
           "shortLabel": "26",
           "type": "multipleChoice",
-          "hint": "Choose ONE letter, A–E.",
-          "prompt": "Which advantage of modern stadium design does the writer mention? (Choose the other correct answer.)"
+          "hint": "Choose TWO letters, A–E. (Select the other correct answer.)",
+          "prompt": "Which TWO advantages of modern stadium design does the writer mention?",
+          "options": [
+            { "value": "A", "text": "offering improved amenities for the enjoyment of sports events" },
+            { "value": "B", "text": "bringing community life back into the city environment" },
+            { "value": "C", "text": "facilitating research into solar and wind energy solutions" },
+            { "value": "D", "text": "enabling local residents to reduce their consumption of electricity" },
+            { "value": "E", "text": "providing a suitable site for the installation of renewable power generators" }
+          ]
         }
       ]
     },
@@ -237,7 +269,19 @@
           "shortLabel": "27",
           "type": "multipleChoice",
           "hint": "Choose the correct letter, A–J.",
-          "prompt": "Charles II then formed a ________ with the Scots."
+          "prompt": "Charles II then formed a ________ with the Scots.",
+          "options": [
+            { "value": "A", "text": "military innovation" },
+            { "value": "B", "text": "large reward" },
+            { "value": "C", "text": "widespread conspiracy" },
+            { "value": "D", "text": "relative safety" },
+            { "value": "E", "text": "new government" },
+            { "value": "F", "text": "decisive victory" },
+            { "value": "G", "text": "political debate" },
+            { "value": "H", "text": "strategic alliance" },
+            { "value": "I", "text": "popular solution" },
+            { "value": "J", "text": "religious conviction" }
+          ]
         },
         {
           "key": "28",
@@ -245,7 +289,19 @@
           "shortLabel": "28",
           "type": "multipleChoice",
           "hint": "Choose the correct letter, A–J.",
-          "prompt": "In order to become King of Scots, he abandoned an important ________ that was held by his father and had contributed to his father’s death."
+          "prompt": "In order to become King of Scots, he abandoned an important ________ that was held by his father and had contributed to his father’s death.",
+          "options": [
+            { "value": "A", "text": "military innovation" },
+            { "value": "B", "text": "large reward" },
+            { "value": "C", "text": "widespread conspiracy" },
+            { "value": "D", "text": "relative safety" },
+            { "value": "E", "text": "new government" },
+            { "value": "F", "text": "decisive victory" },
+            { "value": "G", "text": "political debate" },
+            { "value": "H", "text": "strategic alliance" },
+            { "value": "I", "text": "popular solution" },
+            { "value": "J", "text": "religious conviction" }
+          ]
         },
         {
           "key": "29",
@@ -253,7 +309,19 @@
           "shortLabel": "29",
           "type": "multipleChoice",
           "hint": "Choose the correct letter, A–J.",
-          "prompt": "The battle led to a ________ for the Parliamentarians."
+          "prompt": "The battle led to a ________ for the Parliamentarians.",
+          "options": [
+            { "value": "A", "text": "military innovation" },
+            { "value": "B", "text": "large reward" },
+            { "value": "C", "text": "widespread conspiracy" },
+            { "value": "D", "text": "relative safety" },
+            { "value": "E", "text": "new government" },
+            { "value": "F", "text": "decisive victory" },
+            { "value": "G", "text": "political debate" },
+            { "value": "H", "text": "strategic alliance" },
+            { "value": "I", "text": "popular solution" },
+            { "value": "J", "text": "religious conviction" }
+          ]
         },
         {
           "key": "30",
@@ -261,7 +329,19 @@
           "shortLabel": "30",
           "type": "multipleChoice",
           "hint": "Choose the correct letter, A–J.",
-          "prompt": "A ________ was offered for Charles’s capture."
+          "prompt": "A ________ was offered for Charles’s capture.",
+          "options": [
+            { "value": "A", "text": "military innovation" },
+            { "value": "B", "text": "large reward" },
+            { "value": "C", "text": "widespread conspiracy" },
+            { "value": "D", "text": "relative safety" },
+            { "value": "E", "text": "new government" },
+            { "value": "F", "text": "decisive victory" },
+            { "value": "G", "text": "political debate" },
+            { "value": "H", "text": "strategic alliance" },
+            { "value": "I", "text": "popular solution" },
+            { "value": "J", "text": "religious conviction" }
+          ]
         },
         {
           "key": "31",
@@ -269,7 +349,19 @@
           "shortLabel": "31",
           "type": "multipleChoice",
           "hint": "Choose the correct letter, A–J.",
-          "prompt": "After six weeks spent in hiding, he eventually managed to reach the ________ of continental Europe."
+          "prompt": "After six weeks spent in hiding, he eventually managed to reach the ________ of continental Europe.",
+          "options": [
+            { "value": "A", "text": "military innovation" },
+            { "value": "B", "text": "large reward" },
+            { "value": "C", "text": "widespread conspiracy" },
+            { "value": "D", "text": "relative safety" },
+            { "value": "E", "text": "new government" },
+            { "value": "F", "text": "decisive victory" },
+            { "value": "G", "text": "political debate" },
+            { "value": "H", "text": "strategic alliance" },
+            { "value": "I", "text": "popular solution" },
+            { "value": "J", "text": "religious conviction" }
+          ]
         },
         {
           "key": "32",
@@ -309,7 +401,13 @@
           "shortLabel": "36",
           "type": "multipleChoice",
           "hint": "Choose the correct letter, A, B, C or D.",
-          "prompt": "What is the reviewer’s main purpose in the first paragraph?"
+          "prompt": "What is the reviewer’s main purpose in the first paragraph?",
+          "options": [
+            { "value": "A", "text": "to describe what happened during the Battle of Worcester" },
+            { "value": "B", "text": "to give an account of the circumstances leading to Charles II’s escape" },
+            { "value": "C", "text": "to provide details of the Parliamentarians’ political views" },
+            { "value": "D", "text": "to compare Charles II’s beliefs with those of his father" }
+          ]
         },
         {
           "key": "37",
@@ -317,7 +415,13 @@
           "shortLabel": "37",
           "type": "multipleChoice",
           "hint": "Choose the correct letter, A, B, C or D.",
-          "prompt": "Why does the reviewer include examples of the fugitives’ behaviour in the third paragraph?"
+          "prompt": "Why does the reviewer include examples of the fugitives’ behaviour in the third paragraph?",
+          "options": [
+            { "value": "A", "text": "to explain how close Charles II came to losing his life" },
+            { "value": "B", "text": "to suggest that Charles II’s supporters were badly prepared" },
+            { "value": "C", "text": "to illustrate how the events of the six weeks are brought to life" },
+            { "value": "D", "text": "to argue that certain aspects are not as well known as they should be" }
+          ]
         },
         {
           "key": "38",
@@ -325,7 +429,13 @@
           "shortLabel": "38",
           "type": "multipleChoice",
           "hint": "Choose the correct letter, A, B, C or D.",
-          "prompt": "What point does the reviewer make about Charles II in the fourth paragraph?"
+          "prompt": "What point does the reviewer make about Charles II in the fourth paragraph?",
+          "options": [
+            { "value": "A", "text": "He chose to celebrate what was essentially a defeat." },
+            { "value": "B", "text": "He misunderstood the motives of his opponents." },
+            { "value": "C", "text": "He aimed to restore people’s faith in the monarchy." },
+            { "value": "D", "text": "He was driven by a desire to be popular." }
+          ]
         },
         {
           "key": "39",
@@ -333,7 +443,13 @@
           "shortLabel": "39",
           "type": "multipleChoice",
           "hint": "Choose the correct letter, A, B, C or D.",
-          "prompt": "What does the reviewer say about Charles Spencer in the fifth paragraph?"
+          "prompt": "What does the reviewer say about Charles Spencer in the fifth paragraph?",
+          "options": [
+            { "value": "A", "text": "His decision to write the book comes as a surprise." },
+            { "value": "B", "text": "He takes an unbiased approach to the subject matter." },
+            { "value": "C", "text": "His descriptions of events would be better if they included more detail." },
+            { "value": "D", "text": "He chooses language that is suitable for a twenty-first-century audience." }
+          ]
         },
         {
           "key": "40",
@@ -341,7 +457,13 @@
           "shortLabel": "40",
           "type": "multipleChoice",
           "hint": "Choose the correct letter, A, B, C or D.",
-          "prompt": "When the reviewer says the book ‘doesn’t quite hit the mark’, she is making the point that"
+          "prompt": "When the reviewer says the book ‘doesn’t quite hit the mark’, she is making the point that",
+          "options": [
+            { "value": "A", "text": "it overlooks the impact of events on ordinary people." },
+            { "value": "B", "text": "it lacks an analysis of prevalent views on monarchy." },
+            { "value": "C", "text": "it omits any references to the deceit practised by Charles II during his time in hiding." },
+            { "value": "D", "text": "it fails to address whether Charles II’s experiences had a lasting influence on him." }
+          ]
         }
       ]
     }
