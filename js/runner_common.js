@@ -93,13 +93,13 @@ export async function bootModule({ moduleName, manifestPath }) {
       if (!raw) return new Set();
       const arr = JSON.parse(raw);
       if (Array.isArray(arr)) return new Set(arr);
-    } catch { /* ignore */ }
+    } catch {}
     return new Set();
   };
 
   const saveFlags = () => {
     if (!flagsKey) return;
-    try { localStorage.setItem(flagsKey, JSON.stringify(Array.from(flags))); } catch { /* ignore */ }
+    try { localStorage.setItem(flagsKey, JSON.stringify(Array.from(flags))); } catch {}
   };
 
   const updateFlagBtn = () => {
@@ -116,11 +116,24 @@ export async function bootModule({ moduleName, manifestPath }) {
     else el.timer.classList.remove("danger");
   };
 
+  const applySectionSelection = () => {
+    const cur = engine.getCurrent();
+    if (!cur) return;
+    const currentSectionId = cur.sectionId;
+    if (el.sectionSelect && el.sectionSelect.value !== currentSectionId) {
+      el.sectionSelect.value = currentSectionId ?? "";
+    }
+  };
+
   const syncSectionResources = () => {
-    const section = currentTest.sections?.[engine.sectionIndex];
+    const cur = engine.getCurrent();
+    if (!cur) return;
+    const sectionId = cur.sectionId;
+    const section = currentTest.sections?.find(s => s.id === sectionId);
 
     if (el.materialFrame) {
-      const target = resolveAssetPath(section?.materialHtml ?? currentTest.assets?.materialHtml ?? null);
+      const htmlPath = section?.materialHtml ?? currentTest.assets?.materialHtml ?? null;
+      const target = resolveAsset(htmlPath);
       if (target) {
         if (el.materialFrame.getAttribute("src") !== target) el.materialFrame.src = target;
       } else {
