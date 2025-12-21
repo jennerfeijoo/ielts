@@ -1,4 +1,4 @@
-import { loadJSON, blobURLFromFile } from "./loader.js";
+import { loadJSON } from "./loader.js";
 import { CountdownTimer } from "./timer.js";
 
 const STORAGE_KEY = "ielts:writing:v1";
@@ -11,9 +11,7 @@ const el = {
   wordCount: document.getElementById("wordCount"),
   timer: document.getElementById("timer"),
   resetBtn: document.getElementById("resetBtn"),
-  exportBtn: document.getElementById("exportBtn"),
-  pdfFile: document.getElementById("pdfFile"),
-  pdfFrame: document.getElementById("pdfFrame")
+  exportBtn: document.getElementById("exportBtn")
 };
 
 let sets = null;
@@ -84,7 +82,20 @@ async function loadSet(path) {
 
 function renderTask(setJson) {
   const t = setJson.tasks[state.taskIndex];
-  el.promptBox.innerHTML = `<strong>${t.title ?? `Task ${t.task ?? (state.taskIndex+1)}`}</strong><br><span class="small">${t.promptNote ?? "Use your PDF prompt."}</span>`;
+  const promptLines = Array.isArray(t.prompt) ? t.prompt : (t.prompt ? [t.prompt] : []);
+  const note = t.promptNote ?? "";
+  const title = t.title ?? `Task ${t.task ?? (state.taskIndex+1)}`;
+  const numberedLabel = `Task ${t.task ?? (state.taskIndex+1)}`;
+  const parts = [
+    `<div class="badge">${numberedLabel}</div>`,
+    `<div class="h1" style="font-size:18px; margin-top:6px">${title}</div>`
+  ];
+  if (promptLines.length) {
+    parts.push(`<div class="notice" style="margin-top:8px">${promptLines.map(p => `<p style="margin:0 0 8px 0">${p}</p>`).join("")}</div>`);
+  } else if (note) {
+    parts.push(`<div class="small" style="margin-top:6px">${note}</div>`);
+  }
+  el.promptBox.innerHTML = parts.join("");
   el.essay.value = state.essay ?? "";
   el.wordCount.textContent = String(countWords(el.essay.value));
 
@@ -129,12 +140,6 @@ el.resetBtn.addEventListener("click", () => {
 el.exportBtn.addEventListener("click", () => {
   const words = countWords(state.essay);
   downloadText("ielts-writing.txt", `WORDS: ${words}\n\n${state.essay}`);
-});
-
-el.pdfFile?.addEventListener("change", (e) => {
-  const file = e.target.files?.[0];
-  if (!file) return;
-  el.pdfFrame.src = blobURLFromFile(file);
 });
 
 init().catch(err => {
