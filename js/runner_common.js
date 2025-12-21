@@ -253,8 +253,7 @@ export async function bootModule({ moduleName, manifestPath }) {
     render();
   };
 
-  // Events
-  el.testSelect.addEventListener("change", async () => {
+  el.testSelect?.addEventListener("change", async () => {
     await loadTest(el.testSelect.value);
   });
 
