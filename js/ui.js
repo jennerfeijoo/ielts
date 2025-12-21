@@ -39,17 +39,6 @@ export function renderQuestion(container, q, engine, opts = {}) {
   }
 
   const optionsList = Array.isArray(q.options) ? q.options : [];
-  if (optionsList.length) {
-    const list = document.createElement("div");
-    list.className = "small";
-    list.style.lineHeight = "1.5";
-    for (const opt of optionsList) {
-      const row = document.createElement("div");
-      row.textContent = `${opt.letter ? `${opt.letter}) ` : ""}${opt.text ?? ""}`.trim();
-      list.appendChild(row);
-    }
-    wrap.appendChild(list);
-  }
 
   const clearBtn = document.createElement("button");
   clearBtn.type = "button";
@@ -68,8 +57,37 @@ export function renderQuestion(container, q, engine, opts = {}) {
   const currentRaw = canonicalVal(engine, q.key);
   const current = Array.isArray(currentRaw) ? currentRaw : (typeof currentRaw === "string" ? currentRaw : "");
   const letters = q.letters ?? ["A","B","C","D","E","F","G","H","I","J"];
-  const selectValues = (optionsList.length
-    ? optionsList.map(o => o.letter ?? o.text).filter(Boolean)
+  const letterForIndex = (idx) => normalizeLetter(letters[idx] ?? String.fromCharCode(65 + idx));
+  const normalizedOptions = (() => {
+    const opts = [];
+    if (Array.isArray(q.options) && q.options.length) {
+      q.options.forEach((opt, idx) => {
+        if (typeof opt === "string") {
+          opts.push({ id: letterForIndex(idx), text: opt });
+          return;
+        }
+        const id = normalizeLetter(opt.id ?? opt.value ?? opt.letter ?? letters[idx] ?? String.fromCharCode(65 + idx));
+        const text = opt.text ?? opt.label ?? opt.value ?? "";
+        opts.push({ id, text });
+      });
+      return opts;
+    }
+    if (Array.isArray(q.optionTexts) && q.optionTexts.length) {
+      q.optionTexts.forEach((text, idx) => {
+        opts.push({ id: letterForIndex(idx), text });
+      });
+      return opts;
+    }
+    if (Array.isArray(q.letters) && Array.isArray(q.optionTexts)) {
+      q.optionTexts.forEach((text, idx) => {
+        opts.push({ id: letterForIndex(idx), text });
+      });
+      return opts;
+    }
+    return opts;
+  })();
+  const selectValues = (normalizedOptions.length
+    ? normalizedOptions.map(o => o.id).filter(Boolean)
     : letters
   ).map(normalizeLetter);
   const expectedCount = q.expectedCount ?? 2;
@@ -213,12 +231,109 @@ export function renderQuestion(container, q, engine, opts = {}) {
   }
 
   if (type === "multipleChoice") {
-    const group = makeRadioGroup(selectValues);
-    body.appendChild(group);
-    clearBtn.addEventListener("click", () => {
-      setValue(engine, q.key, "");
-      group.querySelectorAll("input[type='radio']").forEach(r => { r.checked = false; });
+    if (!normalizedOptions.length) {
+      const fallback = document.createElement("div");
+      fallback.className = "notice";
+      fallback.textContent = "No options available.";
+      body.appendChild(fallback);
+      return;
+    }
+    const maxSelect = (() => {
+      if (Number.isFinite(Number(q.maxSelect)) && Number(q.maxSelect) > 0) return Number(q.maxSelect);
+      if (typeof q.expectedCount === "number" && q.expectedCount > 1) return q.expectedCount;
+      if (typeof q.hint === "string" && /choose\s+two/i.test(q.hint)) return 2;
+      return 1;
+    })();
+    const allowMulti = maxSelect >= 2;
+    const parseResponse = (val) => {
+      if (Array.isArray(val)) return val.map(normalizeLetter).filter(Boolean);
+      if (typeof val === "string") {
+        if (val.includes(",")) return val.split(",").map(normalizeLetter).filter(Boolean);
+        const solo = normalizeLetter(val);
+        return solo ? [solo] : [];
+      }
+      return [];
+    };
+    const state = new Set(parseResponse(currentRaw));
+    if (!allowMulti && state.size > 1) {
+      const first = Array.from(state)[0];
+      state.clear();
+      if (first) state.add(first);
+    }
+    const group = document.createElement("div");
+    group.className = "column";
+    group.style.gap = "8px";
+
+    const commit = () => {
+      const sorted = Array.from(state).filter(Boolean).sort();
+      setValue(engine, q.key, allowMulti ? sorted : (sorted[0] ?? ""));
       callChange();
+    };
+
+    const refreshDisabled = () => {
+      if (!allowMulti) return;
+      const atMax = state.size >= maxSelect;
+      group.querySelectorAll("input[type='checkbox']").forEach(cb => {
+        if (!cb.checked) cb.disabled = atMax;
+      });
+    };
+
+    normalizedOptions.forEach((opt, idx) => {
+      const label = document.createElement("label");
+      label.style.display = "flex";
+      label.style.alignItems = "flex-start";
+      label.style.gap = "8px";
+      label.style.fontSize = "14px";
+
+      const input = document.createElement("input");
+      input.type = allowMulti ? "checkbox" : "radio";
+      input.name = `mc-${q.key}`;
+      input.value = opt.id ?? letterForIndex(idx);
+      input.checked = state.has(input.value);
+      input.addEventListener("change", () => {
+        if (allowMulti) {
+          if (input.checked) {
+            if (state.size >= maxSelect) {
+              input.checked = false;
+              return;
+            }
+            state.add(input.value);
+          } else {
+            state.delete(input.value);
+          }
+        } else {
+          state.clear();
+          if (input.checked) state.add(input.value);
+        }
+        refreshDisabled();
+        commit();
+      });
+
+      const letterSpan = document.createElement("span");
+      letterSpan.style.fontWeight = "600";
+      letterSpan.textContent = `${input.value || letterForIndex(idx)}.`;
+
+      const textSpan = document.createElement("span");
+      textSpan.textContent = opt.text ?? "";
+
+      label.appendChild(input);
+      label.appendChild(letterSpan);
+      label.appendChild(textSpan);
+      group.appendChild(label);
+    });
+
+    refreshDisabled();
+    body.appendChild(group);
+    if (allowMulti) {
+      const note = document.createElement("div");
+      note.className = "small";
+      note.textContent = `Choose up to ${maxSelect} option(s).`;
+      wrap.appendChild(note);
+    }
+    clearBtn.addEventListener("click", () => {
+      state.clear();
+      group.querySelectorAll("input").forEach(inp => { inp.checked = false; inp.disabled = false; });
+      commit();
     });
     wrap.appendChild(clearBtn);
     return;
