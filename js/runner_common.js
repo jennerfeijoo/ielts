@@ -102,6 +102,20 @@ export async function bootModule({ moduleName, manifestPath }) {
 
   const getSectionById = (secId) => (currentTest?.sections ?? []).find(s => s.id === secId) ?? null;
 
+  const getAnswerValue = (key) => {
+    if (!engine || !key) return "";
+    if (typeof engine.getAnswer === "function") return engine.getAnswer(key) ?? "";
+    if (typeof engine.getResponse === "function") return engine.getResponse(key) ?? "";
+    return engine.responses?.[key] ?? "";
+  };
+
+  const setAnswerValue = (key, value) => {
+    if (!engine || !key) return;
+    if (typeof engine.setAnswer === "function") engine.setAnswer(key, value);
+    else if (typeof engine.setResponse === "function") engine.setResponse(key, value);
+    else if (engine.responses) engine.responses[key] = value;
+  };
+
   const syncSectionResources = () => {
     if (!engine || !currentTest) return;
 
@@ -146,7 +160,94 @@ export async function bootModule({ moduleName, manifestPath }) {
     return engine.questionFlat.filter(q => q.sectionId === secId);
   };
 
-  const renderAll = () => {
+  const sheetHtmlCache = new Map();
+  let renderedSheetSectionId = null;
+  let lastQuestionKey = null;
+
+  const loadSheetTemplate = async (section) => {
+    if (!section?.sheetHtml) return null;
+    if (sheetHtmlCache.has(section.id)) return sheetHtmlCache.get(section.id);
+    const url = resolveAsset(section.sheetHtml);
+    if (!url) return null;
+    try {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`Sheet fetch failed: ${res.status}`);
+      const html = await res.text();
+      sheetHtmlCache.set(section.id, html);
+      return html;
+    } catch (err) {
+      console.error(err);
+      setStatus("Unable to load section sheet.");
+      return null;
+    }
+  };
+
+  const highlightBlank = (key, { scroll } = {}) => {
+    if (!el.question) return;
+    const blanks = Array.from(el.question.querySelectorAll("[data-q]"));
+    blanks.forEach(b => b.classList?.remove("active"));
+    const target = blanks.find(b => `${b.dataset.q}` === `${key}`);
+    if (target) {
+      target.classList.add("active");
+      if (scroll) target.scrollIntoView({ block: "nearest" });
+    }
+  };
+
+  const syncSheetValues = () => {
+    if (!el.question) return;
+    const blanks = el.question.querySelectorAll("input[data-q], textarea[data-q]");
+    blanks.forEach(inp => {
+      const key = inp.dataset.q?.trim();
+      if (!key) return;
+      const val = getAnswerValue(key) ?? "";
+      if (inp.value !== val) inp.value = val;
+    });
+  };
+
+  const bindSheetInputs = () => {
+    if (!el.question) return;
+    const blanks = el.question.querySelectorAll("input[data-q], textarea[data-q]");
+    blanks.forEach(inp => {
+      const key = inp.dataset.q?.trim();
+      if (!key) return;
+      const val = getAnswerValue(key) ?? "";
+      if (inp.value !== val) inp.value = val;
+      inp.addEventListener("input", () => {
+        setAnswerValue(key, inp.value.trim());
+        refreshNav();
+      });
+    });
+  };
+
+  const renderSheetForSection = async (section, curKey, shouldScroll) => {
+    const html = await loadSheetTemplate(section);
+    if (!html) return false;
+    if (renderedSheetSectionId !== section.id) {
+      el.question.innerHTML = html;
+      renderedSheetSectionId = section.id;
+      bindSheetInputs();
+    } else {
+      syncSheetValues();
+    }
+    highlightBlank(curKey, { scroll: shouldScroll });
+    return true;
+  };
+
+  const navPickHandler = async (pickedKey) => {
+    const idx = engine.questionFlat.findIndex(q => q.key === pickedKey);
+    if (idx >= 0) {
+      engine.goToIndex(idx);
+      await renderAll();
+    }
+  };
+
+  const refreshNav = () => {
+    const cur = engine.getCurrent();
+    const navQs = questionsForCurrentSection();
+    renderNav(el.qnav, navQs, engine.responses, cur?.key, navPickHandler, flags);
+  };
+
+  const renderAll = async () => {
     if (!engine || !currentTest) return;
 
     syncSectionResources();
@@ -156,35 +257,24 @@ export async function bootModule({ moduleName, manifestPath }) {
     if (secId) el.sectionSelect.value = secId;
 
     const cur = engine.getCurrent();
-    const navQs = questionsForCurrentSection();
+    const section = getSectionById(cur?.sectionId);
+    const shouldScroll = lastQuestionKey !== cur?.key;
 
-    renderNav(
-      el.qnav,
-      navQs,
-      engine.responses,
-      cur.key,
-      (pickedKey) => {
-        const idx = engine.questionFlat.findIndex(q => q.key === pickedKey);
-        if (idx >= 0) {
-          engine.goToIndex(idx);
-          renderAll();
+    refreshNav();
+
+    const usedSheet = moduleName === "listening" && section?.sheetHtml
+      ? await renderSheetForSection(section, cur?.key, shouldScroll)
+      : false;
+
+    if (!usedSheet) {
+      renderedSheetSectionId = null;
+      renderQuestion(el.question, cur, engine, {
+        onAnswerChange: () => {
+          updateFlagBtn();
+          refreshNav();
         }
-      },
-      flags
-    );
-
-    renderQuestion(el.question, cur, engine, {
-      onAnswerChange: () => {
-        // refresh nav + flag state without heavy work
-        updateFlagBtn();
-        const cur2 = engine.getCurrent();
-        const nav2 = questionsForCurrentSection();
-        renderNav(el.qnav, nav2, engine.responses, cur2.key, (pickedKey) => {
-          const idx = engine.questionFlat.findIndex(q => q.key === pickedKey);
-          if (idx >= 0) { engine.goToIndex(idx); renderAll(); }
-        }, flags);
-      }
-    });
+      });
+    }
 
     updateFlagBtn();
 
@@ -192,6 +282,8 @@ export async function bootModule({ moduleName, manifestPath }) {
       `Section ${engine.sectionIndex + 1}/${(currentTest.sections ?? []).length} • ` +
       `Q ${engine.qIndex + 1}/${engine.getTotalQuestions()}`
     );
+
+    lastQuestionKey = cur?.key ?? null;
   };
 
   const renderResults = (auto = false) => {
@@ -247,6 +339,10 @@ export async function bootModule({ moduleName, manifestPath }) {
     // ensure sectionIndex matches qIndex after load
     engine.goToIndex(engine.qIndex);
 
+    sheetHtmlCache.clear();
+    renderedSheetSectionId = null;
+    lastQuestionKey = null;
+
     flags = loadFlags(flagsKey);
 
     // timer
@@ -262,7 +358,7 @@ export async function bootModule({ moduleName, manifestPath }) {
     populateSections();
     if (el.results) el.results.textContent = "Submit to see results.";
 
-    renderAll();
+    await renderAll();
   };
 
   // ---------- wire UI ----------
@@ -273,33 +369,33 @@ export async function bootModule({ moduleName, manifestPath }) {
     await loadTest(el.testSelect.value);
   });
 
-  el.sectionSelect.addEventListener("change", () => {
+  el.sectionSelect.addEventListener("change", async () => {
     const secId = el.sectionSelect.value; // section.id
     const firstIdx = engine.questionFlat.findIndex(q => q.sectionId === secId);
     if (firstIdx >= 0) {
       engine.goToIndex(firstIdx);
-      renderAll();
+      await renderAll();
     }
   });
 
-  el.prevBtn?.addEventListener("click", () => { engine.prev(); renderAll(); });
-  el.nextBtn?.addEventListener("click", () => { engine.next(); renderAll(); });
+  el.prevBtn?.addEventListener("click", async () => { engine.prev(); await renderAll(); });
+  el.nextBtn?.addEventListener("click", async () => { engine.next(); await renderAll(); });
 
-  el.flagBtn?.addEventListener("click", () => {
+  el.flagBtn?.addEventListener("click", async () => {
     const k = engine.getCurrent()?.key;
     if (!k) return;
     if (flags.has(k)) flags.delete(k);
     else flags.add(k);
     saveFlags();
-    renderAll();
+    await renderAll();
   });
 
-  el.resetBtn?.addEventListener("click", () => {
+  el.resetBtn?.addEventListener("click", async () => {
     engine.resetAll();
     flags.clear();
     saveFlags();
     if (el.results) el.results.textContent = "Submit to see results.";
-    renderAll();
+    await renderAll();
   });
 
   el.submitBtn?.addEventListener("click", () => {

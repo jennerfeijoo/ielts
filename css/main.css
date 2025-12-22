@@ -236,7 +236,14 @@ hr{
 
 .ok{color:var(--ok); font-weight:800}
 .bad{color:var(--danger); font-weight:800}
-.sheet { font-size: 15px; line-height: 1.45; }
+.sheet {
+  font-size: 15px;
+  line-height: 1.45;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+}
 .sheet h2 { text-align: center; margin: 0 0 10px; font-size: 22px; }
 .sheet h3 { margin: 14px 0 6px; font-size: 16px; }
 .sheet-subhead { font-weight: 700; margin: 10px 0 4px; }
@@ -248,9 +255,10 @@ hr{
   min-width: 180px;
   padding: 2px 6px;
   border: none;
-  border-bottom: 2px dotted var(--text);
+  border-bottom: 2px dotted var(--border);
   background: transparent;
   font: inherit;
+  transition: border-color 0.15s ease, background 0.15s ease;
 }
 .blank-small { min-width: 110px; }
 
@@ -261,5 +269,6 @@ hr{
 }
 .blank.active {
   background: #fffbe6;
+  border-bottom-style: solid;
+  border-bottom-color: var(--accent);
 }
-
