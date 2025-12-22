@@ -262,4 +262,31 @@ hr{
 .blank.active {
   background: #fffbe6;
 }
+.sheet { font-size: 15px; line-height: 1.45; }
+.sheet h2 { text-align: center; margin: 0 0 10px; font-size: 22px; }
+.sheet h3 { margin: 14px 0 6px; font-size: 16px; }
+.sheet-subhead { font-weight: 700; margin: 10px 0 4px; }
+.sheet-bullets { margin: 6px 0 0 18px; padding: 0; }
+.sheet-bullets li { margin: 6px 0; }
+
+.blank{
+  display:inline-block;
+  min-width:180px;
+  padding:2px 6px;
+  border:none;
+  border-bottom:2px dotted var(--text);
+  background:transparent;
+  color:var(--text);
+  font:inherit;
+}
+.blank-small{ min-width:110px; }
+
+.blank:focus{
+  outline:none;
+  border-bottom-style:solid;
+  border-bottom-color:var(--accent);
+}
+.blank.active{
+  background:#fffbe6;
+}
 
