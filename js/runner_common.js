@@ -5,6 +5,21 @@ import { CountdownTimer } from "./timer.js";
 import { renderQuestion, renderNav } from "./ui.js";
 import { gradeModule, estimateBand } from "./grader.js";
 
+/**
+ * Sheet mode:
+ * If a section has `sheetHtml`, we render that HTML into #question and bind
+ * any inputs/textarea/select with [data-q="..."] to engine responses.
+ *
+ * Intended use: Listening Part 1 “form” like IELTS on computer.
+ *
+ * JSON example (inside a section):
+ *   "sheetHtml": "assets/sheets/test1/listening_part1.html"
+ *
+ * In the HTML:
+ *   <input class="blank" data-q="1" />
+ *   <input class="blank" data-q="2" />
+ *   ...
+ */
 export async function bootModule({ moduleName, manifestPath }) {
   const el = {
     testSelect: document.getElementById("testSelect"),
@@ -66,6 +81,16 @@ export async function bootModule({ moduleName, manifestPath }) {
     return raw;
   };
 
+  // Safe CSS escaping for querySelector
+  const cssEscape = (s) => {
+    try {
+      // Modern browsers
+      if (window.CSS && typeof window.CSS.escape === "function") return window.CSS.escape(String(s));
+    } catch {}
+    // Minimal fallback
+    return String(s).replace(/["\\]/g, "\\$&");
+  };
+
   // ---------- state ----------
   let currentTest = null;
   let engine = null;
@@ -73,6 +98,10 @@ export async function bootModule({ moduleName, manifestPath }) {
 
   let flags = new Set();
   let flagsKey = "";
+
+  // Sheet-mode cache
+  let renderedSheetSectionId = null;
+  let renderedSheetHtmlUrl = null;
 
   const loadFlags = (key) => {
     try {
@@ -87,7 +116,9 @@ export async function bootModule({ moduleName, manifestPath }) {
 
   const saveFlags = () => {
     if (!flagsKey) return;
-    try { localStorage.setItem(flagsKey, JSON.stringify(Array.from(flags))); } catch {}
+    try {
+      localStorage.setItem(flagsKey, JSON.stringify(Array.from(flags)));
+    } catch {}
   };
 
   const updateFlagBtn = () => {
@@ -100,13 +131,17 @@ export async function bootModule({ moduleName, manifestPath }) {
 
   const getCurrentSectionId = () => engine?.getCurrent()?.sectionId ?? null;
 
-  const getSectionById = (secId) => (currentTest?.sections ?? []).find(s => s.id === secId) ?? null;
+  const getSectionById = (secId) => (currentTest?.sections ?? []).find((s) => s.id === secId) ?? null;
+
+  const getCurrentSection = () => {
+    const secId = getCurrentSectionId();
+    return secId ? getSectionById(secId) : null;
+  };
 
   const syncSectionResources = () => {
     if (!engine || !currentTest) return;
 
-    const secId = getCurrentSectionId();
-    const section = getSectionById(secId);
+    const section = getCurrentSection();
 
     // Reading: passage iframe
     if (el.materialFrame) {
@@ -114,7 +149,7 @@ export async function bootModule({ moduleName, manifestPath }) {
       if (src) el.materialFrame.src = src;
     }
 
-    // Listening: audio
+    // Listening: audio (optional; you said you can load manually; still keep auto-load logic)
     if (el.audio) {
       const raw =
         section?.audioFile ??
@@ -143,10 +178,129 @@ export async function bootModule({ moduleName, manifestPath }) {
 
   const questionsForCurrentSection = () => {
     const secId = getCurrentSectionId();
-    return engine.questionFlat.filter(q => q.sectionId === secId);
+    return engine.questionFlat.filter((q) => q.sectionId === secId);
   };
 
-  const renderAll = () => {
+  // ---------- sheet mode ----------
+  async function fetchHtml(url) {
+    const res = await fetch(url, { cache: "no-store" });
+    if (!res.ok) throw new Error(`Failed to load sheetHtml (${res.status}): ${url}`);
+    return await res.text();
+  }
+
+  function getResponseValue(key) {
+    // engine.responses is used by renderNav; prefer engine.getResponse if available
+    if (engine && typeof engine.getResponse === "function") return engine.getResponse(key) ?? "";
+    return (engine?.responses?.[key] ?? "");
+  }
+
+  function setResponseValue(key, value) {
+    if (!engine) return;
+    // prefer engine.setResponse if available
+    if (typeof engine.setResponse === "function") {
+      engine.setResponse(key, value);
+      return;
+    }
+    // fallback: directly set
+    engine.responses[key] = value;
+  }
+
+  function bindSheetInputs() {
+    if (!el.question) return;
+
+    const fields = el.question.querySelectorAll("[data-q]");
+    fields.forEach((field) => {
+      const keyRaw = field.getAttribute("data-q");
+      if (!keyRaw) return;
+
+      const key = String(keyRaw).trim();
+      if (!key) return;
+
+      // Prefill current stored answer
+      const current = getResponseValue(key);
+      if (typeof field.value !== "undefined" && field.value !== current) {
+        field.value = current;
+      }
+
+      // Avoid multiple identical listeners if re-binding
+      if (field.dataset.bound === "1") return;
+      field.dataset.bound = "1";
+
+      field.addEventListener("input", () => {
+        const v = (typeof field.value === "string") ? field.value : "";
+        setResponseValue(key, v);
+
+        // Update nav highlighting (answered state)
+        const cur = engine.getCurrent();
+        const nav = questionsForCurrentSection();
+        renderNav(
+          el.qnav,
+          nav,
+          engine.responses,
+          cur.key,
+          (pickedKey) => {
+            const idx = engine.questionFlat.findIndex((q) => q.key === pickedKey);
+            if (idx >= 0) {
+              engine.goToIndex(idx);
+              renderAll();
+            }
+          },
+          flags
+        );
+        updateFlagBtn();
+      });
+    });
+  }
+
+  function highlightActiveBlank(activeKey) {
+    if (!el.question) return;
+    const all = el.question.querySelectorAll("[data-q]");
+    all.forEach((x) => x.classList.remove("active"));
+
+    const selector = `[data-q="${cssEscape(activeKey)}"]`;
+    const target = el.question.querySelector(selector);
+    if (target) {
+      target.classList.add("active");
+      // keep focus behavior natural: only focus if user navigated (not on every render)
+      try {
+        target.scrollIntoView({ block: "nearest" });
+      } catch {}
+    }
+  }
+
+  async function ensureSheetRendered(section) {
+    if (!section?.sheetHtml) return false;
+
+    const sheetUrl = resolveAsset(section.sheetHtml);
+    if (!sheetUrl) return false;
+
+    // Only (re)render if section changed or URL changed
+    if (renderedSheetSectionId === section.id && renderedSheetHtmlUrl === sheetUrl) {
+      return true;
+    }
+
+    const html = await fetchHtml(sheetUrl);
+    el.question.innerHTML = html;
+
+    renderedSheetSectionId = section.id;
+    renderedSheetHtmlUrl = sheetUrl;
+
+    // bind immediately after injecting HTML
+    bindSheetInputs();
+    return true;
+  }
+
+  function clearSheetCacheIfNeeded(section) {
+    // When not in sheet mode, clear cache so next time it can re-render cleanly
+    if (!section?.sheetHtml) {
+      renderedSheetSectionId = null;
+      renderedSheetHtmlUrl = null;
+      // (do not clear el.question here; renderQuestion will replace it)
+    }
+  }
+
+  // ---------- render ----------
+  const renderAll = async () => {
     if (!engine || !currentTest) return;
 
     syncSectionResources();
@@ -164,7 +318,7 @@ export async function bootModule({ moduleName, manifestPath }) {
       engine.responses,
       cur.key,
       (pickedKey) => {
-        const idx = engine.questionFlat.findIndex(q => q.key === pickedKey);
+        const idx = engine.questionFlat.findIndex((q) => q.key === pickedKey);
         if (idx >= 0) {
           engine.goToIndex(idx);
           renderAll();
@@ -173,18 +327,40 @@ export async function bootModule({ moduleName, manifestPath }) {
       flags
     );
 
-    renderQuestion(el.question, cur, engine, {
-      onAnswerChange: () => {
-        // refresh nav + flag state without heavy work
-        updateFlagBtn();
-        const cur2 = engine.getCurrent();
-        const nav2 = questionsForCurrentSection();
-        renderNav(el.qnav, nav2, engine.responses, cur2.key, (pickedKey) => {
-          const idx = engine.questionFlat.findIndex(q => q.key === pickedKey);
-          if (idx >= 0) { engine.goToIndex(idx); renderAll(); }
-        }, flags);
-      }
-    });
+    const section = getCurrentSection();
+
+    // Sheet mode for Listening (or any module if you want): enabled by section.sheetHtml
+    const useSheet = !!section?.sheetHtml;
+
+    if (useSheet) {
+      await ensureSheetRendered(section);
+      bindSheetInputs();
+      highlightActiveBlank(cur.key);
+    } else {
+      clearSheetCacheIfNeeded(section);
+
+      renderQuestion(el.question, cur, engine, {
+        onAnswerChange: () => {
+          updateFlagBtn();
+          const cur2 = engine.getCurrent();
+          const nav2 = questionsForCurrentSection();
+          renderNav(
+            el.qnav,
+            nav2,
+            engine.responses,
+            cur2.key,
+            (pickedKey) => {
+              const idx = engine.questionFlat.findIndex((q) => q.key === pickedKey);
+              if (idx >= 0) {
+                engine.goToIndex(idx);
+                renderAll();
+              }
+            },
+            flags
+          );
+        },
+      });
+    }
 
     updateFlagBtn();
 
@@ -249,6 +425,10 @@ export async function bootModule({ moduleName, manifestPath }) {
 
     flags = loadFlags(flagsKey);
 
+    // reset sheet cache per test
+    renderedSheetSectionId = null;
+    renderedSheetHtmlUrl = null;
+
     // timer
     timer?.stop();
     timer = new CountdownTimer(
@@ -262,7 +442,7 @@ export async function bootModule({ moduleName, manifestPath }) {
     populateSections();
     if (el.results) el.results.textContent = "Submit to see results.";
 
-    renderAll();
+    await renderAll();
   };
 
   // ---------- wire UI ----------
@@ -273,33 +453,33 @@ export async function bootModule({ moduleName, manifestPath }) {
     await loadTest(el.testSelect.value);
   });
 
-  el.sectionSelect.addEventListener("change", () => {
+  el.sectionSelect.addEventListener("change", async () => {
     const secId = el.sectionSelect.value; // section.id
-    const firstIdx = engine.questionFlat.findIndex(q => q.sectionId === secId);
+    const firstIdx = engine.questionFlat.findIndex((q) => q.sectionId === secId);
     if (firstIdx >= 0) {
       engine.goToIndex(firstIdx);
-      renderAll();
+      await renderAll();
     }
   });
 
-  el.prevBtn?.addEventListener("click", () => { engine.prev(); renderAll(); });
-  el.nextBtn?.addEventListener("click", () => { engine.next(); renderAll(); });
+  el.prevBtn?.addEventListener("click", async () => { engine.prev(); await renderAll(); });
+  el.nextBtn?.addEventListener("click", async () => { engine.next(); await renderAll(); });
 
-  el.flagBtn?.addEventListener("click", () => {
+  el.flagBtn?.addEventListener("click", async () => {
     const k = engine.getCurrent()?.key;
     if (!k) return;
     if (flags.has(k)) flags.delete(k);
     else flags.add(k);
     saveFlags();
-    renderAll();
+    await renderAll();
   });
 
-  el.resetBtn?.addEventListener("click", () => {
+  el.resetBtn?.addEventListener("click", async () => {
     engine.resetAll();
     flags.clear();
     saveFlags();
     if (el.results) el.results.textContent = "Submit to see results.";
-    renderAll();
+    await renderAll();
   });
 
   el.submitBtn?.addEventListener("click", () => {
