@@ -209,27 +209,6 @@ export async function bootModule({ moduleName, manifestPath }) {
     if (!el.question) return;
 
     const fields = el.question.querySelectorAll("[data-q]");
-
-    const syncNavAnsweredState = () => {
-      const cur = engine.getCurrent();
-      const nav = questionsForCurrentSection();
-      renderNav(
-        el.qnav,
-        nav,
-        engine.responses,
-        cur.key,
-        (pickedKey) => {
-          const idx = engine.questionFlat.findIndex((q) => q.key === pickedKey);
-          if (idx >= 0) {
-            engine.goToIndex(idx);
-            renderAll();
-          }
-        },
-        flags
-      );
-      updateFlagBtn();
-    };
-
     fields.forEach((field) => {
       const keyRaw = field.getAttribute("data-q");
       if (!keyRaw) return;
@@ -237,61 +216,55 @@ export async function bootModule({ moduleName, manifestPath }) {
       const key = String(keyRaw).trim();
       if (!key) return;
 
+      // Prefill current stored answer
       const current = getResponseValue(key);
-
-      // Prefill value depending on field type
-      if (field instanceof HTMLInputElement && field.type === "radio") {
-        field.checked = normalizeLetter(field.value) === normalizeLetter(current);
-      } else if (typeof field.value !== "undefined") {
-        if (field.value !== current) field.value = current;
+      if (typeof field.value !== "undefined" && field.value !== current) {
+        field.value = current;
       }
 
       // Avoid multiple identical listeners if re-binding
       if (field.dataset.bound === "1") return;
       field.dataset.bound = "1";
 
-      const commit = () => {
-        if (field instanceof HTMLInputElement && field.type === "radio") {
-          if (!field.checked) return;
-          setResponseValue(key, field.value ?? "");
-        } else if (field instanceof HTMLInputElement && field.type === "checkbox") {
-          // Optional: treat checkbox as single-letter when checked, empty when unchecked
-          setResponseValue(key, field.checked ? (field.value ?? "") : "");
-        } else {
-          const v = (typeof field.value === "string") ? field.value : "";
-          setResponseValue(key, v);
-        }
-        syncNavAnsweredState();
-      };
+      field.addEventListener("input", () => {
+        const v = (typeof field.value === "string") ? field.value : "";
+        setResponseValue(key, v);
 
-      // Use change for select/radio/checkbox; input for textareas/text inputs
-      const useChange =
-        (field instanceof HTMLSelectElement) ||
-        (field instanceof HTMLInputElement && (field.type === "radio" || field.type === "checkbox"));
-
-      field.addEventListener(useChange ? "change" : "input", commit);
+        // Update nav highlighting (answered state)
+        const cur = engine.getCurrent();
+        const nav = questionsForCurrentSection();
+        renderNav(
+          el.qnav,
+          nav,
+          engine.responses,
+          cur.key,
+          (pickedKey) => {
+            const idx = engine.questionFlat.findIndex((q) => q.key === pickedKey);
+            if (idx >= 0) {
+              engine.goToIndex(idx);
+              renderAll();
+            }
+          },
+          flags
+        );
+        updateFlagBtn();
+      });
     });
   }
 
   function highlightActiveBlank(activeKey) {
     if (!el.question) return;
-    const all = el.question.querySelectorAll(".active");
+    const all = el.question.querySelectorAll("[data-q]");
     all.forEach((x) => x.classList.remove("active"));
 
-    // Prefer wrapper highlight if present
-    const wrapSel = `[data-qwrap="${cssEscape(activeKey)}"]`;
-    const wrap = el.question.querySelector(wrapSel);
-    if (wrap) {
-      wrap.classList.add("active");
-      try { wrap.scrollIntoView({ block: "nearest" }); } catch {}
-      return;
-    }
-
     const selector = `[data-q="${cssEscape(activeKey)}"]`;
-    const targets = el.question.querySelectorAll(selector);
-    if (targets.length) {
-      targets.forEach((t) => t.classList.add("active"));
-      try { targets[0].scrollIntoView({ block: "nearest" }); } catch {}
+    const target = el.question.querySelector(selector);
+    if (target) {
+      target.classList.add("active");
+      // keep focus behavior natural: only focus if user navigated (not on every render)
+      try {
+        target.scrollIntoView({ block: "nearest" });
+      } catch {}
     }
   }
 
@@ -328,6 +301,7 @@ export async function bootModule({ moduleName, manifestPath }) {
 
   // ---------- render ----------
   const renderAll = async () => {
+    try {
     if (!engine || !currentTest) return;
 
     syncSectionResources();
@@ -395,6 +369,10 @@ export async function bootModule({ moduleName, manifestPath }) {
       `Section ${engine.sectionIndex + 1}/${(currentTest.sections ?? []).length} • ` +
       `Q ${engine.qIndex + 1}/${engine.getTotalQuestions()}`
     );
+    } catch (err) {
+      console.error(err);
+      setStatus(`Error: ${err?.message ?? String(err)}`);
+    }
   };
 
   const renderResults = (auto = false) => {

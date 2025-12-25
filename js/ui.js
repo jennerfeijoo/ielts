@@ -32,12 +32,47 @@ export function renderQuestion(container, q, engine, opts = {}) {
   title.innerHTML = `<div class="badge"><strong>${labelText}</strong></div>${q.hint ? `<div class="small">${q.hint}</div>` : ""}`;
   wrap.appendChild(title);
 
+  // Optional shared options box (e.g., Reading word lists A–G)
+  if (q.optionsBox && Array.isArray(q.optionsBox.items) && q.optionsBox.items.length) {
+    const box = document.createElement("div");
+    box.className = "notice";
+
+    const heading = document.createElement("div");
+    heading.className = "small";
+    heading.style.marginBottom = "6px";
+    heading.innerHTML = `<strong>${q.optionsBox.title ?? "Options"}</strong>`;
+    box.appendChild(heading);
+
+    const grid = document.createElement("div");
+    grid.style.display = "grid";
+    grid.style.gridTemplateColumns = "repeat(2, minmax(0, 1fr))";
+    grid.style.gap = "6px";
+
+    q.optionsBox.items.forEach((it) => {
+      const row = document.createElement("div");
+      const letter = (it.letter ?? it.id ?? it.value ?? "").toString().trim();
+      const text = (it.text ?? it.label ?? "").toString();
+      row.innerHTML = `<strong>${letter}</strong> ${text}`;
+      grid.appendChild(row);
+    });
+
+    box.appendChild(grid);
+    wrap.appendChild(box);
+  }
+
   if (q.prompt) {
     const p = document.createElement("div");
     p.className = "notice";
     p.textContent = q.prompt;
     wrap.appendChild(p);
   }
+  if (q.note) {
+    const n = document.createElement("div");
+    n.className = "small";
+    n.textContent = typeof q.note === "string" ? q.note : "";
+    wrap.appendChild(n);
+  }
+
 
   const optionsList = Array.isArray(q.options) ? q.options : [];
 
