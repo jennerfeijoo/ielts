@@ -94,9 +94,9 @@
       ]
     },
     {
-      "id": "L2A",
-      "title": "Part 2A (Q11–14)",
-      "sheetHtml": "assets/sheets/test2/listening_part2.html",
+      "id": "L2",
+      "title": "Part 2 (Q11–20)",
+      "instructions": "Questions 11–14: Choose the correct letter, A, B or C. Questions 15–20: Match each location to an activity. Choose SIX answers from the box and write the correct letter, A–H, next to Questions 15–20.",
       "questions": [
         {
           "key": "11",
@@ -149,14 +149,7 @@
             "mini tractors",
             "the adventure playground"
           ]
-        }
-      ]
-    },
-    {
-      "id": "L2B",
-      "title": "Part 2B (Q15–20)",
-      "sheetHtml": "assets/sheets/test2/listening_part2.html",
-      "questions": [
+        },
         {
           "key": "15",
           "label": "Q15",
@@ -268,9 +261,9 @@
       ]
     },
     {
-      "id": "L3A",
-      "title": "Part 3A (Q21–22)",
-      "sheetHtml": "assets/sheets/test2/listening_part3.html",
+      "id": "L3",
+      "title": "Part 3 (Q21–30)",
+      "instructions": "Follow the instructions for each set of questions in Part 3.",
       "questions": [
         {
           "key": "21",
@@ -287,15 +280,10 @@
             "a reference to particular scenes"
           ],
           "allowMulti": true,
-          "expectedCount": 2
-        }
-      ]
-    },
-    {
-      "id": "L3B",
-      "title": "Part 3B (Q23–27)",
-      "sheetHtml": "assets/sheets/test2/listening_part3.html",
-      "questions": [
+          "expectedCount": 2,
+          "groupTitle": "Romeo and Juliet – Student discussion",
+          "groupPrompt": "Q21–22: Choose TWO letters (A–E)."
+        },
         {
           "key": "23",
           "label": "Q23",
@@ -311,7 +299,9 @@
             "E",
             "F",
             "G"
-          ]
+          ],
+          "groupTitle": "Romeo and Juliet – Student discussion",
+          "groupPrompt": "Q23–27: Opinions (A–G). Choose FIVE answers from the box and write the correct letter A–G."
         },
         {
           "key": "24",
@@ -328,7 +318,9 @@
             "E",
             "F",
             "G"
-          ]
+          ],
+          "groupTitle": "Romeo and Juliet – Student discussion",
+          "groupPrompt": "Q23–27: Opinions (A–G). Choose FIVE answers from the box and write the correct letter A–G."
         },
         {
           "key": "25",
@@ -345,7 +337,9 @@
             "E",
             "F",
             "G"
-          ]
+          ],
+          "groupTitle": "Romeo and Juliet – Student discussion",
+          "groupPrompt": "Q23–27: Opinions (A–G). Choose FIVE answers from the box and write the correct letter A–G."
         },
         {
           "key": "26",
@@ -362,7 +356,9 @@
             "E",
             "F",
             "G"
-          ]
+          ],
+          "groupTitle": "Romeo and Juliet – Student discussion",
+          "groupPrompt": "Q23–27: Opinions (A–G). Choose FIVE answers from the box and write the correct letter A–G."
         },
         {
           "key": "27",
@@ -379,15 +375,10 @@
             "E",
             "F",
             "G"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "L3C",
-      "title": "Part 3C (Q28–30)",
-      "sheetHtml": "assets/sheets/test2/listening_part3.html",
-      "questions": [
+          ],
+          "groupTitle": "Romeo and Juliet – Student discussion",
+          "groupPrompt": "Q23–27: Opinions (A–G). Choose FIVE answers from the box and write the correct letter A–G."
+        },
         {
           "key": "28",
           "label": "Q28",
@@ -399,7 +390,9 @@
             "it illustrates how easily conflict can start.",
             "it deals with problems that families experience.",
             "it teaches them about relationships."
-          ]
+          ],
+          "groupTitle": "Romeo and Juliet – Student discussion",
+          "groupPrompt": "Q28–30: Choose the correct letter, A, B or C."
         },
         {
           "key": "29",
@@ -412,7 +405,9 @@
             "frustrating.",
             "demanding.",
             "moving."
-          ]
+          ],
+          "groupTitle": "Romeo and Juliet – Student discussion",
+          "groupPrompt": "Q28–30: Choose the correct letter, A, B or C."
         },
         {
           "key": "30",
@@ -425,7 +420,9 @@
             "The stories are exciting.",
             "There are recognisable characters.",
             "They can be interpreted in many ways."
-          ]
+          ],
+          "groupTitle": "Romeo and Juliet – Student discussion",
+          "groupPrompt": "Q28–30: Choose the correct letter, A, B or C."
         }
       ]
     },
@@ -569,22 +566,22 @@
       ]
     },
     "11": {
-      "accepted": "B"
-    },
-    "12": {
-      "accepted": "C"
-    },
-    "13": {
-      "accepted": "C"
-    },
-    "14": {
-      "accepted": "B"
-    },
-    "15": {
       "accepted": "D"
     },
-    "16": {
+    "12": {
+      "accepted": "E"
+    },
+    "13": {
+      "accepted": "D"
+    },
+    "14": {
       "accepted": "C"
+    },
+    "15": {
+      "accepted": "B"
+    },
+    "16": {
+      "accepted": "H"
     },
     "17": {
       "accepted": "G"
@@ -601,31 +598,31 @@
     "21": {
       "type": "multi_letter",
       "acceptedSet": [
-        "D",
+        "A",
         "E"
       ],
       "expectedCount": 2
     },
     "23": {
-      "accepted": "D"
-    },
-    "24": {
-      "accepted": "C"
-    },
-    "25": {
-      "accepted": "A"
-    },
-    "26": {
-      "accepted": "E"
-    },
-    "27": {
-      "accepted": "F"
-    },
-    "28": {
       "accepted": "B"
     },
-    "29": {
+    "24": {
+      "accepted": "D"
+    },
+    "25": {
       "accepted": "C"
+    },
+    "26": {
+      "accepted": "G"
+    },
+    "27": {
+      "accepted": "A"
+    },
+    "28": {
+      "accepted": "C"
+    },
+    "29": {
+      "accepted": "B"
     },
     "30": {
       "accepted": "C"

@@ -25,6 +25,7 @@ export async function bootModule({ moduleName, manifestPath }) {
     testSelect: document.getElementById("testSelect"),
     sectionSelect: document.getElementById("sectionSelect"),
     qnav: document.getElementById("qnav"),
+    groupTitle: document.getElementById("groupTitle"),
     question: document.getElementById("question"),
     prevBtn: document.getElementById("prevBtn"),
     nextBtn: document.getElementById("nextBtn"),
@@ -142,6 +143,21 @@ export async function bootModule({ moduleName, manifestPath }) {
     if (!engine || !currentTest) return;
 
     const section = getCurrentSection();
+
+
+    // Optional: show sub-instructions per question group (e.g., Part 3 sub-sets)
+    if (el.groupTitle) {
+      const gt = cur?.groupTitle ?? "";
+      const gp = cur?.groupPrompt ?? "";
+      if (gt || gp) {
+        el.groupTitle.innerHTML = `<strong>${gt}</strong>${gp ? `<div class="small" style="margin-top:4px">${gp}</div>` : ""}`;
+        el.groupTitle.style.display = "block";
+      } else {
+        el.groupTitle.textContent = "";
+        el.groupTitle.style.display = "none";
+      }
+    }
+
 
     // Reading: passage iframe
     if (el.materialFrame) {
@@ -328,6 +344,21 @@ export async function bootModule({ moduleName, manifestPath }) {
     );
 
     const section = getCurrentSection();
+
+
+    // Optional: show sub-instructions per question group (e.g., Part 3 sub-sets)
+    if (el.groupTitle) {
+      const gt = cur?.groupTitle ?? "";
+      const gp = cur?.groupPrompt ?? "";
+      if (gt || gp) {
+        el.groupTitle.innerHTML = `<strong>${gt}</strong>${gp ? `<div class="small" style="margin-top:4px">${gp}</div>` : ""}`;
+        el.groupTitle.style.display = "block";
+      } else {
+        el.groupTitle.textContent = "";
+        el.groupTitle.style.display = "none";
+      }
+    }
+
 
     // Sheet mode for Listening (or any module if you want): enabled by section.sheetHtml
     const useSheet = !!section?.sheetHtml;
