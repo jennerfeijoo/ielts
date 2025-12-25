@@ -1,9 +1,6 @@
 {
   "sets": [
-    {
-      "id": "test1",
-      "title": "Test 1",
-      "path": "data/writing/test1.json"
-    }
+    { "title": "Test 1 – Writing", "path": "data/writing/test1.json" },
+    { "title": "Test 2 – Writing", "path": "data/writing/test2.json" }
   ]
 }

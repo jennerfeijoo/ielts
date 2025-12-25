@@ -1,0 +1,39 @@
+{
+  "id": "writing-test2",
+  "module": "writing",
+  "title": "Test 2 – Writing",
+  "timeLimitSeconds": 3600,
+  "tasks": [
+    {
+      "id": "W1",
+      "taskNumber": 1,
+      "title": "WRITING TASK 1",
+      "instructions": "You should spend about 20 minutes on this task.",
+      "prompt": "The table and charts below give information on the police budget for 2017 and 2018 in one area of Britain. The table shows where the money came from and the charts show how it was distributed.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.",
+      "requirements": "Write at least 150 words.",
+      "imageUrl": "assets/images/test2-writing-task1.png",
+      "imageAlt": "Police budget table (2017/2018) and spending pie charts",
+      "criteria": {
+        "taskAchievement": "How well you summarize the main features and make comparisons",
+        "coherenceCohesion": "How well you organize information and use linking devices",
+        "lexicalResource": "Range and accuracy of vocabulary",
+        "grammaticalRange": "Range and accuracy of grammatical structures"
+      }
+    },
+    {
+      "id": "W2",
+      "taskNumber": 2,
+      "title": "WRITING TASK 2",
+      "instructions": "You should spend about 40 minutes on this task.",
+      "prompt": "Some children spend hours every day on their smartphones.\n\nWhy is this the case? Do you think this is a positive or a negative development?",
+      "requirements": "Write at least 250 words.",
+      "additionalInstructions": "Give reasons for your answer and include any relevant examples from your own knowledge or experience.",
+      "criteria": {
+        "taskResponse": "How well you address the prompt and develop arguments",
+        "coherenceCohesion": "How well you structure the essay and use linking devices",
+        "lexicalResource": "Range and accuracy of vocabulary",
+        "grammaticalRange": "Range and accuracy of grammatical structures"
+      }
+    }
+  ]
+}
