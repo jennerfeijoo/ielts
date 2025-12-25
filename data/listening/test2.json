@@ -11,16 +11,86 @@
       "title": "Part 1 (Q1–10)",
       "sheetHtml": "assets/sheets/test2/listening_part1.html",
       "questions": [
-        { "key": "1", "label": "Q1", "shortLabel": "1", "type": "text", "hint": "ONE WORD ONLY", "prompt": "Help with ______ books (times to be arranged)." },
-        { "key": "2", "label": "Q2", "shortLabel": "2", "type": "text", "hint": "ONE WORD ONLY", "prompt": "Help needed to keep ______ of books up to date." },
-        { "key": "3", "label": "Q3", "shortLabel": "3", "type": "text", "hint": "ONE WORD ONLY", "prompt": "Library is in the ______ Room in the village hall." },
-        { "key": "4", "label": "Q4", "shortLabel": "4", "type": "text", "hint": "ONE WORD ONLY", "prompt": "Lunch club: Help by providing ______." },
-        { "key": "5", "label": "Q5", "shortLabel": "5", "type": "text", "hint": "ONE WORD ONLY", "prompt": "Lunch club: Help with hobbies such as ______." },
-        { "key": "6", "label": "Q6", "shortLabel": "6", "type": "text", "hint": "ONE WORD ONLY", "prompt": "Taking Mrs Carroll to ______." },
-        { "key": "7", "label": "Q7", "shortLabel": "7", "type": "text", "hint": "ONE WORD ONLY", "prompt": "Work in the ______ at Mr Seisbury’s house." },
-        { "key": "8", "label": "Q8", "shortLabel": "8", "type": "text", "hint": "ONE WORD ONLY", "prompt": "19 Oct event: ______." },
-        { "key": "9", "label": "Q9", "shortLabel": "9", "type": "text", "hint": "ONE WORD ONLY", "prompt": "18 Nov dance: checking ______." },
-        { "key": "10", "label": "Q10", "shortLabel": "10", "type": "text", "hint": "ONE WORD ONLY", "prompt": "31 Dec: designing the ______." }
+        {
+          "key": "1",
+          "label": "Q1",
+          "shortLabel": "1",
+          "type": "text",
+          "hint": "ONE WORD ONLY",
+          "prompt": "Help with ______ books (times to be arranged)."
+        },
+        {
+          "key": "2",
+          "label": "Q2",
+          "shortLabel": "2",
+          "type": "text",
+          "hint": "ONE WORD ONLY",
+          "prompt": "Help needed to keep ______ of books up to date."
+        },
+        {
+          "key": "3",
+          "label": "Q3",
+          "shortLabel": "3",
+          "type": "text",
+          "hint": "ONE WORD ONLY",
+          "prompt": "Library is in the ______ Room in the village hall."
+        },
+        {
+          "key": "4",
+          "label": "Q4",
+          "shortLabel": "4",
+          "type": "text",
+          "hint": "ONE WORD ONLY",
+          "prompt": "Lunch club: Help by providing ______."
+        },
+        {
+          "key": "5",
+          "label": "Q5",
+          "shortLabel": "5",
+          "type": "text",
+          "hint": "ONE WORD ONLY",
+          "prompt": "Lunch club: Help with hobbies such as ______."
+        },
+        {
+          "key": "6",
+          "label": "Q6",
+          "shortLabel": "6",
+          "type": "text",
+          "hint": "ONE WORD ONLY",
+          "prompt": "Taking Mrs Carroll to ______."
+        },
+        {
+          "key": "7",
+          "label": "Q7",
+          "shortLabel": "7",
+          "type": "text",
+          "hint": "ONE WORD ONLY",
+          "prompt": "Work in the ______ at Mr Seisbury’s house."
+        },
+        {
+          "key": "8",
+          "label": "Q8",
+          "shortLabel": "8",
+          "type": "text",
+          "hint": "ONE WORD ONLY",
+          "prompt": "19 Oct event: ______."
+        },
+        {
+          "key": "9",
+          "label": "Q9",
+          "shortLabel": "9",
+          "type": "text",
+          "hint": "ONE WORD ONLY",
+          "prompt": "18 Nov dance: checking ______."
+        },
+        {
+          "key": "10",
+          "label": "Q10",
+          "shortLabel": "10",
+          "type": "text",
+          "hint": "ONE WORD ONLY",
+          "prompt": "31 Dec: designing the ______."
+        }
       ]
     },
     {
@@ -35,7 +105,11 @@
           "type": "multipleChoice",
           "hint": "Choose the correct letter, A, B or C.",
           "prompt": "Many past owners made changes to",
-          "options": ["the gardens.", "the house.", "the farm."]
+          "options": [
+            "the gardens.",
+            "the house.",
+            "the farm."
+          ]
         },
         {
           "key": "12",
@@ -44,7 +118,11 @@
           "type": "multipleChoice",
           "hint": "Choose the correct letter, A, B or C.",
           "prompt": "Sir Edward Downes built Oniton Hall because he wanted",
-          "options": ["a place for discussing politics.", "a place to display his wealth.", "a place for artists and writers."]
+          "options": [
+            "a place for discussing politics.",
+            "a place to display his wealth.",
+            "a place for artists and writers."
+          ]
         },
         {
           "key": "13",
@@ -53,7 +131,11 @@
           "type": "multipleChoice",
           "hint": "Choose the correct letter, A, B or C.",
           "prompt": "Visitors can learn about the work of servants in the past from",
-          "options": ["audio guides.", "photographs.", "people in costume."]
+          "options": [
+            "audio guides.",
+            "photographs.",
+            "people in costume."
+          ]
         },
         {
           "key": "14",
@@ -62,7 +144,11 @@
           "type": "multipleChoice",
           "hint": "Choose the correct letter, A, B or C.",
           "prompt": "What is new for children at Oniton Hall?",
-          "options": ["clothes for dressing up", "mini tractors", "the adventure playground"]
+          "options": [
+            "clothes for dressing up",
+            "mini tractors",
+            "the adventure playground"
+          ]
         }
       ]
     },
@@ -71,12 +157,114 @@
       "title": "Part 2B (Q15–20)",
       "sheetHtml": "assets/sheets/test2/listening_part2.html",
       "questions": [
-        { "key": "15", "label": "Q15", "shortLabel": "15", "type": "matching", "hint": "Choose SIX answers from the box and write the correct letter, A–H.", "prompt": "dairy", "allowedLetters": ["A","B","C","D","E","F","G","H"] },
-        { "key": "16", "label": "Q16", "shortLabel": "16", "type": "matching", "hint": "Choose the correct letter, A–H.", "prompt": "large barn", "allowedLetters": ["A","B","C","D","E","F","G","H"] },
-        { "key": "17", "label": "Q17", "shortLabel": "17", "type": "matching", "hint": "Choose the correct letter, A–H.", "prompt": "small barn", "allowedLetters": ["A","B","C","D","E","F","G","H"] },
-        { "key": "18", "label": "Q18", "shortLabel": "18", "type": "matching", "hint": "Choose the correct letter, A–H.", "prompt": "stables", "allowedLetters": ["A","B","C","D","E","F","G","H"] },
-        { "key": "19", "label": "Q19", "shortLabel": "19", "type": "matching", "hint": "Choose the correct letter, A–H.", "prompt": "shed", "allowedLetters": ["A","B","C","D","E","F","G","H"] },
-        { "key": "20", "label": "Q20", "shortLabel": "20", "type": "matching", "hint": "Choose the correct letter, A–H.", "prompt": "parkland", "allowedLetters": ["A","B","C","D","E","F","G","H"] }
+        {
+          "key": "15",
+          "label": "Q15",
+          "shortLabel": "15",
+          "type": "matching",
+          "hint": "Choose SIX answers from the box and write the correct letter, A–H.",
+          "prompt": "dairy",
+          "allowedLetters": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H"
+          ]
+        },
+        {
+          "key": "16",
+          "label": "Q16",
+          "shortLabel": "16",
+          "type": "matching",
+          "hint": "Choose the correct letter, A–H.",
+          "prompt": "large barn",
+          "allowedLetters": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H"
+          ]
+        },
+        {
+          "key": "17",
+          "label": "Q17",
+          "shortLabel": "17",
+          "type": "matching",
+          "hint": "Choose the correct letter, A–H.",
+          "prompt": "small barn",
+          "allowedLetters": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H"
+          ]
+        },
+        {
+          "key": "18",
+          "label": "Q18",
+          "shortLabel": "18",
+          "type": "matching",
+          "hint": "Choose the correct letter, A–H.",
+          "prompt": "stables",
+          "allowedLetters": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H"
+          ]
+        },
+        {
+          "key": "19",
+          "label": "Q19",
+          "shortLabel": "19",
+          "type": "matching",
+          "hint": "Choose the correct letter, A–H.",
+          "prompt": "shed",
+          "allowedLetters": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H"
+          ]
+        },
+        {
+          "key": "20",
+          "label": "Q20",
+          "shortLabel": "20",
+          "type": "matching",
+          "hint": "Choose the correct letter, A–H.",
+          "prompt": "parkland",
+          "allowedLetters": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H"
+          ]
+        }
       ]
     },
     {
@@ -108,11 +296,91 @@
       "title": "Part 3B (Q23–27)",
       "sheetHtml": "assets/sheets/test2/listening_part3.html",
       "questions": [
-        { "key": "23", "label": "Q23", "shortLabel": "23", "type": "matching", "hint": "Choose FIVE answers from the box and write the correct letter, A–G.", "prompt": "the set", "allowedLetters": ["A","B","C","D","E","F","G"] },
-        { "key": "24", "label": "Q24", "shortLabel": "24", "type": "matching", "hint": "Choose the correct letter, A–G.", "prompt": "the lighting", "allowedLetters": ["A","B","C","D","E","F","G"] },
-        { "key": "25", "label": "Q25", "shortLabel": "25", "type": "matching", "hint": "Choose the correct letter, A–G.", "prompt": "the costume design", "allowedLetters": ["A","B","C","D","E","F","G"] },
-        { "key": "26", "label": "Q26", "shortLabel": "26", "type": "matching", "hint": "Choose the correct letter, A–G.", "prompt": "the music", "allowedLetters": ["A","B","C","D","E","F","G"] },
-        { "key": "27", "label": "Q27", "shortLabel": "27", "type": "matching", "hint": "Choose the correct letter, A–G.", "prompt": "the actors’ delivery", "allowedLetters": ["A","B","C","D","E","F","G"] }
+        {
+          "key": "23",
+          "label": "Q23",
+          "shortLabel": "23",
+          "type": "matching",
+          "hint": "Choose FIVE answers from the box and write the correct letter, A–G.",
+          "prompt": "the set",
+          "allowedLetters": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G"
+          ]
+        },
+        {
+          "key": "24",
+          "label": "Q24",
+          "shortLabel": "24",
+          "type": "matching",
+          "hint": "Choose the correct letter, A–G.",
+          "prompt": "the lighting",
+          "allowedLetters": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G"
+          ]
+        },
+        {
+          "key": "25",
+          "label": "Q25",
+          "shortLabel": "25",
+          "type": "matching",
+          "hint": "Choose the correct letter, A–G.",
+          "prompt": "the costume design",
+          "allowedLetters": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G"
+          ]
+        },
+        {
+          "key": "26",
+          "label": "Q26",
+          "shortLabel": "26",
+          "type": "matching",
+          "hint": "Choose the correct letter, A–G.",
+          "prompt": "the music",
+          "allowedLetters": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G"
+          ]
+        },
+        {
+          "key": "27",
+          "label": "Q27",
+          "shortLabel": "27",
+          "type": "matching",
+          "hint": "Choose the correct letter, A–G.",
+          "prompt": "the actors’ delivery",
+          "allowedLetters": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G"
+          ]
+        }
       ]
     },
     {
@@ -140,7 +408,11 @@
           "type": "multipleChoice",
           "hint": "Choose the correct letter, A, B or C.",
           "prompt": "The students found watching Romeo and Juliet in another language",
-          "options": ["frustrating.", "demanding.", "moving."]
+          "options": [
+            "frustrating.",
+            "demanding.",
+            "moving."
+          ]
         },
         {
           "key": "30",
@@ -149,7 +421,11 @@
           "type": "multipleChoice",
           "hint": "Choose the correct letter, A, B or C.",
           "prompt": "Why do the students think Shakespeare’s plays have such international appeal?",
-          "options": ["The stories are exciting.", "There are recognisable characters.", "They can be interpreted in many ways."]
+          "options": [
+            "The stories are exciting.",
+            "There are recognisable characters.",
+            "They can be interpreted in many ways."
+          ]
         }
       ]
     },
@@ -158,64 +434,252 @@
       "title": "Part 4 (Q31–40)",
       "sheetHtml": "assets/sheets/test2/listening_part4.html",
       "questions": [
-        { "key": "31", "label": "Q31", "shortLabel": "31", "type": "text", "hint": "ONE WORD AND/OR A NUMBER", "prompt": "Icelandic has approximately ______ speakers." },
-        { "key": "32", "label": "Q32", "shortLabel": "32", "type": "text", "hint": "ONE WORD AND/OR A NUMBER", "prompt": "Icelandic has a ______ that is still growing." },
-        { "key": "33", "label": "Q33", "shortLabel": "33", "type": "text", "hint": "ONE WORD AND/OR A NUMBER", "prompt": "Icelandic has its own word for web browser and ______." },
-        { "key": "34", "label": "Q34", "shortLabel": "34", "type": "text", "hint": "ONE WORD AND/OR A NUMBER", "prompt": "Young speakers are big users of digital technology, such as ______." },
-        { "key": "35", "label": "Q35", "shortLabel": "35", "type": "text", "hint": "ONE WORD AND/OR A NUMBER", "prompt": "Young speakers are becoming ______ very quickly." },
-        { "key": "36", "label": "Q36", "shortLabel": "36", "type": "text", "hint": "ONE WORD AND/OR A NUMBER", "prompt": "They have discussions using only English while they are in the ______ at school." },
-        { "key": "37", "label": "Q37", "shortLabel": "37", "type": "text", "hint": "ONE WORD AND/OR A NUMBER", "prompt": "They can identify the content of a ______ in English better than in Icelandic." },
-        { "key": "38", "label": "Q38", "shortLabel": "38", "type": "text", "hint": "ONE WORD AND/OR A NUMBER", "prompt": "Companies write very little in Icelandic partly because of how complicated its ______ is." },
-        { "key": "39", "label": "Q39", "shortLabel": "39", "type": "text", "hint": "ONE WORD AND/OR A NUMBER", "prompt": "Government worries young Icelanders may lose their ______ as Icelanders." },
-        { "key": "40", "label": "Q40", "shortLabel": "40", "type": "text", "hint": "ONE WORD AND/OR A NUMBER", "prompt": "Government worries children may not be ______ in either Icelandic or English." }
+        {
+          "key": "31",
+          "label": "Q31",
+          "shortLabel": "31",
+          "type": "text",
+          "hint": "ONE WORD AND/OR A NUMBER",
+          "prompt": "Icelandic has approximately ______ speakers."
+        },
+        {
+          "key": "32",
+          "label": "Q32",
+          "shortLabel": "32",
+          "type": "text",
+          "hint": "ONE WORD AND/OR A NUMBER",
+          "prompt": "Icelandic has a ______ that is still growing."
+        },
+        {
+          "key": "33",
+          "label": "Q33",
+          "shortLabel": "33",
+          "type": "text",
+          "hint": "ONE WORD AND/OR A NUMBER",
+          "prompt": "Icelandic has its own word for web browser and ______."
+        },
+        {
+          "key": "34",
+          "label": "Q34",
+          "shortLabel": "34",
+          "type": "text",
+          "hint": "ONE WORD AND/OR A NUMBER",
+          "prompt": "Young speakers are big users of digital technology, such as ______."
+        },
+        {
+          "key": "35",
+          "label": "Q35",
+          "shortLabel": "35",
+          "type": "text",
+          "hint": "ONE WORD AND/OR A NUMBER",
+          "prompt": "Young speakers are becoming ______ very quickly."
+        },
+        {
+          "key": "36",
+          "label": "Q36",
+          "shortLabel": "36",
+          "type": "text",
+          "hint": "ONE WORD AND/OR A NUMBER",
+          "prompt": "They have discussions using only English while they are in the ______ at school."
+        },
+        {
+          "key": "37",
+          "label": "Q37",
+          "shortLabel": "37",
+          "type": "text",
+          "hint": "ONE WORD AND/OR A NUMBER",
+          "prompt": "They can identify the content of a ______ in English better than in Icelandic."
+        },
+        {
+          "key": "38",
+          "label": "Q38",
+          "shortLabel": "38",
+          "type": "text",
+          "hint": "ONE WORD AND/OR A NUMBER",
+          "prompt": "Companies write very little in Icelandic partly because of how complicated its ______ is."
+        },
+        {
+          "key": "39",
+          "label": "Q39",
+          "shortLabel": "39",
+          "type": "text",
+          "hint": "ONE WORD AND/OR A NUMBER",
+          "prompt": "Government worries young Icelanders may lose their ______ as Icelanders."
+        },
+        {
+          "key": "40",
+          "label": "Q40",
+          "shortLabel": "40",
+          "type": "text",
+          "hint": "ONE WORD AND/OR A NUMBER",
+          "prompt": "Government worries children may not be ______ in either Icelandic or English."
+        }
       ]
     }
   ],
   "answerKey": {
-    "1": { "accepted": ["collecting"] },
-    "2": { "accepted": ["records"] },
-    "3": { "accepted": ["west"] },
-    "4": { "accepted": ["transport"] },
-    "5": { "accepted": ["art"] },
-    "6": { "accepted": ["hospital"] },
-    "7": { "accepted": ["garden"] },
-    "8": { "accepted": ["quiz"] },
-    "9": { "accepted": ["tickets"] },
-    "10": { "accepted": ["poster"] },
-
-    "11": { "accepted": "D" },
-    "12": { "accepted": "E" },
-    "13": { "accepted": "D" },
-    "14": { "accepted": "C" },
-
-    "15": { "accepted": "B" },
-    "16": { "accepted": "H" },
-    "17": { "accepted": "G" },
-    "18": { "accepted": "A" },
-    "19": { "accepted": "E" },
-    "20": { "accepted": "F" },
-
-    "21": { "type": "multi_letter", "acceptedSet": ["A", "E"], "expectedCount": 2 },
-
-    "23": { "accepted": "B" },
-    "24": { "accepted": "D" },
-    "25": { "accepted": "C" },
-    "26": { "accepted": "G" },
-    "27": { "accepted": "A" },
-
-    "28": { "accepted": "C" },
-    "29": { "accepted": "B" },
-    "30": { "accepted": "C" },
-
-    "31": { "accepted": ["321,000", "321000"] },
-    "32": { "accepted": ["vocabulary"] },
-    "33": { "accepted": ["podcast"] },
-    "34": { "accepted": ["smartphones"] },
-    "35": { "accepted": ["bilingual"] },
-    "36": { "accepted": ["playground"] },
-    "37": { "accepted": ["picture"] },
-    "38": { "accepted": ["grammar"] },
-    "39": { "accepted": ["identity"] },
-    "40": { "accepted": ["fluent"] }
+    "1": {
+      "accepted": [
+        "collecting"
+      ]
+    },
+    "2": {
+      "accepted": [
+        "records"
+      ]
+    },
+    "3": {
+      "accepted": [
+        "west"
+      ]
+    },
+    "4": {
+      "accepted": [
+        "transport"
+      ]
+    },
+    "5": {
+      "accepted": [
+        "art"
+      ]
+    },
+    "6": {
+      "accepted": [
+        "hospital"
+      ]
+    },
+    "7": {
+      "accepted": [
+        "garden"
+      ]
+    },
+    "8": {
+      "accepted": [
+        "quiz"
+      ]
+    },
+    "9": {
+      "accepted": [
+        "tickets"
+      ]
+    },
+    "10": {
+      "accepted": [
+        "poster"
+      ]
+    },
+    "11": {
+      "accepted": "B"
+    },
+    "12": {
+      "accepted": "C"
+    },
+    "13": {
+      "accepted": "C"
+    },
+    "14": {
+      "accepted": "B"
+    },
+    "15": {
+      "accepted": "D"
+    },
+    "16": {
+      "accepted": "C"
+    },
+    "17": {
+      "accepted": "G"
+    },
+    "18": {
+      "accepted": "A"
+    },
+    "19": {
+      "accepted": "E"
+    },
+    "20": {
+      "accepted": "F"
+    },
+    "21": {
+      "type": "multi_letter",
+      "acceptedSet": [
+        "D",
+        "E"
+      ],
+      "expectedCount": 2
+    },
+    "23": {
+      "accepted": "D"
+    },
+    "24": {
+      "accepted": "C"
+    },
+    "25": {
+      "accepted": "A"
+    },
+    "26": {
+      "accepted": "E"
+    },
+    "27": {
+      "accepted": "F"
+    },
+    "28": {
+      "accepted": "B"
+    },
+    "29": {
+      "accepted": "C"
+    },
+    "30": {
+      "accepted": "C"
+    },
+    "31": {
+      "accepted": [
+        "321,000",
+        "321000"
+      ]
+    },
+    "32": {
+      "accepted": [
+        "vocabulary"
+      ]
+    },
+    "33": {
+      "accepted": [
+        "podcast"
+      ]
+    },
+    "34": {
+      "accepted": [
+        "smartphones"
+      ]
+    },
+    "35": {
+      "accepted": [
+        "bilingual"
+      ]
+    },
+    "36": {
+      "accepted": [
+        "playground"
+      ]
+    },
+    "37": {
+      "accepted": [
+        "picture"
+      ]
+    },
+    "38": {
+      "accepted": [
+        "grammar"
+      ]
+    },
+    "39": {
+      "accepted": [
+        "identity"
+      ]
+    },
+    "40": {
+      "accepted": [
+        "fluent"
+      ]
+    }
   }
 }

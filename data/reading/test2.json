@@ -6,29 +6,110 @@
   "sections": [
     {
       "id": "R1",
-      "title": "Passage 1",
+      "title": "Passage 1 – The Dead Sea Scrolls",
       "materialHtml": "assets/passages/test2/passage1.html",
       "questions": [
-        { "key": "1", "label": "Q1", "shortLabel": "1", "type": "text", "hint": "ONE WORD ONLY", "prompt": "The teenagers who found the scrolls were tending their ______." },
-        { "key": "2", "label": "Q2", "shortLabel": "2", "type": "text", "hint": "ONE WORD ONLY", "prompt": "The scrolls were stored in large ______." },
-        { "key": "3", "label": "Q3", "shortLabel": "3", "type": "text", "hint": "ONE WORD ONLY", "prompt": "Most of the manuscripts are in ______." },
-        { "key": "4", "label": "Q4", "shortLabel": "4", "type": "text", "hint": "ONE WORD ONLY", "prompt": "Some scrolls include translations of the Bible into ______." },
-        { "key": "5", "label": "Q5", "shortLabel": "5", "type": "text", "hint": "ONE WORD ONLY", "prompt": "Scroll 3Q15 was made from a combination of copper and ______." },
-
-        { "key": "6", "label": "Q6", "shortLabel": "6", "type": "tfng", "prompt": "The remains of the Qumran settlement were damaged by Roman soldiers." },
-        { "key": "7", "label": "Q7", "shortLabel": "7", "type": "tfng", "prompt": "The Essenes were an important group of musicians." },
-        { "key": "8", "label": "Q8", "shortLabel": "8", "type": "tfng", "prompt": "The majority of the scrolls are written using the alphabet that is still used today." },
-        { "key": "9", "label": "Q9", "shortLabel": "9", "type": "tfng", "prompt": "The only entire book of the Hebrew Bible found at Qumran was the Book of Isaiah." },
-        { "key": "10", "label": "Q10", "shortLabel": "10", "type": "tfng", "prompt": "The Copper Scroll has remained untranslated." },
-        { "key": "11", "label": "Q11", "shortLabel": "11", "type": "tfng", "prompt": "Yigael Yadin bought some of the scrolls after seeing an advertisement in The Wall Street Journal." },
-        { "key": "12", "label": "Q12", "shortLabel": "12", "type": "tfng", "prompt": "Eshbal Ratson and Jonathan Ben-Dov worked on restoring and deciphering a scroll for twelve months." },
-        { "key": "13", "label": "Q13", "shortLabel": "13", "type": "tfng", "prompt": "All known Dead Sea Scrolls have now been translated." }
+        {
+          "key": "1",
+          "label": "Q1",
+          "shortLabel": "1",
+          "type": "text",
+          "hint": "ONE WORD ONLY",
+          "prompt": "A teenager threw a ______ into the cave."
+        },
+        {
+          "key": "2",
+          "label": "Q2",
+          "shortLabel": "2",
+          "type": "text",
+          "hint": "ONE WORD ONLY",
+          "prompt": "The teenagers entered the ______ to locate the source of the sound."
+        },
+        {
+          "key": "3",
+          "label": "Q3",
+          "shortLabel": "3",
+          "type": "text",
+          "hint": "ONE WORD ONLY",
+          "prompt": "The manuscripts were stored in large ______ jars."
+        },
+        {
+          "key": "4",
+          "label": "Q4",
+          "shortLabel": "4",
+          "type": "text",
+          "hint": "ONE WORD ONLY",
+          "prompt": "The scrolls are thought to have been produced by a group called the ______."
+        },
+        {
+          "key": "5",
+          "label": "Q5",
+          "shortLabel": "5",
+          "type": "text",
+          "hint": "ONE WORD ONLY",
+          "prompt": "Most of the texts are written in ______."
+        },
+        {
+          "key": "6",
+          "label": "Q6",
+          "shortLabel": "6",
+          "type": "tfng",
+          "prompt": "The Bedouin teenagers who found the scrolls were disappointed by how little money they received for them."
+        },
+        {
+          "key": "7",
+          "label": "Q7",
+          "shortLabel": "7",
+          "type": "tfng",
+          "prompt": "There is agreement among academics about the origin of the Dead Sea Scrolls."
+        },
+        {
+          "key": "8",
+          "label": "Q8",
+          "shortLabel": "8",
+          "type": "tfng",
+          "prompt": "Most of the books of the Bible written on the scrolls are incomplete."
+        },
+        {
+          "key": "9",
+          "label": "Q9",
+          "shortLabel": "9",
+          "type": "tfng",
+          "prompt": "The information on the Copper Scroll is written in an unusual way."
+        },
+        {
+          "key": "10",
+          "label": "Q10",
+          "shortLabel": "10",
+          "type": "tfng",
+          "prompt": "Mar Samuel was given some of the scrolls as a gift."
+        },
+        {
+          "key": "11",
+          "label": "Q11",
+          "shortLabel": "11",
+          "type": "tfng",
+          "prompt": "In the early 1950s, a number of educational establishments in the US were keen to buy scrolls from Mar Samuel."
+        },
+        {
+          "key": "12",
+          "label": "Q12",
+          "shortLabel": "12",
+          "type": "tfng",
+          "prompt": "The scroll that was pieced together in 2017 contains information about annual occasions in the Qumran area 2,000 years ago."
+        },
+        {
+          "key": "13",
+          "label": "Q13",
+          "shortLabel": "13",
+          "type": "tfng",
+          "prompt": "Academics at the University of Haifa are currently researching how to decipher the final scroll."
+        }
       ]
     },
-
     {
       "id": "R2",
-      "title": "Passage 2",
+      "title": "Passage 2 – A second attempt at domesticating the tomato",
       "materialHtml": "assets/passages/test2/passage2.html",
       "questions": [
         {
@@ -38,7 +119,13 @@
           "type": "matching",
           "hint": "Write the correct letter, A–E.",
           "prompt": "a reference to a type of tomato that can resist a dangerous infection",
-          "allowedLetters": ["A", "B", "C", "D", "E"],
+          "allowedLetters": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E"
+          ],
           "note": "Sections: A–E"
         },
         {
@@ -48,7 +135,13 @@
           "type": "matching",
           "hint": "Write the correct letter, A–E.",
           "prompt": "an explanation of how problems can arise from focusing only on a certain type of tomato plant",
-          "allowedLetters": ["A", "B", "C", "D", "E"]
+          "allowedLetters": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E"
+          ]
         },
         {
           "key": "16",
@@ -57,7 +150,13 @@
           "type": "matching",
           "hint": "Write the correct letter, A–E.",
           "prompt": "a number of examples of plants that are not cultivated at present but could be useful as food sources",
-          "allowedLetters": ["A", "B", "C", "D", "E"]
+          "allowedLetters": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E"
+          ]
         },
         {
           "key": "17",
@@ -66,7 +165,13 @@
           "type": "matching",
           "hint": "Write the correct letter, A–E.",
           "prompt": "a comparison between the early domestication of the tomato and more recent research",
-          "allowedLetters": ["A", "B", "C", "D", "E"]
+          "allowedLetters": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E"
+          ]
         },
         {
           "key": "18",
@@ -75,9 +180,14 @@
           "type": "matching",
           "hint": "Write the correct letter, A–E.",
           "prompt": "a personal reaction to the flavour of a tomato that has been genetically edited",
-          "allowedLetters": ["A", "B", "C", "D", "E"]
+          "allowedLetters": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E"
+          ]
         },
-
         {
           "key": "19",
           "label": "Q19",
@@ -85,7 +195,12 @@
           "type": "matching",
           "hint": "Write the correct letter, A–D.",
           "prompt": "Domestication of certain plants could allow them to adapt to future environmental challenges.",
-          "allowedLetters": ["A", "B", "C", "D"],
+          "allowedLetters": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
           "note": "Researchers: A Jorg Kudla, B Caixia Gao, C Joyce Van Eck, D Jonathan Jones"
         },
         {
@@ -95,7 +210,12 @@
           "type": "matching",
           "hint": "Write the correct letter, A–D.",
           "prompt": "The idea of growing and eating unusual plants may not be accepted on a large scale.",
-          "allowedLetters": ["A", "B", "C", "D"]
+          "allowedLetters": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
         },
         {
           "key": "21",
@@ -104,7 +224,12 @@
           "type": "matching",
           "hint": "Write the correct letter, A–D.",
           "prompt": "It is not advisable for the future direction of certain research to be made public.",
-          "allowedLetters": ["A", "B", "C", "D"]
+          "allowedLetters": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
         },
         {
           "key": "22",
@@ -113,7 +238,12 @@
           "type": "matching",
           "hint": "Write the correct letter, A–D.",
           "prompt": "Present efforts to domesticate one wild fruit are limited by the costs involved.",
-          "allowedLetters": ["A", "B", "C", "D"]
+          "allowedLetters": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
         },
         {
           "key": "23",
@@ -121,19 +251,61 @@
           "shortLabel": "23",
           "type": "matching",
           "hint": "Write the correct letter, A–D.",
-          "prompt": "Humans only make use of a small proportion of the plant food available on Earth.",
-          "allowedLetters": ["A", "B", "C", "D"]
+          "prompt": "Re-domesticated tomatoes have greater potential health benefits than traditionally domesticated ones.",
+          "allowedLetters": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
         },
-
-        { "key": "24", "label": "Q24", "shortLabel": "24", "type": "text", "hint": "ONE WORD ONLY", "prompt": "An undesirable trait such as loss of ______ may be caused by a mutation in a tomato gene." },
-        { "key": "25", "label": "Q25", "shortLabel": "25", "type": "text", "hint": "ONE WORD ONLY", "prompt": "By modifying one gene, researchers made the tomato three times its original ______." },
-        { "key": "26", "label": "Q26", "shortLabel": "26", "type": "text", "hint": "ONE WORD ONLY", "prompt": "A type of tomato not badly affected by ______ was produced by a team of researchers in China." }
+        {
+          "key": "24",
+          "label": "Q24",
+          "shortLabel": "24",
+          "type": "matching",
+          "hint": "Write the correct letter, A–D.",
+          "prompt": "Some people's choices of food may be limited by their cultural backgrounds.",
+          "allowedLetters": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
+        },
+        {
+          "key": "25",
+          "label": "Q25",
+          "shortLabel": "25",
+          "type": "matching",
+          "hint": "Write the correct letter, A–D.",
+          "prompt": "It is possible that climate change may cause difficulties for certain crops.",
+          "allowedLetters": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
+        },
+        {
+          "key": "26",
+          "label": "Q26",
+          "shortLabel": "26",
+          "type": "matching",
+          "hint": "Write the correct letter, A–D.",
+          "prompt": "A number of species could be transformed into commercial crops in the future.",
+          "allowedLetters": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
+        }
       ]
     },
-
     {
       "id": "R3",
-      "title": "Passage 3",
+      "title": "Passage 3 – Insight or evolution?",
       "materialHtml": "assets/passages/test2/passage3.html",
       "questions": [
         {
@@ -142,12 +314,12 @@
           "shortLabel": "27",
           "type": "multipleChoice",
           "hint": "Choose the correct letter, A, B, C or D.",
-          "prompt": "What is the main point of the first paragraph?",
+          "prompt": "The purpose of the first paragraph is to",
           "options": [
-            "Innovative behavior allows an individual to pass information on to others.",
-            "Some discoveries happen by chance, but there is often a reason for chance discoveries.",
-            "People and animals may be innovative when they are under pressure.",
-            "Individuals who are innovative may have more opportunities for survival."
+            "defend particular ideas.",
+            "compare certain beliefs.",
+            "disprove a widely held view.",
+            "outline a common assumption."
           ]
         },
         {
@@ -156,12 +328,12 @@
           "shortLabel": "28",
           "type": "multipleChoice",
           "hint": "Choose the correct letter, A, B, C or D.",
-          "prompt": "What does the example of the Japanese macaques illustrate?",
+          "prompt": "What are the writers doing in the second paragraph?",
           "options": [
-            "Animals are able to adapt their behavior in order to survive.",
-            "Problems can be solved by imitation rather than by trial and error.",
-            "A solution to a problem can be spread from one group to another.",
-            "Animals can learn new skills from observation of a parent."
+            "criticising an opinion",
+            "justifying a standpoint",
+            "explaining an approach",
+            "supporting an argument"
           ]
         },
         {
@@ -170,12 +342,12 @@
           "shortLabel": "29",
           "type": "multipleChoice",
           "hint": "Choose the correct letter, A, B, C or D.",
-          "prompt": "What is the writer doing in the fourth paragraph?",
+          "prompt": "In the third paragraph, what do the writers suggest about Darwin and Einstein?",
           "options": [
-            "explaining a controversial view about innovation",
-            "giving an example of theory about innovation",
-            "suggesting that a certain situation is likely to lead to innovation",
-            "comparing the approaches of two scientists"
+            "They represent an exception to a general rule.",
+            "Their way of working has been misunderstood.",
+            "They are an ideal which others should aspire to.",
+            "Their achievements deserve greater recognition."
           ]
         },
         {
@@ -184,12 +356,12 @@
           "shortLabel": "30",
           "type": "multipleChoice",
           "hint": "Choose the correct letter, A, B, C or D.",
-          "prompt": "What is the key to success in Osvath’s experiment?",
+          "prompt": "John Nicholson is an example of a person whose idea",
           "options": [
-            "the nature of the chimpanzees’ underlying motivation",
-            "the way that the chimpanzees are encouraged to manipulate the objects",
-            "the design of the chimpanzees’ environment",
-            "the timing of the chimpanzees’ exposure to the objects"
+            "established his reputation as an influential scientist.",
+            "was only fully understood at a later point in history.",
+            "laid the foundations for someone else’s breakthrough.",
+            "initially met with scepticism from the scientific community."
           ]
         },
         {
@@ -198,109 +370,253 @@
           "shortLabel": "31",
           "type": "multipleChoice",
           "hint": "Choose the correct letter, A, B, C or D.",
-          "prompt": "What does Reader suggest about the birds that use a leaf as a tool?",
+          "prompt": "What is the key point of interest about the ‘acey-deucy’ stirrup placement?",
           "options": [
-            "The birds are experimenting with objects they find in the forest.",
-            "The birds are copying the behavior of other birds.",
-            "The birds can create a tool to suit their purposes.",
-            "The birds have learned by chance that the leaf can be used in this way."
+            "the simple reason why it was invented",
+            "the enthusiasm with which it was adopted",
+            "the research that went into its development",
+            "the cleverness of the person who first used it"
           ]
         },
-
-        { "key": "32", "label": "Q32", "shortLabel": "32", "type": "ynng", "prompt": "The banana was the first fruit to be domesticated." },
-        { "key": "33", "label": "Q33", "shortLabel": "33", "type": "ynng", "prompt": "Primitive humans were not able to domesticate animals." },
-        { "key": "34", "label": "Q34", "shortLabel": "34", "type": "ynng", "prompt": "It is difficult to know how much the process of animal domestication required conscious thought." },
-        { "key": "35", "label": "Q35", "shortLabel": "35", "type": "ynng", "prompt": "Animals could have helped to domesticate other animals." },
-        { "key": "36", "label": "Q36", "shortLabel": "36", "type": "ynng", "prompt": "All animals can benefit from the process of domestication." },
-
+        {
+          "key": "32",
+          "label": "Q32",
+          "shortLabel": "32",
+          "type": "ynng",
+          "prompt": "Acknowledging people such as Plato or da Vinci as geniuses will help us understand the process by which great minds create new ideas."
+        },
+        {
+          "key": "33",
+          "label": "Q33",
+          "shortLabel": "33",
+          "type": "ynng",
+          "prompt": "The Law of Effect was discovered at a time when psychologists were seeking a scientific reason why creativity occurs."
+        },
+        {
+          "key": "34",
+          "label": "Q34",
+          "shortLabel": "34",
+          "type": "ynng",
+          "prompt": "The Law of Effect states that no planning is involved in the behaviour of organisms."
+        },
+        {
+          "key": "35",
+          "label": "Q35",
+          "shortLabel": "35",
+          "type": "ynng",
+          "prompt": "The Law of Effect sets out clear explanations about the sources of new ideas and behaviours."
+        },
+        {
+          "key": "36",
+          "label": "Q36",
+          "shortLabel": "36",
+          "type": "ynng",
+          "prompt": "Many scientists are now turning away from the notion of intelligent design and genius."
+        },
         {
           "key": "37",
           "label": "Q37",
           "shortLabel": "37",
           "type": "matching",
-          "hint": "Choose the correct letter, A–G.",
-          "prompt": "Traditional view: people had a sudden ______ of the benefits of domestication.",
-          "allowedLetters": ["A", "B", "C", "D", "E", "F", "G"],
-          "note": "A cleverness | B control | C culture | D eyes | E preferences | F realisation | G understanding"
+          "hint": "Write the correct letter, A–G.",
+          "prompt": "The traditional view of scientific discovery is that breakthroughs happen when a single great mind has sudden ______.",
+          "allowedLetters": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G"
+          ],
+          "note": "Word list: A invention, B goals, C compromise, D mistakes, E luck, F inspiration, G experiments"
         },
         {
           "key": "38",
           "label": "Q38",
           "shortLabel": "38",
           "type": "matching",
-          "hint": "Choose the correct letter, A–G.",
-          "prompt": "More recent view: domestication was a gradual ______ and not planned.",
-          "allowedLetters": ["A", "B", "C", "D", "E", "F", "G"]
+          "hint": "Write the correct letter, A–G.",
+          "prompt": "In some cases, this process involves ______, such as Nicholson’s theory about proto-elements.",
+          "allowedLetters": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G"
+          ]
         },
         {
           "key": "39",
           "label": "Q39",
           "shortLabel": "39",
           "type": "matching",
-          "hint": "Choose the correct letter, A–G.",
-          "prompt": "Process may involve selecting young animals for certain ______.",
-          "allowedLetters": ["A", "B", "C", "D", "E", "F", "G"]
+          "hint": "Write the correct letter, A–G.",
+          "prompt": "There is also often an element of ______, for example, the coincidence of ideas that led to the invention of the Post-It note.",
+          "allowedLetters": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G"
+          ]
         },
         {
           "key": "40",
           "label": "Q40",
           "shortLabel": "40",
           "type": "matching",
-          "hint": "Choose the correct letter, A–G.",
-          "prompt": "Nicholson: domestication is ongoing as humans exert ______ over their environment.",
-          "allowedLetters": ["A", "B", "C", "D", "E", "F", "G"]
+          "hint": "Write the correct letter, A–G.",
+          "prompt": "With both the Law of Natural Selection and the Law of Effect, there may be no clear ______ involved, but merely a process of variation and selection.",
+          "allowedLetters": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G"
+          ]
         }
       ]
     }
   ],
-
   "answerKey": {
-    "1": { "accepted": ["goats"] },
-    "2": { "accepted": ["jars"] },
-    "3": { "accepted": ["hebrew"] },
-    "4": { "accepted": ["greek"] },
-    "5": { "accepted": ["tin"] },
-
-    "6": { "accepted": "TRUE" },
-    "7": { "accepted": "FALSE" },
-    "8": { "accepted": "NOT GIVEN" },
-    "9": { "accepted": "TRUE" },
-    "10": { "accepted": "FALSE" },
-    "11": { "accepted": "TRUE" },
-    "12": { "accepted": "TRUE" },
-    "13": { "accepted": "FALSE" },
-
-    "14": { "accepted": "C" },
-    "15": { "accepted": "B" },
-    "16": { "accepted": "E" },
-    "17": { "accepted": "A" },
-    "18": { "accepted": "C" },
-
-    "19": { "accepted": "B" },
-    "20": { "accepted": "D" },
-    "21": { "accepted": "A" },
-    "22": { "accepted": "C" },
-    "23": { "accepted": "A" },
-
-    "24": { "accepted": ["flavour", "flavor"] },
-    "25": { "accepted": ["size"] },
-    "26": { "accepted": ["salt"] },
-
-    "27": { "accepted": "D" },
-    "28": { "accepted": "A" },
-    "29": { "accepted": "A" },
-    "30": { "accepted": "C" },
-    "31": { "accepted": "A" },
-
-    "32": { "accepted": "NO" },
-    "33": { "accepted": "NOT GIVEN" },
-    "34": { "accepted": "YES" },
-    "35": { "accepted": "NO" },
-    "36": { "accepted": "NOT GIVEN" },
-
-    "37": { "accepted": "F" },
-    "38": { "accepted": "D" },
-    "39": { "accepted": "E" },
-    "40": { "accepted": "B" }
+    "1": {
+      "accepted": [
+        "rock"
+      ]
+    },
+    "2": {
+      "accepted": [
+        "cave"
+      ]
+    },
+    "3": {
+      "accepted": [
+        "clay"
+      ]
+    },
+    "4": {
+      "accepted": [
+        "Essenes",
+        "essenes"
+      ]
+    },
+    "5": {
+      "accepted": [
+        "Hebrew",
+        "hebrew"
+      ]
+    },
+    "6": {
+      "accepted": "FALSE"
+    },
+    "7": {
+      "accepted": "FALSE"
+    },
+    "8": {
+      "accepted": "TRUE"
+    },
+    "9": {
+      "accepted": "TRUE"
+    },
+    "10": {
+      "accepted": "FALSE"
+    },
+    "11": {
+      "accepted": "FALSE"
+    },
+    "12": {
+      "accepted": "TRUE"
+    },
+    "13": {
+      "accepted": "FALSE"
+    },
+    "14": {
+      "accepted": "C"
+    },
+    "15": {
+      "accepted": "B"
+    },
+    "16": {
+      "accepted": "E"
+    },
+    "17": {
+      "accepted": "A"
+    },
+    "18": {
+      "accepted": "C"
+    },
+    "19": {
+      "accepted": "B"
+    },
+    "20": {
+      "accepted": "D"
+    },
+    "21": {
+      "accepted": "A"
+    },
+    "22": {
+      "accepted": "C"
+    },
+    "23": {
+      "accepted": "A"
+    },
+    "24": {
+      "accepted": "B"
+    },
+    "25": {
+      "accepted": "D"
+    },
+    "26": {
+      "accepted": "B"
+    },
+    "27": {
+      "accepted": "C"
+    },
+    "28": {
+      "accepted": "A"
+    },
+    "29": {
+      "accepted": "A"
+    },
+    "30": {
+      "accepted": "C"
+    },
+    "31": {
+      "accepted": "A"
+    },
+    "32": {
+      "accepted": "NO"
+    },
+    "33": {
+      "accepted": "NOT GIVEN"
+    },
+    "34": {
+      "accepted": "YES"
+    },
+    "35": {
+      "accepted": "NO"
+    },
+    "36": {
+      "accepted": "YES"
+    },
+    "37": {
+      "accepted": "F"
+    },
+    "38": {
+      "accepted": "D"
+    },
+    "39": {
+      "accepted": "E"
+    },
+    "40": {
+      "accepted": "B"
+    }
   }
 }
