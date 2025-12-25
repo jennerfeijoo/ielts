@@ -6,7 +6,7 @@ const STORAGE_KEY = "ielts:writing:v1";
 const el = {
   promptSelect: document.getElementById("promptSelect"),
   taskSelect: document.getElementById("taskSelect"),
-  promptBox: document.getElementById("promptBox"),
+  taskViewer: document.getElementById("taskViewer"),
   taskImage: document.getElementById("taskImage"),
   taskImageHint: document.getElementById("taskImageHint"),
   essay: document.getElementById("essay"),
@@ -43,27 +43,44 @@ function downloadText(filename, text) {
   const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
-  a.href = url; a.download = filename;
-  document.body.appendChild(a); a.click(); a.remove();
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
   setTimeout(() => URL.revokeObjectURL(url), 500);
 }
 
 /**
  * Resolve an asset path from a Writing JSON field.
- * - If it's an absolute URL (http/https), keep it.
- * - Otherwise, treat it as a site-root-relative path like "assets/images/..."
- *   and convert it to a modules-relative URL: "../assets/images/..."
+ * Writing module lives in /modules/, so a site-root relative asset like:
+ *   "assets/images/x.png"
+ * must be referenced as:
+ *   "../assets/images/x.png"
  */
 function resolveAssetPath(p) {
   const raw = String(p ?? "").trim();
   if (!raw) return "";
   if (/^https?:\/\//i.test(raw)) return raw;
-  // Normalize: remove leading "./" or "/" so we can safely prefix "../"
+
+  // remove any leading "./" or "/" so we can safely prefix "../"
   const normalized = raw.replace(/^\.?\//, "").replace(/^\/+/, "");
   return `../${normalized}`;
 }
 
 async function init() {
+  // Hard guard: if HTML ids mismatch, fail fast with a clearer error
+  if (!el.taskViewer) throw new Error("Missing #taskViewer in modules/writing.html");
+  if (!el.promptSelect) throw new Error("Missing #promptSelect in modules/writing.html");
+  if (!el.taskSelect) throw new Error("Missing #taskSelect in modules/writing.html");
+  if (!el.essay) throw new Error("Missing #essay in modules/writing.html");
+  if (!el.wordCount) throw new Error("Missing #wordCount in modules/writing.html");
+  if (!el.timer) throw new Error("Missing #timer in modules/writing.html");
+  if (!el.resetBtn) throw new Error("Missing #resetBtn in modules/writing.html");
+  if (!el.exportBtn) throw new Error("Missing #exportBtn in modules/writing.html");
+  if (!el.taskImage) throw new Error("Missing #taskImage in modules/writing.html");
+  if (!el.taskImageHint) throw new Error("Missing #taskImageHint in modules/writing.html");
+
   load();
   sets = await loadJSON("../data/writing/sets.json");
 
@@ -89,7 +106,7 @@ async function loadSet(path) {
   setJson.tasks.forEach((t, idx) => {
     const o = document.createElement("option");
     o.value = String(idx);
-    o.textContent = t.title ?? `Task ${t.task ?? (idx + 1)}`;
+    o.textContent = t.title ?? `Task ${t.taskNumber ?? t.task ?? (idx + 1)}`;
     el.taskSelect.appendChild(o);
   });
   el.taskSelect.value = String(state.taskIndex);
@@ -102,8 +119,8 @@ function renderTask(setJson) {
 
   const promptLines = Array.isArray(t.prompt) ? t.prompt : (t.prompt ? [t.prompt] : []);
   const note = t.promptNote ?? "";
-  const title = t.title ?? `Task ${t.task ?? (state.taskIndex + 1)}`;
-  const numberedLabel = `Task ${t.task ?? (state.taskIndex + 1)}`;
+  const title = t.title ?? `Task ${t.taskNumber ?? t.task ?? (state.taskIndex + 1)}`;
+  const numberedLabel = `Task ${t.taskNumber ?? t.task ?? (state.taskIndex + 1)}`;
 
   const parts = [
     `<div class="badge">${numberedLabel}</div>`,
@@ -117,7 +134,7 @@ function renderTask(setJson) {
   if (promptLines.length) {
     parts.push(
       `<div class="notice" style="margin-top:10px">${promptLines
-        .map(p => `<p style="margin:0 0 8px 0">${p}</p>`)
+        .map(p => `<p style="margin:0 0 8px 0">${String(p).replace(/\n/g, "<br>")}</p>`)
         .join("")}</div>`
     );
   } else if (note) {
@@ -128,19 +145,19 @@ function renderTask(setJson) {
     parts.push(`<div class="small" style="margin-top:10px"><strong>Requirement:</strong> ${t.requirements}</div>`);
   }
 
-  el.promptBox.innerHTML = parts.join("");
+  el.taskViewer.innerHTML = parts.join("");
 
-  // ---- IMAGE RENDERING (Task 1) ----
+  // ---- Image rendering ----
   const imgSrc = resolveAssetPath(t.imageUrl);
   if (imgSrc) {
     el.taskImage.style.display = "block";
     el.taskImage.src = imgSrc;
-    el.taskImage.alt = t.imageAlt ?? "Writing Task 1 figure";
+    el.taskImage.alt = t.imageAlt ?? "Writing Task figure";
 
     el.taskImageHint.style.display = "none";
     el.taskImageHint.textContent = "";
 
-    // Ensure we don't keep stacking handlers across tasks
+    // reset handler and set a fresh one (prevents stacking)
     el.taskImage.onerror = () => {
       el.taskImage.style.display = "none";
       el.taskImageHint.style.display = "block";
@@ -154,13 +171,12 @@ function renderTask(setJson) {
     el.taskImageHint.style.display = "none";
     el.taskImageHint.textContent = "";
   }
-  // -------------------------------
 
   // Response box
   el.essay.value = state.essay ?? "";
   el.wordCount.textContent = String(countWords(el.essay.value));
 
-  // Timer (per task)
+  // Timer (per task; if missing, no countdown)
   timer?.stop();
   timer = new CountdownTimer(
     t.timeLimitSeconds ?? 0,
