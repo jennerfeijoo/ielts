@@ -301,7 +301,6 @@ export async function bootModule({ moduleName, manifestPath }) {
 
   // ---------- render ----------
   const renderAll = async () => {
-    try {
     if (!engine || !currentTest) return;
 
     syncSectionResources();
@@ -341,6 +340,8 @@ export async function bootModule({ moduleName, manifestPath }) {
       clearSheetCacheIfNeeded(section);
 
       renderQuestion(el.question, cur, engine, {
+        moduleName,
+        section: getCurrentSection(),
         onAnswerChange: () => {
           updateFlagBtn();
           const cur2 = engine.getCurrent();
@@ -369,10 +370,6 @@ export async function bootModule({ moduleName, manifestPath }) {
       `Section ${engine.sectionIndex + 1}/${(currentTest.sections ?? []).length} • ` +
       `Q ${engine.qIndex + 1}/${engine.getTotalQuestions()}`
     );
-    } catch (err) {
-      console.error(err);
-      setStatus(`Error: ${err?.message ?? String(err)}`);
-    }
   };
 
   const renderResults = (auto = false) => {
