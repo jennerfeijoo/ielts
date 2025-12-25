@@ -18,6 +18,140 @@ export function renderQuestion(container, q, engine, opts = {}) {
   if (!container || !q) return;
   const { onAnswerChange } = opts;
   const callChange = () => { if (typeof onAnswerChange === "function") onAnswerChange(); };
+
+  // ---------------------------------------------------------------------------
+  // Group rendering (Reading): show multiple questions together when they share
+  // a single options list (e.g., Reading Q37–40 with word list A–G).
+  //
+  // To activate, set `groupId` on each question and optionally `groupTitle`
+  // / `groupInstructions` on any of them.
+  // ---------------------------------------------------------------------------
+  const renderGroupIfAny = () => {
+    if (!q.groupId || !engine?.questionFlat?.length) return false;
+    const groupQs = engine.questionFlat
+      .filter(x => x.groupId === q.groupId)
+      .slice()
+      .sort((a, b) => {
+        const ak = Number(a.shortLabel ?? a.key);
+        const bk = Number(b.shortLabel ?? b.key);
+        if (Number.isFinite(ak) && Number.isFinite(bk)) return ak - bk;
+        return String(a.key).localeCompare(String(b.key));
+      });
+
+    if (groupQs.length <= 1) return false;
+
+    const esc = (s) => {
+      const x = String(s ?? "");
+      return x
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/\"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    };
+
+    container.innerHTML = "";
+    const wrap = document.createElement("div");
+    wrap.style.display = "flex";
+    wrap.style.flexDirection = "column";
+    wrap.style.gap = "12px";
+    container.appendChild(wrap);
+
+    const titleRow = document.createElement("div");
+    titleRow.className = "row";
+    const groupTitle = q.groupTitle ?? groupQs.find(x => x.groupTitle)?.groupTitle ?? "";
+    const groupInst = q.groupInstructions ?? groupQs.find(x => x.groupInstructions)?.groupInstructions ?? "";
+    const badge = `<div class="badge"><strong>${esc(groupTitle || (q.sectionTitle ? q.sectionTitle : "Group"))}</strong></div>`;
+    const inst = groupInst ? `<div class="small">${esc(groupInst)}</div>` : "";
+    titleRow.innerHTML = `${badge}${inst}`;
+    wrap.appendChild(titleRow);
+
+    // Shared options box: take from the first question that has it.
+    const optSrc = groupQs.find(x => x.optionsBox)?.optionsBox ?? null;
+    if (optSrc && Array.isArray(optSrc.items) && optSrc.items.length) {
+      const box = document.createElement("div");
+      box.className = "notice";
+      const heading = document.createElement("div");
+      heading.className = "small";
+      heading.style.marginBottom = "6px";
+      heading.innerHTML = `<strong>${esc(optSrc.title ?? "Options")}</strong>`;
+      box.appendChild(heading);
+
+      const grid = document.createElement("div");
+      grid.style.display = "grid";
+      grid.style.gridTemplateColumns = "repeat(2, minmax(0, 1fr))";
+      grid.style.gap = "6px";
+
+      optSrc.items.forEach((it) => {
+        const row = document.createElement("div");
+        const letter = (it.letter ?? it.id ?? it.value ?? "").toString().trim();
+        const text = (it.text ?? it.label ?? "").toString();
+        row.innerHTML = `<strong>${esc(letter)}</strong> ${esc(text)}`;
+        grid.appendChild(row);
+      });
+      box.appendChild(grid);
+      wrap.appendChild(box);
+    }
+
+    // Render each question in the group with a compact layout.
+    groupQs.forEach((qq) => {
+      const row = document.createElement("div");
+      row.className = "row";
+      row.style.alignItems = "center";
+      row.style.justifyContent = "space-between";
+      row.style.gap = "12px";
+
+      const left = document.createElement("div");
+      left.style.flex = "1";
+      left.className = "small";
+      left.innerHTML = `<strong>Q${esc(qq.shortLabel ?? qq.key)}</strong> ${esc(qq.prompt ?? "")}`;
+
+      const right = document.createElement("div");
+      right.style.minWidth = "160px";
+
+      // Matching/headings/dropdown => use a select (A–G etc.)
+      const type = qq.type;
+      const allowed = (Array.isArray(qq.allowedLetters) && qq.allowedLetters.length)
+        ? qq.allowedLetters
+        : (Array.isArray(qq.letters) && qq.letters.length ? qq.letters : ["A","B","C","D","E","F","G"]);
+      const vals = allowed.map(normalizeLetter);
+
+      const sel = document.createElement("select");
+      const ph = document.createElement("option");
+      ph.value = "";
+      ph.textContent = "Select...";
+      sel.appendChild(ph);
+      vals.forEach(v => {
+        const o = document.createElement("option");
+        o.value = v;
+        o.textContent = v;
+        sel.appendChild(o);
+      });
+
+      const curVal = canonicalVal(engine, qq.key);
+      sel.value = typeof curVal === "string" ? normalizeLetter(curVal) : "";
+      sel.addEventListener("change", () => {
+        setValue(engine, qq.key, sel.value);
+        callChange();
+      });
+      right.appendChild(sel);
+
+      // Highlight the currently selected question (from nav)
+      if (String(qq.key) === String(q.key)) {
+        row.style.border = "1px solid rgba(0,0,0,0.12)";
+        row.style.borderRadius = "12px";
+        row.style.padding = "10px";
+      }
+
+      row.appendChild(left);
+      row.appendChild(right);
+      wrap.appendChild(row);
+    });
+
+    return true;
+  };
+
+  if (renderGroupIfAny()) return;
   container.innerHTML = "";
   const labelText = q.label ?? (q.shortLabel ? `Q${q.shortLabel}` : (q.key ? `Q${q.key}` : ""));
 
