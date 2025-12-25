@@ -114,48 +114,37 @@
   "instructions": "Questions 15–16: Choose TWO letters, A–E.\nQuestions 17–18: Choose TWO letters, A–E.\nQuestions 19–20: Choose TWO letters, A–E.",
   "audioFile": "assets/audio/ELT_IELTS17_t1_audio2.mp3",
   "audioDuration": 120,
+  "sheetHtml": "assets/sheets/test1/listening_part2b_15-20.html",
   "questions": [
     {
       "key": "15",
-      "type": "multipleChoice",
-      "prompt": "Which TWO features of the lighthouse does Lou mention? (Choose TWO)",
-      "options": ["A why it was built", "B who built it", "C how long it took to build", "D who staffed it", "E what it was built with"],
-      "multipleAnswers": true
+      "type": "single_letter",
+      "hint": "ONE LETTER (A–E)"
     },
     {
       "key": "16",
-      "type": "multipleChoice",
-      "prompt": "Which TWO features of the lighthouse does Lou mention? (Choose the other answer)",
-      "options": ["A why it was built", "B who built it", "C how long it took to build", "D who staffed it", "E what it was built with"],
-      "multipleAnswers": true
+      "type": "single_letter",
+      "hint": "ONE LETTER (A–E)"
     },
     {
       "key": "17",
-      "type": "multipleChoice",
-      "prompt": "Which TWO types of creature might come close to the boat? (Choose TWO)",
-      "options": ["A sea eagles", "B fur seals", "C dolphins", "D whales", "E penguins"],
-      "multipleAnswers": true
+      "type": "single_letter",
+      "hint": "ONE LETTER (A–E)"
     },
     {
       "key": "18",
-      "type": "multipleChoice",
-      "prompt": "Which TWO types of creature might come close to the boat? (Choose the other answer)",
-      "options": ["A sea eagles", "B fur seals", "C dolphins", "D whales", "E penguins"],
-      "multipleAnswers": true
+      "type": "single_letter",
+      "hint": "ONE LETTER (A–E)"
     },
     {
       "key": "19",
-      "type": "multipleChoice",
-      "prompt": "Which TWO points does Lou make about the caves? (Choose TWO)",
-      "options": ["A Only large tourist boats can visit them", "B The entrances to them are often blocked", "C It is too dangerous for individuals to go near them", "D Someone will explain what is inside them", "E They cannot be reached on foot"],
-      "multipleAnswers": true
+      "type": "single_letter",
+      "hint": "ONE LETTER (A–E)"
     },
     {
       "key": "20",
-      "type": "multipleChoice",
-      "prompt": "Which TWO points does Lou make about the caves? (Choose the other answer)",
-      "options": ["A Only large tourist boats can visit them", "B The entrances to them are often blocked", "C It is too dangerous for individuals to go near them", "D Someone will explain what is inside them", "E They cannot be reached on foot"],
-      "multipleAnswers": true
+      "type": "single_letter",
+      "hint": "ONE LETTER (A–E)"
     }
   ]
 },
@@ -289,6 +278,26 @@
       ]
     }
   ],
+  "answerGroups": [
+    {
+      "id": "15-16",
+      "keys": ["15", "16"],
+      "acceptedSet": ["A", "D"],
+      "expectedCount": 2
+    },
+    {
+      "id": "17-18",
+      "keys": ["17", "18"],
+      "acceptedSet": ["B", "C"],
+      "expectedCount": 2
+    },
+    {
+      "id": "19-20",
+      "keys": ["19", "20"],
+      "acceptedSet": ["D", "E"],
+      "expectedCount": 2
+    }
+  ],
   "answerKey": {
     "1": { "accepted": ["litter"] },
     "2": { "accepted": ["dogs"] },
@@ -304,12 +313,6 @@
     "12": { "accepted": "C" },
     "13": { "accepted": "B" },
     "14": { "accepted": "B" },
-    "15": { "accepted": ["A", "D"] },
-    "16": { "accepted": ["A", "D"] },
-    "17": { "accepted": ["B", "C"] },
-    "18": { "accepted": ["B", "C"] },
-    "19": { "accepted": ["D", "E"] },
-    "20": { "accepted": ["D", "E"] },
     "21": { "accepted": "A" },
     "22": { "accepted": "B" },
     "23": { "accepted": "B" },

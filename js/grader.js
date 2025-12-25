@@ -41,6 +41,7 @@ function acceptedNormalized(accepted, type) {
  */
 export function gradeModule(testJson, responses) {
   const key = testJson.answerKey ?? {};
+  const groups = Array.isArray(testJson.answerGroups) ? testJson.answerGroups : [];
   const flat = [];
   for (const sec of (testJson.sections ?? [])) {
     for (const q of (sec.questions ?? [])) {
@@ -51,9 +52,42 @@ export function gradeModule(testJson, responses) {
   let raw = 0;
   let max = 0;
   const details = [];
+  const groupedKeys = new Set();
+
+  for (const group of groups) {
+    const keys = Array.isArray(group.keys) ? group.keys.map(String) : [];
+    keys.forEach(k => groupedKeys.add(k));
+
+    const acceptedSet = new Set((group.acceptedSet ?? []).map(normalizeLetter).filter(Boolean));
+    const userSet = new Set();
+    for (const k of keys) {
+      const val = normalizeLetter(responses?.[k]);
+      if (val) userSet.add(val);
+    }
+
+    let gained = 0;
+    for (const val of userSet) {
+      if (acceptedSet.has(val)) gained += 1;
+    }
+
+    const expectedCount = group.expectedCount ?? acceptedSet.size;
+    const groupScore = Math.min(gained, expectedCount);
+    max += expectedCount;
+    raw += groupScore;
+
+    details.push({
+      key: group.id ?? keys.join("-"),
+      type: "answerGroup",
+      gained: groupScore,
+      max: expectedCount,
+      user: Array.from(userSet),
+      accepted: Array.from(acceptedSet)
+    });
+  }
 
   for (const q of flat) {
     const qKey = q.key;
+    if (groupedKeys.has(qKey)) continue;
     const rule = key[qKey];
     if (!rule) continue;
 
