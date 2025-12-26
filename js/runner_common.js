@@ -70,7 +70,7 @@ export async function bootModule({ moduleName, manifestPath }) {
 
   // manifestPath is relative to runner_common.js (js/)
   const manifestUrl = new URL(manifestPath, import.meta.url);
-  const appBaseUrl = new URL("..", manifestUrl); // site root (…/ielts/)
+  const appBaseUrl = new URL("..", import.meta.url); // site root (…/ielts/)
   setStatus("Loading manifest...");
 
   const manifest = await loadJSON(manifestUrl);
