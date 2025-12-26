@@ -6,9 +6,12 @@ const STORAGE_KEY = "ielts:writing:v1";
 const el = {
   promptSelect: document.getElementById("promptSelect"),
   taskSelect: document.getElementById("taskSelect"),
-  taskViewer: document.getElementById("taskViewer") || document.getElementById("promptBox"),
+
+  // Left viewer pane (writing.html uses #taskViewer, not #promptBox)
+  taskViewer: document.getElementById("taskViewer"),
   taskImage: document.getElementById("taskImage"),
   taskImageHint: document.getElementById("taskImageHint"),
+
   essay: document.getElementById("essay"),
   wordCount: document.getElementById("wordCount"),
   timer: document.getElementById("timer"),
@@ -54,17 +57,28 @@ function downloadText(filename, text) {
   const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
-  a.href = url;
-  a.download = filename;
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click(); a.remove();
   setTimeout(() => URL.revokeObjectURL(url), 500);
 }
 
+function resolveAsset(p) {
+  if (!p) return null;
+  if (/^https?:\/\//i.test(p)) return p;
+  // writing.html is in /modules; writing.js is in /js. Resolve from JS location.
+  return new URL(`../${p}`, import.meta.url).href;
+}
+
 async function init() {
-  if (!el.promptSelect || !el.taskSelect || !el.essay || !el.wordCount || !el.timer || !el.resetBtn || !el.exportBtn) {
-    console.warn("Writing module: required elements missing; aborting init.");
+  // Basic layout guard to avoid null reference errors
+  if (!el.promptSelect || !el.taskSelect || !el.taskViewer || !el.essay) {
+    document.body.innerHTML = `
+      <div class="container">
+        <div class="card">
+          <h2>Error</h2>
+          <pre>writing.html is missing required elements (promptSelect, taskSelect, taskViewer, essay).</pre>
+        </div>
+      </div>`;
     return;
   }
 
@@ -104,8 +118,6 @@ async function loadSet(path) {
 function renderTask(setJson) {
   const t = setJson.tasks[state.taskIndex];
 
-  const promptLines = Array.isArray(t.prompt) ? t.prompt : (t.prompt ? [t.prompt] : []);
-  const note = t.promptNote ?? "";
   const title = t.title ?? `Task ${t.taskNumber ?? t.task ?? (state.taskIndex + 1)}`;
   const numberedLabel = `Task ${t.taskNumber ?? t.task ?? (state.taskIndex + 1)}`;
 
@@ -117,65 +129,58 @@ function renderTask(setJson) {
   if (t.instructions) {
     parts.push(`<div class="small" style="margin-top:8px">${t.instructions}</div>`);
   }
-
-  if (promptLines.length) {
+  if (t.prompt) {
+    const p = String(t.prompt);
+    const paragraphs = p.split(/\n\n+/).map(x => x.trim()).filter(Boolean);
     parts.push(
-      `<div class="notice" style="margin-top:10px">${promptLines
-        .map(p => `<p style="margin:0 0 8px 0">${String(p).replace(/\n/g, "<br>")}</p>`)
-        .join("")}</div>`
+      `<div class="notice" style="margin-top:10px">` +
+        paragraphs.map(x => `<p style="margin:0 0 8px 0">${x}</p>`).join("") +
+      `</div>`
     );
-  } else if (note) {
-    parts.push(`<div class="small" style="margin-top:10px">${note}</div>`);
   }
-
   if (t.requirements) {
-    parts.push(`<div class="small" style="margin-top:10px"><strong>Requirement:</strong> ${t.requirements}</div>`);
+    parts.push(`<div class="small" style="margin-top:8px"><strong>${t.requirements}</strong></div>`);
+  }
+  if (t.additionalInstructions) {
+    parts.push(`<div class="small" style="margin-top:6px">${t.additionalInstructions}</div>`);
   }
 
   if (el.taskViewer) {
     el.taskViewer.innerHTML = parts.join("");
   }
 
-  // ---- Image rendering ----
+  // Image (Task 1)
+  const imgSrc = resolveAsset(t.imageUrl);
   if (el.taskImage && el.taskImageHint) {
-    const imgSrc = resolveAsset(t.imageUrl);
     if (imgSrc) {
-      el.taskImage.style.display = "block";
       el.taskImage.src = imgSrc;
-      el.taskImage.alt = t.imageAlt ?? "Writing Task figure";
-
-      el.taskImageHint.style.display = "none";
-      el.taskImageHint.textContent = "";
-
-      // reset handler and set a fresh one (prevents stacking)
-      el.taskImage.onerror = () => {
-        el.taskImage.style.display = "none";
-        el.taskImageHint.style.display = "block";
-        el.taskImageHint.textContent = `Image failed to load: ${t.imageUrl}`;
-      };
+      el.taskImage.alt = t.imageAlt ?? "";
+      el.taskImage.style.display = "block";
+      el.taskImageHint.textContent = t.imageAlt ?? "";
+      el.taskImageHint.style.display = (t.imageAlt ? "block" : "none");
     } else {
       el.taskImage.removeAttribute("src");
+      el.taskImage.alt = "";
       el.taskImage.style.display = "none";
-      el.taskImage.onerror = null;
-
-      el.taskImageHint.style.display = "none";
       el.taskImageHint.textContent = "";
+      el.taskImageHint.style.display = "none";
     }
   }
 
-  // Response box
+  // Essay + word count
   el.essay.value = state.essay ?? "";
   el.wordCount.textContent = String(countWords(el.essay.value));
 
-  // Timer (per task; if missing, no countdown)
+  // Timer (per-task override; fallback to full test if not present)
   timer?.stop();
+  const seconds = Number(t.timeLimitSeconds ?? setJson.timeLimitSeconds ?? 0) || 0;
   timer = new CountdownTimer(
-    t.timeLimitSeconds ?? 0,
-    () => { el.timer.textContent = timer.format(); },
+    seconds,
+    () => { if (el.timer) el.timer.textContent = timer.format(); },
     () => { /* time over: no auto submit */ }
   );
-  el.timer.textContent = timer.format();
-  if ((t.timeLimitSeconds ?? 0) > 0) timer.start();
+  if (el.timer) el.timer.textContent = timer.format();
+  if (seconds > 0) timer.start();
 }
 
 el.promptSelect?.addEventListener("change", async () => {
@@ -214,6 +219,5 @@ el.exportBtn?.addEventListener("click", () => {
 
 init().catch(err => {
   console.error(err);
-  document.body.innerHTML =
-    `<div class="container"><div class="card"><h2>Error</h2><pre>${err.message}</pre></div></div>`;
+  document.body.innerHTML = `<div class="container"><div class="card"><h2>Error</h2><pre>${err.message}</pre></div></div>`;
 });

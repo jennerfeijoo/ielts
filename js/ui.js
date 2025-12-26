@@ -8,6 +8,246 @@ const canonicalVal = (engine, key) => {
 };
 
 const setValue = (engine, key, value) => {
+const escapeHtml = (s) => String(s ?? "")
+  .replace(/&/g, "&amp;")
+  .replace(/</g, "&lt;")
+  .replace(/>/g, "&gt;")
+  .replace(/"/g, "&quot;")
+  .replace(/'/g, "&#39;");
+
+function renderOptionsBox(box) {
+  if (!box) return null;
+  const items = box.items ?? box.options ?? null;
+  if (!Array.isArray(items) || items.length === 0) return null;
+
+  const wrap = document.createElement("div");
+  wrap.className = "notice";
+  wrap.style.margin = "10px 0";
+  const title = box.title ? `<div class="small"><strong>${escapeHtml(box.title)}</strong></div>` : `<div class="small"><strong>Options</strong></div>`;
+  const cols = box.columns ?? 2;
+
+  const grid = document.createElement("div");
+  grid.style.display = "grid";
+  grid.style.gridTemplateColumns = `repeat(${cols}, minmax(0, 1fr))`;
+  grid.style.gap = "6px";
+  grid.style.marginTop = "6px";
+
+  items.forEach((it) => {
+    const row = document.createElement("div");
+    if (typeof it === "string") {
+      row.textContent = it;
+    } else {
+      const k = it.letter ?? it.key ?? "";
+      const t = it.text ?? it.label ?? "";
+      row.innerHTML = `<strong>${escapeHtml(k)}</strong> ${escapeHtml(t)}`.trim();
+    }
+    grid.appendChild(row);
+  });
+
+  wrap.innerHTML = title;
+  wrap.appendChild(grid);
+  return wrap;
+}
+
+function computeGroupTitle(groupQuestions) {
+  const nums = groupQuestions
+    .map(q => Number(String(q.key).match(/\d+/)?.[0]))
+    .filter(n => Number.isFinite(n))
+    .sort((a,b)=>a-b);
+  if (nums.length >= 2) return `Questions ${nums[0]}–${nums[nums.length-1]}`;
+  if (nums.length === 1) return `Question ${nums[0]}`;
+  return "Questions";
+}
+
+function renderAnswerControl(q, engine, callChange) {
+  const type = q.type ?? "text";
+  const currentRaw = canonicalVal(engine, q.key);
+  const current = currentRaw;
+
+  const makeSelect = (vals, placeholder="Select...") => {
+    const select = document.createElement("select");
+    const addOpt = (val, text) => {
+      const o = document.createElement("option");
+      o.value = val;
+      o.textContent = text ?? val;
+      select.appendChild(o);
+    };
+    addOpt("", placeholder);
+    vals.forEach(v => addOpt(v, v));
+    select.value = typeof current === "string" ? current : "";
+    select.addEventListener("change", () => {
+      setValue(engine, q.key, select.value);
+      callChange();
+    });
+    return select;
+  };
+
+  if (type === "text") {
+    const input = document.createElement("input");
+    input.type = "text";
+    input.placeholder = q.placeholder ?? "Type your answer";
+    input.value = typeof current === "string" ? current : "";
+    input.addEventListener("input", () => {
+      setValue(engine, q.key, input.value);
+      callChange();
+    });
+    return input;
+  }
+
+  if (type === "tfng" || type === "ynng") {
+    const vals = type === "tfng" ? ["TRUE", "FALSE", "NOT GIVEN"] : ["YES", "NO", "NOT GIVEN"];
+    return makeSelect(vals, "Select...");
+  }
+
+  if (type === "matching") {
+    const letters = q.allowedLetters ?? q.letters ?? ["A","B","C","D","E","F","G"];
+    return makeSelect(letters, "Select letter...");
+  }
+
+  if (type === "multipleChoice") {
+    const opts = Array.isArray(q.options) ? q.options : [];
+    const maxSelect = (() => {
+      if (typeof q.maxSelect === "number") return q.maxSelect;
+      if (q.multipleAnswers === true) return q.expectedCount ?? 2;
+      if (typeof q.expectedCount === "number" && q.expectedCount > 1) return q.expectedCount;
+      if (typeof q.hint === "string" && /choose\s+two/i.test(q.hint)) return 2;
+      return 1;
+    })();
+    const allowMulti = maxSelect >= 2;
+
+    const parseResponse = (val) => {
+      if (Array.isArray(val)) return val.map(normalizeLetter).filter(Boolean);
+      if (typeof val === "string") {
+        if (val.includes(",")) return val.split(",").map(normalizeLetter).filter(Boolean);
+        const solo = normalizeLetter(val);
+        return solo ? [solo] : [];
+      }
+      return [];
+    };
+    const state = new Set(parseResponse(currentRaw));
+    if (!allowMulti && state.size > 1) {
+      const first = Array.from(state)[0];
+      state.clear();
+      if (first) state.add(first);
+    }
+
+    const commit = () => {
+      const sorted = Array.from(state).filter(Boolean).sort();
+      setValue(engine, q.key, allowMulti ? sorted : (sorted[0] ?? ""));
+      callChange();
+    };
+
+    if (!allowMulti) {
+      const group = document.createElement("div");
+      group.className = "column";
+      group.style.gap = "8px";
+      opts.forEach((text, idx) => {
+        const letter = String.fromCharCode("A".charCodeAt(0) + idx);
+        const label = document.createElement("label");
+        label.style.display = "flex";
+        label.style.alignItems = "center";
+        label.style.gap = "6px";
+        label.style.fontSize = "14px";
+        const rb = document.createElement("input");
+        rb.type = "radio";
+        rb.name = `q_${q.key}`;
+        rb.value = letter;
+        rb.checked = normalizeLetter(currentRaw) === letter;
+        rb.addEventListener("change", () => {
+          setValue(engine, q.key, letter);
+          callChange();
+        });
+        label.appendChild(rb);
+        label.appendChild(document.createTextNode(`${letter} ${text}`));
+        group.appendChild(label);
+      });
+      return group;
+    }
+
+    const group = document.createElement("div");
+    group.className = "column";
+    group.style.gap = "8px";
+    const expectedCount = q.expectedCount ?? maxSelect;
+
+    const refreshDisabled = () => {
+      const full = state.size >= expectedCount;
+      group.querySelectorAll("input[type=checkbox]").forEach((cb) => {
+        if (!cb.checked) cb.disabled = full;
+      });
+    };
+
+    opts.forEach((text, idx) => {
+      const letter = String.fromCharCode("A".charCodeAt(0) + idx);
+      const label = document.createElement("label");
+      label.style.display = "flex";
+      label.style.alignItems = "center";
+      label.style.gap = "6px";
+      label.style.fontSize = "14px";
+      const cb = document.createElement("input");
+      cb.type = "checkbox";
+      cb.value = letter;
+      cb.checked = state.has(letter);
+      cb.addEventListener("change", () => {
+        if (cb.checked) {
+          if (state.size >= expectedCount) {
+            cb.checked = false;
+            return;
+          }
+          state.add(letter);
+        } else {
+          state.delete(letter);
+        }
+        refreshDisabled();
+        commit();
+      });
+      label.appendChild(cb);
+      label.appendChild(document.createTextNode(`${letter} ${text}`));
+      group.appendChild(label);
+    });
+
+    refreshDisabled();
+    return group;
+  }
+
+  // fallback
+  const input = document.createElement("input");
+  input.type = "text";
+  input.value = typeof current === "string" ? current : "";
+  input.addEventListener("input", () => {
+    setValue(engine, q.key, input.value);
+    callChange();
+  });
+  return input;
+}
+
+function renderQuestionInline(parent, q, engine, callChange) {
+  const row = document.createElement("div");
+  row.style.display = "flex";
+  row.style.flexDirection = "column";
+  row.style.gap = "8px";
+  row.style.padding = "10px";
+  row.style.border = "1px solid rgba(0,0,0,0.08)";
+  row.style.borderRadius = "12px";
+
+  const head = document.createElement("div");
+  head.className = "row";
+  const label = q.shortLabel ?? q.key;
+  head.innerHTML = `<div class="badge"><strong>Q${escapeHtml(label)}</strong></div>`;
+  row.appendChild(head);
+
+  if (q.prompt) {
+    const p = document.createElement("div");
+    p.className = "small";
+    p.style.fontSize = "14px";
+    p.innerHTML = escapeHtml(q.prompt);
+    row.appendChild(p);
+  }
+
+  const control = renderAnswerControl(q, engine, callChange);
+  row.appendChild(control);
+
+  parent.appendChild(row);
+}
   if (!engine) return;
   if (typeof engine.setAnswer === "function") { engine.setAnswer(key, value); return; }
   if (typeof engine.setResponse === "function") { engine.setResponse(key, value); return; }
@@ -18,6 +258,50 @@ export function renderQuestion(container, q, engine, opts = {}) {
   if (!container || !q) return;
   const { onAnswerChange } = opts;
   const callChange = () => { if (typeof onAnswerChange === "function") onAnswerChange(); };
+
+// Reading group mode: if the current question has a groupId, render the whole group together.
+if (opts?.moduleName === "reading" && opts?.section && q.groupId) {
+  const sec = opts.section;
+  const allQs = Array.isArray(sec.questions) ? sec.questions : [];
+  const groupQs = allQs.filter(x => x && x.groupId === q.groupId);
+
+  if (groupQs.length) {
+    container.innerHTML = "";
+    const wrapG = document.createElement("div");
+    wrapG.style.display = "flex";
+    wrapG.style.flexDirection = "column";
+    wrapG.style.gap = "12px";
+    container.appendChild(wrapG);
+
+    const meta = (Array.isArray(sec.groups) ? sec.groups : []).find(g => g && g.id === q.groupId) ?? null;
+    const gTitle = meta?.title ?? q.groupTitle ?? computeGroupTitle(groupQs);
+    const gInstr = meta?.instructions ?? q.groupInstructions ?? "";
+    const gBox = meta?.optionsBox ?? meta?.sharedOptionsBox ?? q.optionsBox ?? q.sharedOptionsBox ?? null;
+
+    const h = document.createElement("div");
+    h.className = "row";
+    h.innerHTML = `<div class="badge"><strong>${escapeHtml(gTitle)}</strong></div>`;
+    wrapG.appendChild(h);
+
+    if (gInstr) {
+      const i = document.createElement("div");
+      i.className = "small";
+      i.innerHTML = escapeHtml(gInstr);
+      wrapG.appendChild(i);
+    }
+
+    const ob = renderOptionsBox(gBox);
+    if (ob) wrapG.appendChild(ob);
+
+    const list = document.createElement("div");
+    list.className = "column";
+    list.style.gap = "10px";
+    wrapG.appendChild(list);
+
+    groupQs.forEach(qq => renderQuestionInline(list, qq, engine, callChange));
+    return;
+  }
+}
   container.innerHTML = "";
   const labelText = q.label ?? (q.shortLabel ? `Q${q.shortLabel}` : (q.key ? `Q${q.key}` : ""));
 

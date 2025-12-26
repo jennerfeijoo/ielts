@@ -450,31 +450,29 @@ export async function bootModule({ moduleName, manifestPath }) {
     } else {
       clearSheetCacheIfNeeded(section);
 
-      if (cur.groupId) {
-        renderGroup(cur.groupId, section);
-      } else {
-        renderQuestion(el.question, cur, engine, {
-          onAnswerChange: () => {
-            updateFlagBtn();
-            const cur2 = engine.getCurrent();
-            const nav2 = questionsForCurrentSection();
-            renderNav(
-              el.qnav,
-              nav2,
-              engine.responses,
-              cur2.key,
-              (pickedKey) => {
-                const idx = engine.questionFlat.findIndex((q) => q.key === pickedKey);
-                if (idx >= 0) {
-                  engine.goToIndex(idx);
-                  renderAll();
-                }
-              },
-              flags
-            );
-          },
-        });
-      }
+      renderQuestion(el.question, cur, engine, {
+        moduleName,
+        section: getCurrentSection(),
+        onAnswerChange: () => {
+          updateFlagBtn();
+          const cur2 = engine.getCurrent();
+          const nav2 = questionsForCurrentSection();
+          renderNav(
+            el.qnav,
+            nav2,
+            engine.responses,
+            cur2.key,
+            (pickedKey) => {
+              const idx = engine.questionFlat.findIndex((q) => q.key === pickedKey);
+              if (idx >= 0) {
+                engine.goToIndex(idx);
+                renderAll();
+              }
+            },
+            flags
+          );
+        },
+      });
     }
 
     updateFlagBtn();
