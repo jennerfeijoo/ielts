@@ -49,6 +49,12 @@ export function gradeModule(testJson, responses) {
     }
   }
 
+  // Keys that are scored via answerGroups (to avoid double-counting)
+  const groupedKeys = new Set();
+  for (const g of groups) {
+    for (const k of (g?.keys ?? [])) groupedKeys.add(String(k));
+  }
+
   let raw = 0;
   let max = 0;
   const details = [];
@@ -85,9 +91,41 @@ export function gradeModule(testJson, responses) {
     });
   }
 
+  // 1) Score grouped questions (e.g., "Choose TWO letters" where order doesn't matter)
+  for (const g of groups) {
+    const keys = (g?.keys ?? []).map(String).filter(Boolean);
+    if (!keys.length) continue;
+
+    const acceptedSet = new Set((g.acceptedSet ?? []).map(normalizeLetter).filter(Boolean));
+    const expectedCount = g.expectedCount ?? acceptedSet.size;
+    if (!acceptedSet.size || !expectedCount) continue;
+
+    let userSet = new Set();
+    for (const k of keys) {
+      const v = normalizeLetter(responses?.[k]);
+      if (v) userSet.add(v);
+    }
+
+    let gained = 0;
+    for (const v of userSet) if (acceptedSet.has(v)) gained += 1;
+    gained = Math.min(gained, expectedCount);
+
+    raw += gained;
+    max += expectedCount;
+    details.push({
+      key: g.id ?? keys.join(","),
+      type: "answerGroup",
+      gained,
+      max: expectedCount,
+      user: Array.from(userSet),
+      accepted: Array.from(acceptedSet)
+    });
+  }
+
+  // 2) Score regular questions
   for (const q of flat) {
     const qKey = q.key;
-    if (groupedKeys.has(qKey)) continue;
+    if (groupedKeys.has(String(qKey))) continue;
     const rule = key[qKey];
     if (!rule) continue;
 

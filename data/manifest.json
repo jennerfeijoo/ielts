@@ -17,7 +17,7 @@
       "title": "Test 1",
       "path": "data/reading/test1.json"
     },
-    {
+        {
       "id": "test2",
       "title": "Test 2",
       "path": "data/reading/test2.json"

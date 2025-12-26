@@ -6,9 +6,12 @@ const STORAGE_KEY = "ielts:writing:v1";
 const el = {
   promptSelect: document.getElementById("promptSelect"),
   taskSelect: document.getElementById("taskSelect"),
-  taskViewer: document.getElementById("taskViewer") || document.getElementById("promptBox"),
+
+  // Left viewer pane (writing.html)
+  taskViewer: document.getElementById("taskViewer"),
   taskImage: document.getElementById("taskImage"),
   taskImageHint: document.getElementById("taskImageHint"),
+
   essay: document.getElementById("essay"),
   wordCount: document.getElementById("wordCount"),
   timer: document.getElementById("timer"),
@@ -20,15 +23,13 @@ let sets = null;
 let timer = null;
 let state = { setPath: null, taskIndex: 0, essay: "" };
 
-const appBaseUrl = new URL("..", import.meta.url);
+// Resolve assets from site root (…/ielts/) regardless of which module page is open.
+const appBaseUrl = new URL("..", import.meta.url); // js/.. => site root
 const resolveAsset = (p) => {
   const raw = String(p ?? "").trim();
   if (!raw) return "";
-  try {
-    return new URL(raw, appBaseUrl).href;
-  } catch {
-    return "";
-  }
+  if (/^https?:\/\//i.test(raw)) return raw;
+  return new URL(raw, appBaseUrl).href;
 };
 
 function countWords(s) {
@@ -62,35 +63,75 @@ function downloadText(filename, text) {
   setTimeout(() => URL.revokeObjectURL(url), 500);
 }
 
+function setImage(url, alt) {
+  if (!el.taskImage) return;
+
+  if (!url) {
+    el.taskImage.style.display = "none";
+    if (el.taskImageHint) el.taskImageHint.style.display = "none";
+    return;
+  }
+
+  el.taskImage.alt = alt ?? "";
+  el.taskImage.style.display = "block";
+
+  el.taskImage.onerror = () => {
+    el.taskImage.style.display = "none";
+    if (el.taskImageHint) {
+      el.taskImageHint.textContent = "Image failed to load. Check imageUrl path in the JSON and that the file exists.";
+      el.taskImageHint.style.display = "block";
+    }
+  };
+
+  el.taskImage.src = url;
+
+  if (el.taskImageHint) {
+    el.taskImageHint.textContent = "";
+    el.taskImageHint.style.display = "none";
+  }
+}
+
 async function init() {
-  if (!el.promptSelect || !el.taskSelect || !el.essay || !el.wordCount || !el.timer || !el.resetBtn || !el.exportBtn) {
-    console.warn("Writing module: required elements missing; aborting init.");
+  // Guard against layout mismatches to avoid null reference crashes
+  if (!el.promptSelect || !el.taskSelect || !el.taskViewer || !el.essay) {
+    document.body.innerHTML = `
+      <div class="container">
+        <div class="card">
+          <h2>Error</h2>
+          <pre>writing.html is missing required elements (promptSelect, taskSelect, taskViewer, essay).</pre>
+        </div>
+      </div>`;
     return;
   }
 
   load();
+
+  // sets.json is referenced from /modules/writing.html -> "../data/...". Here we resolve from js via loader.
   sets = await loadJSON("../data/writing/sets.json");
 
   el.promptSelect.innerHTML = "";
-  for (const s of sets.sets) {
+  for (const s of (sets?.sets ?? [])) {
     const o = document.createElement("option");
     o.value = s.path;
     o.textContent = s.title ?? s.path;
     el.promptSelect.appendChild(o);
   }
 
-  el.promptSelect.value = state.setPath ?? sets.sets[0].path;
+  const first = sets?.sets?.[0]?.path;
+  el.promptSelect.value = state.setPath ?? first ?? "";
   await loadSet(el.promptSelect.value);
 }
 
 async function loadSet(path) {
+  if (!path) return;
   const setJson = await loadJSON(`../${path}`);
+
   state.setPath = path;
-  state.taskIndex = Math.min(state.taskIndex ?? 0, (setJson.tasks.length - 1));
+  state.taskIndex = Math.min(Number(state.taskIndex ?? 0), Math.max(0, (setJson.tasks?.length ?? 1) - 1));
   save();
 
   el.taskSelect.innerHTML = "";
-  setJson.tasks.forEach((t, idx) => {
+  (setJson.tasks ?? []).forEach((t, idx) => {
     const o = document.createElement("option");
     o.value = String(idx);
     o.textContent = t.title ?? `Task ${t.taskNumber ?? t.task ?? (idx + 1)}`;
@@ -102,81 +143,52 @@ async function loadSet(path) {
 }
 
 function renderTask(setJson) {
-  const t = setJson.tasks[state.taskIndex];
+  const t = setJson.tasks?.[state.taskIndex];
+  if (!t) return;
 
-  const promptLines = Array.isArray(t.prompt) ? t.prompt : (t.prompt ? [t.prompt] : []);
-  const note = t.promptNote ?? "";
   const title = t.title ?? `Task ${t.taskNumber ?? t.task ?? (state.taskIndex + 1)}`;
-  const numberedLabel = `Task ${t.taskNumber ?? t.task ?? (state.taskIndex + 1)}`;
+  const instructions = t.instructions ?? "";
+  const prompt = t.prompt ?? "";
+  const requirements = t.requirements ?? "";
 
-  const parts = [
-    `<div class="badge">${numberedLabel}</div>`,
-    `<div class="h1" style="font-size:18px; margin-top:6px">${title}</div>`
-  ];
+  const html = [
+    `<div class="badge">${escapeHtml(title)}</div>`,
+    instructions ? `<div class="small" style="margin-top:6px">${escapeHtml(instructions)}</div>` : "",
+    prompt ? `<div class="notice" style="margin-top:10px">${escapeHtml(prompt).replace(/\n/g, "<br>")}</div>` : "",
+    requirements ? `<div class="small" style="margin-top:8px"><strong>${escapeHtml(requirements)}</strong></div>` : ""
+  ].filter(Boolean).join("");
 
-  if (t.instructions) {
-    parts.push(`<div class="small" style="margin-top:8px">${t.instructions}</div>`);
-  }
+  el.taskViewer.innerHTML = html;
 
-  if (promptLines.length) {
-    parts.push(
-      `<div class="notice" style="margin-top:10px">${promptLines
-        .map(p => `<p style="margin:0 0 8px 0">${String(p).replace(/\n/g, "<br>")}</p>`)
-        .join("")}</div>`
-    );
-  } else if (note) {
-    parts.push(`<div class="small" style="margin-top:10px">${note}</div>`);
-  }
+  // Image in the left pane
+  const imgUrl = t.imageUrl ? resolveAsset(t.imageUrl) : "";
+  setImage(imgUrl, t.imageAlt ?? "");
 
-  if (t.requirements) {
-    parts.push(`<div class="small" style="margin-top:10px"><strong>Requirement:</strong> ${t.requirements}</div>`);
-  }
-
-  if (el.taskViewer) {
-    el.taskViewer.innerHTML = parts.join("");
-  }
-
-  // ---- Image rendering ----
-  if (el.taskImage && el.taskImageHint) {
-    const imgSrc = resolveAsset(t.imageUrl);
-    if (imgSrc) {
-      el.taskImage.style.display = "block";
-      el.taskImage.src = imgSrc;
-      el.taskImage.alt = t.imageAlt ?? "Writing Task figure";
-
-      el.taskImageHint.style.display = "none";
-      el.taskImageHint.textContent = "";
-
-      // reset handler and set a fresh one (prevents stacking)
-      el.taskImage.onerror = () => {
-        el.taskImage.style.display = "none";
-        el.taskImageHint.style.display = "block";
-        el.taskImageHint.textContent = `Image failed to load: ${t.imageUrl}`;
-      };
-    } else {
-      el.taskImage.removeAttribute("src");
-      el.taskImage.style.display = "none";
-      el.taskImage.onerror = null;
-
-      el.taskImageHint.style.display = "none";
-      el.taskImageHint.textContent = "";
-    }
-  }
-
-  // Response box
+  // Restore essay
   el.essay.value = state.essay ?? "";
-  el.wordCount.textContent = String(countWords(el.essay.value));
+  if (el.wordCount) el.wordCount.textContent = String(countWords(el.essay.value));
 
-  // Timer (per task; if missing, no countdown)
+  // Timer per task (optional)
   timer?.stop();
   timer = new CountdownTimer(
-    t.timeLimitSeconds ?? 0,
-    () => { el.timer.textContent = timer.format(); },
-    () => { /* time over: no auto submit */ }
+    Number(t.timeLimitSeconds ?? 0),
+    () => { if (el.timer) el.timer.textContent = timer.format(); },
+    () => { /* no auto submit */ }
   );
-  el.timer.textContent = timer.format();
+  if (el.timer) el.timer.textContent = timer.format();
   if ((t.timeLimitSeconds ?? 0) > 0) timer.start();
 }
+
+function escapeHtml(s) {
+  return String(s ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/\"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+// ---------- events ----------
 
 el.promptSelect?.addEventListener("change", async () => {
   state.taskIndex = 0;
@@ -195,7 +207,7 @@ el.taskSelect?.addEventListener("change", async () => {
 
 el.essay?.addEventListener("input", () => {
   state.essay = el.essay.value;
-  el.wordCount.textContent = String(countWords(state.essay));
+  if (el.wordCount) el.wordCount.textContent = String(countWords(state.essay));
   save();
 });
 
@@ -203,7 +215,7 @@ el.resetBtn?.addEventListener("click", () => {
   if (!confirm("Reset writing response?")) return;
   state.essay = "";
   el.essay.value = "";
-  el.wordCount.textContent = "0";
+  if (el.wordCount) el.wordCount.textContent = "0";
   save();
 });
 
@@ -214,6 +226,5 @@ el.exportBtn?.addEventListener("click", () => {
 
 init().catch(err => {
   console.error(err);
-  document.body.innerHTML =
-    `<div class="container"><div class="card"><h2>Error</h2><pre>${err.message}</pre></div></div>`;
+  document.body.innerHTML = `<div class="container"><div class="card"><h2>Error</h2><pre>${String(err?.stack ?? err?.message ?? err)}</pre></div></div>`;
 });

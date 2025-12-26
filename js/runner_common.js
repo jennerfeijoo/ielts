@@ -54,6 +54,20 @@ export async function bootModule({ moduleName, manifestPath }) {
     return;
   }
 
+  // Optional: group navigation (Reading question group shortcuts)
+  // This keeps the main selectors simple (Test / Section), while still allowing
+  // quick jumps to grouped question ranges (e.g., Questions 37–40).
+  if (moduleName === "reading" && !el.groupNav && el.qnav.parentElement) {
+    const gn = document.createElement("div");
+    gn.id = "groupNav";
+    gn.className = "row";
+    gn.style.flexWrap = "wrap";
+    gn.style.gap = "8px";
+    gn.style.margin = "10px 0";
+    el.qnav.parentElement.insertBefore(gn, el.qnav);
+    el.groupNav = gn;
+  }
+
   // manifestPath is relative to runner_common.js (js/)
   const manifestUrl = new URL(manifestPath, import.meta.url);
   const appBaseUrl = new URL("..", import.meta.url); // site root (…/ielts/)
@@ -72,6 +86,49 @@ export async function bootModule({ moduleName, manifestPath }) {
     if (/^https?:\/\//i.test(p)) return p;
     return new URL(p, appBaseUrl).href;
   };
+
+  const renderGroupNav = () => {
+    if (!el.groupNav) return;
+    const section = getCurrentSection();
+    const groups = section?.groups;
+    if (!Array.isArray(groups) || groups.length === 0) {
+      el.groupNav.innerHTML = "";
+      el.groupNav.style.display = "none";
+      return;
+    }
+    el.groupNav.style.display = "flex";
+    el.groupNav.innerHTML = "";
+
+    const cur = engine?.getCurrent?.();
+    const curGroupId = cur?.groupId ?? null;
+
+    groups.forEach((g) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "btn secondary";
+      btn.style.padding = "6px 10px";
+      btn.style.fontSize = "12px";
+      btn.textContent = g.title ?? g.id ?? "Group";
+
+      if (curGroupId && (g.id === curGroupId)) {
+        btn.classList.remove("secondary");
+      }
+
+      btn.addEventListener("click", () => {
+        if (!engine) return;
+        const idx = engine.questionFlat.findIndex(
+          (qq) => qq.sectionId === section.id && qq.groupId === g.id
+        );
+        if (idx >= 0) {
+          engine.goToIndex(idx);
+          renderAll();
+        }
+      });
+
+      el.groupNav.appendChild(btn);
+    });
+  };
+
 
   const normalizeAudioPath = (raw) => {
     if (!raw) return null;
@@ -391,6 +448,8 @@ export async function bootModule({ moduleName, manifestPath }) {
           updateFlagBtn();
           const cur2 = engine.getCurrent();
           const nav2 = questionsForCurrentSection();
+
+          renderGroupNav();
           renderNav(
             el.qnav,
             nav2,
@@ -423,6 +482,13 @@ export async function bootModule({ moduleName, manifestPath }) {
     const cur = engine.getCurrent();
     const navQs = questionsForCurrentSection();
 
+    renderGroupNav();
+    if (!cur) {
+      setStatus("No questions found for this section. Check the test JSON structure.");
+      return;
+    }
+
+
     renderNav(
       el.qnav,
       navQs,
@@ -450,31 +516,31 @@ export async function bootModule({ moduleName, manifestPath }) {
     } else {
       clearSheetCacheIfNeeded(section);
 
-      if (cur.groupId) {
-        renderGroup(cur.groupId, section);
-      } else {
-        renderQuestion(el.question, cur, engine, {
-          onAnswerChange: () => {
-            updateFlagBtn();
-            const cur2 = engine.getCurrent();
-            const nav2 = questionsForCurrentSection();
-            renderNav(
-              el.qnav,
-              nav2,
-              engine.responses,
-              cur2.key,
-              (pickedKey) => {
-                const idx = engine.questionFlat.findIndex((q) => q.key === pickedKey);
-                if (idx >= 0) {
-                  engine.goToIndex(idx);
-                  renderAll();
-                }
-              },
-              flags
-            );
-          },
-        });
-      }
+      renderQuestion(el.question, cur, engine, {
+        moduleName,
+        section: getCurrentSection(),
+        onAnswerChange: () => {
+          updateFlagBtn();
+          const cur2 = engine.getCurrent();
+          const nav2 = questionsForCurrentSection();
+
+          renderGroupNav();
+          renderNav(
+            el.qnav,
+            nav2,
+            engine.responses,
+            cur2.key,
+            (pickedKey) => {
+              const idx = engine.questionFlat.findIndex((q) => q.key === pickedKey);
+              if (idx >= 0) {
+                engine.goToIndex(idx);
+                renderAll();
+              }
+            },
+            flags
+          );
+        },
+      });
     }
 
     updateFlagBtn();

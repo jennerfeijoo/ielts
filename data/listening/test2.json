@@ -3,129 +3,205 @@
   "module": "listening",
   "title": "Test 2 – Listening",
   "timeLimitSeconds": 1800,
+  "answerGroups": [
+    {
+      "id": "Q21-22",
+      "keys": ["21", "22"],
+      "acceptedSet": ["D", "E"],
+      "expectedCount": 2
+    }
+  ],
   "sections": [
     {
       "id": "L1",
       "title": "PART 1 Questions 1–10",
-      "instructions": "Complete the notes below. Write ONE WORD AND/OR A NUMBER for each answer.",
-      "audioFile": null,
-      "audioDuration": 90,
+      "instructions": "Complete the notes below. Write ONE WORD ONLY for each answer.",
       "sheetHtml": "assets/sheets/test2/listening_part1.html",
+      "audioFile": "",
       "questions": [
-        { "key": "1", "type": "text", "hint": "ONE WORD ONLY" },
-        { "key": "2", "type": "text", "hint": "ONE WORD ONLY" },
-        { "key": "3", "type": "text", "hint": "ONE WORD ONLY" },
-        { "key": "4", "type": "text", "hint": "ONE WORD ONLY" },
-        { "key": "5", "type": "text", "hint": "ONE WORD ONLY" },
-        { "key": "6", "type": "text", "hint": "ONE WORD ONLY" },
-        { "key": "7", "type": "text", "hint": "ONE WORD ONLY" },
-        { "key": "8", "type": "text", "hint": "ONE WORD ONLY" },
-        { "key": "9", "type": "text", "hint": "ONE WORD ONLY" },
-        { "key": "10", "type": "text", "hint": "NUMBER ONLY" }
+        {"key": "1", "type": "text", "shortLabel": "1", "prompt": "Help with 1 ______ books"},
+        {"key": "2", "type": "text", "shortLabel": "2", "prompt": "keep 2 ______ of books up to date"},
+        {"key": "3", "type": "text", "shortLabel": "3", "prompt": "Library is in the 3 ______ Room"},
+        {"key": "4", "type": "text", "shortLabel": "4", "prompt": "providing 4 ______"},
+        {"key": "5", "type": "text", "shortLabel": "5", "prompt": "hobbies such as 5 ______"},
+        {"key": "6", "type": "text", "shortLabel": "6", "prompt": "Taking Mrs Carroll to 6 ______"},
+        {"key": "7", "type": "text", "shortLabel": "7", "prompt": "Work in the 7 ______ at Mr Seisbury’s house"},
+        {"key": "8", "type": "text", "shortLabel": "8", "prompt": "19 Oct event: 8 ______"},
+        {"key": "9", "type": "text", "shortLabel": "9", "prompt": "checking 9 ______"},
+        {"key": "10", "type": "text", "shortLabel": "10", "prompt": "designing the 10 ______"}
       ]
     },
     {
       "id": "L2",
       "title": "PART 2 Questions 11–20",
-      "instructions": "Questions 11–14: Choose the correct letter, A, B or C.\nQuestions 15–20: Choose TWO letters, A–E.",
-      "audioFile": null,
-      "audioDuration": 120,
+      "instructions": "Questions 11–14: Choose the correct letter, A, B or C. Questions 15–20: Choose SIX answers from the box and write the correct letter A–H.",
       "sheetHtml": "assets/sheets/test2/listening_part2.html",
+      "audioFile": "",
       "questions": [
-        { "key": "11", "type": "single_letter", "hint": "ONE LETTER (A–C)" },
-        { "key": "12", "type": "single_letter", "hint": "ONE LETTER (A–C)" },
-        { "key": "13", "type": "single_letter", "hint": "ONE LETTER (A–C)" },
-        { "key": "14", "type": "single_letter", "hint": "ONE LETTER (A–C)" },
-        { "key": "15", "type": "single_letter", "hint": "ONE LETTER (A–E)" },
-        { "key": "16", "type": "single_letter", "hint": "ONE LETTER (A–E)" },
-        { "key": "17", "type": "single_letter", "hint": "ONE LETTER (A–E)" },
-        { "key": "18", "type": "single_letter", "hint": "ONE LETTER (A–E)" },
-        { "key": "19", "type": "single_letter", "hint": "ONE LETTER (A–E)" },
-        { "key": "20", "type": "single_letter", "hint": "ONE LETTER (A–E)" }
+        {
+          "key": "11",
+          "type": "multipleChoice",
+          "shortLabel": "11",
+          "prompt": "Many past owners made changes to",
+          "options": [
+            {"value": "A", "text": "the gardens."},
+            {"value": "B", "text": "the house."},
+            {"value": "C", "text": "the farm."}
+          ]
+        },
+        {
+          "key": "12",
+          "type": "multipleChoice",
+          "shortLabel": "12",
+          "prompt": "Sir Edward Downes built Oniton Hall because he wanted",
+          "options": [
+            {"value": "A", "text": "a place for discussing politics."},
+            {"value": "B", "text": "a place to display his wealth."},
+            {"value": "C", "text": "a place for artists and writers."}
+          ]
+        },
+        {
+          "key": "13",
+          "type": "multipleChoice",
+          "shortLabel": "13",
+          "prompt": "Visitors can learn about the work of servants in the past from",
+          "options": [
+            {"value": "A", "text": "audio guides."},
+            {"value": "B", "text": "photographs."},
+            {"value": "C", "text": "people in costume."}
+          ]
+        },
+        {
+          "key": "14",
+          "type": "multipleChoice",
+          "shortLabel": "14",
+          "prompt": "What is new for children at Oniton Hall?",
+          "options": [
+            {"value": "A", "text": "clothes for dressing up"},
+            {"value": "B", "text": "mini tractors"},
+            {"value": "C", "text": "the adventure playground"}
+          ]
+        },
+
+        {"key": "15", "type": "single_letter", "shortLabel": "15", "prompt": "dairy", "selectValues": ["A","B","C","D","E","F","G","H"]},
+        {"key": "16", "type": "single_letter", "shortLabel": "16", "prompt": "large barn", "selectValues": ["A","B","C","D","E","F","G","H"]},
+        {"key": "17", "type": "single_letter", "shortLabel": "17", "prompt": "small barn", "selectValues": ["A","B","C","D","E","F","G","H"]},
+        {"key": "18", "type": "single_letter", "shortLabel": "18", "prompt": "stables", "selectValues": ["A","B","C","D","E","F","G","H"]},
+        {"key": "19", "type": "single_letter", "shortLabel": "19", "prompt": "shed", "selectValues": ["A","B","C","D","E","F","G","H"]},
+        {"key": "20", "type": "single_letter", "shortLabel": "20", "prompt": "parkland", "selectValues": ["A","B","C","D","E","F","G","H"]}
       ]
     },
     {
       "id": "L3",
       "title": "PART 3 Questions 21–30",
-      "instructions": "Questions 21–22: Choose TWO letters, A–E.\nQuestions 23–27: Choose the correct letter, A–G.\nQuestions 28–30: Choose the correct letter, A, B or C.",
-      "audioFile": null,
-      "audioDuration": 180,
+      "instructions": "Questions 21–22: Choose TWO letters, A–E. Questions 23–27: Choose FIVE answers from the box and write the correct letter A–G. Questions 28–30: Choose A, B or C.",
       "sheetHtml": "assets/sheets/test2/listening_part3.html",
+      "audioFile": "",
       "questions": [
-        { "key": "21", "type": "single_letter", "hint": "ONE LETTER (A–E)" },
-        { "key": "22", "type": "single_letter", "hint": "ONE LETTER (A–E)" },
-        { "key": "23", "type": "single_letter", "hint": "ONE LETTER (A–G)" },
-        { "key": "24", "type": "single_letter", "hint": "ONE LETTER (A–G)" },
-        { "key": "25", "type": "single_letter", "hint": "ONE LETTER (A–G)" },
-        { "key": "26", "type": "single_letter", "hint": "ONE LETTER (A–G)" },
-        { "key": "27", "type": "single_letter", "hint": "ONE LETTER (A–G)" },
-        { "key": "28", "type": "single_letter", "hint": "ONE LETTER (A–C)" },
-        { "key": "29", "type": "single_letter", "hint": "ONE LETTER (A–C)" },
-        { "key": "30", "type": "single_letter", "hint": "ONE LETTER (A–C)" }
+        {"key": "21", "type": "single_letter", "shortLabel": "21", "selectValues": ["A","B","C","D","E"]},
+        {"key": "22", "type": "single_letter", "shortLabel": "22", "selectValues": ["A","B","C","D","E"]},
+        {"key": "23", "type": "single_letter", "shortLabel": "23", "selectValues": ["A","B","C","D","E","F","G"]},
+        {"key": "24", "type": "single_letter", "shortLabel": "24", "selectValues": ["A","B","C","D","E","F","G"]},
+        {"key": "25", "type": "single_letter", "shortLabel": "25", "selectValues": ["A","B","C","D","E","F","G"]},
+        {"key": "26", "type": "single_letter", "shortLabel": "26", "selectValues": ["A","B","C","D","E","F","G"]},
+        {"key": "27", "type": "single_letter", "shortLabel": "27", "selectValues": ["A","B","C","D","E","F","G"]},
+
+        {
+          "key": "28",
+          "type": "multipleChoice",
+          "shortLabel": "28",
+          "prompt": "The students think the story of Romeo and Juliet is still relevant because",
+          "options": [
+            {"value": "A", "text": "a conflict can start easily"},
+            {"value": "B", "text": "family problems"},
+            {"value": "C", "text": "relationships"}
+          ]
+        },
+        {
+          "key": "29",
+          "type": "multipleChoice",
+          "shortLabel": "29",
+          "prompt": "Watching the play in another language was",
+          "options": [
+            {"value": "A", "text": "frustrating"},
+            {"value": "B", "text": "demanding"},
+            {"value": "C", "text": "moving"}
+          ]
+        },
+        {
+          "key": "30",
+          "type": "multipleChoice",
+          "shortLabel": "30",
+          "prompt": "International appeal because",
+          "options": [
+            {"value": "A", "text": "stories are exciting"},
+            {"value": "B", "text": "recognisable characters"},
+            {"value": "C", "text": "interpreted in many ways"}
+          ]
+        }
       ]
     },
     {
       "id": "L4",
       "title": "PART 4 Questions 31–40",
-      "instructions": "Complete the notes below. Write ONE WORD ONLY for each answer.",
-      "audioFile": null,
-      "audioDuration": 240,
+      "instructions": "Complete the notes below. Write ONE WORD AND/OR A NUMBER for each answer.",
       "sheetHtml": "assets/sheets/test2/listening_part4.html",
+      "audioFile": "",
       "questions": [
-        { "key": "31", "type": "text", "hint": "ONE WORD ONLY" },
-        { "key": "32", "type": "text", "hint": "ONE WORD ONLY" },
-        { "key": "33", "type": "text", "hint": "ONE WORD ONLY" },
-        { "key": "34", "type": "text", "hint": "ONE WORD ONLY" },
-        { "key": "35", "type": "text", "hint": "ONE WORD ONLY" },
-        { "key": "36", "type": "text", "hint": "ONE WORD ONLY" },
-        { "key": "37", "type": "text", "hint": "ONE WORD ONLY" },
-        { "key": "38", "type": "text", "hint": "ONE WORD ONLY" },
-        { "key": "39", "type": "text", "hint": "ONE WORD ONLY" },
-        { "key": "40", "type": "text", "hint": "ONE WORD ONLY" }
+        {"key": "31", "type": "text", "shortLabel": "31"},
+        {"key": "32", "type": "text", "shortLabel": "32"},
+        {"key": "33", "type": "text", "shortLabel": "33"},
+        {"key": "34", "type": "text", "shortLabel": "34"},
+        {"key": "35", "type": "text", "shortLabel": "35"},
+        {"key": "36", "type": "text", "shortLabel": "36"},
+        {"key": "37", "type": "text", "shortLabel": "37"},
+        {"key": "38", "type": "text", "shortLabel": "38"},
+        {"key": "39", "type": "text", "shortLabel": "39"},
+        {"key": "40", "type": "text", "shortLabel": "40"}
       ]
     }
   ],
-  "answerGroups": [
-    { "id": "21-22", "keys": ["21", "22"], "acceptedSet": [], "expectedCount": 2 }
-  ],
   "answerKey": {
-    "1": { "accepted": [] },
-    "2": { "accepted": [] },
-    "3": { "accepted": [] },
-    "4": { "accepted": [] },
-    "5": { "accepted": [] },
-    "6": { "accepted": [] },
-    "7": { "accepted": [] },
-    "8": { "accepted": [] },
-    "9": { "accepted": [] },
-    "10": { "accepted": [] },
-    "11": { "accepted": [] },
-    "12": { "accepted": [] },
-    "13": { "accepted": [] },
-    "14": { "accepted": [] },
-    "15": { "accepted": [] },
-    "16": { "accepted": [] },
-    "17": { "accepted": [] },
-    "18": { "accepted": [] },
-    "19": { "accepted": [] },
-    "20": { "accepted": [] },
-    "23": { "accepted": [] },
-    "24": { "accepted": [] },
-    "25": { "accepted": [] },
-    "26": { "accepted": [] },
-    "27": { "accepted": [] },
-    "28": { "accepted": [] },
-    "29": { "accepted": [] },
-    "30": { "accepted": [] },
-    "31": { "accepted": [] },
-    "32": { "accepted": [] },
-    "33": { "accepted": [] },
-    "34": { "accepted": [] },
-    "35": { "accepted": [] },
-    "36": { "accepted": [] },
-    "37": { "accepted": [] },
-    "38": { "accepted": [] },
-    "39": { "accepted": [] },
-    "40": { "accepted": [] }
+    "1": {"accepted": ["collecting"]},
+    "2": {"accepted": ["records"]},
+    "3": {"accepted": ["west"]},
+    "4": {"accepted": ["transport"]},
+    "5": {"accepted": ["art"]},
+    "6": {"accepted": ["hospital"]},
+    "7": {"accepted": ["garden"]},
+    "8": {"accepted": ["quiz"]},
+    "9": {"accepted": ["tickets"]},
+    "10": {"accepted": ["poster"]},
+
+    "11": {"accepted": ["B"]},
+    "12": {"accepted": ["C"]},
+    "13": {"accepted": ["C"]},
+    "14": {"accepted": ["B"]},
+    "15": {"accepted": ["D"], "type": "single_letter"},
+    "16": {"accepted": ["C"], "type": "single_letter"},
+    "17": {"accepted": ["G"], "type": "single_letter"},
+    "18": {"accepted": ["A"], "type": "single_letter"},
+    "19": {"accepted": ["E"], "type": "single_letter"},
+    "20": {"accepted": ["F"], "type": "single_letter"},
+
+    "23": {"accepted": ["D"], "type": "single_letter"},
+    "24": {"accepted": ["C"], "type": "single_letter"},
+    "25": {"accepted": ["A"], "type": "single_letter"},
+    "26": {"accepted": ["E"], "type": "single_letter"},
+    "27": {"accepted": ["F"], "type": "single_letter"},
+    "28": {"accepted": ["B"]},
+    "29": {"accepted": ["C"]},
+    "30": {"accepted": ["C"]},
+
+    "31": {"accepted": ["321000", "321,000", "321000."]},
+    "32": {"accepted": ["vocabulary"]},
+    "33": {"accepted": ["podcast", "podcasts"]},
+    "34": {"accepted": ["smartphones", "smartphone"]},
+    "35": {"accepted": ["bilingual"]},
+    "36": {"accepted": ["playground"]},
+    "37": {"accepted": ["picture", "pictures"]},
+    "38": {"accepted": ["grammar"]},
+    "39": {"accepted": ["identity"]},
+    "40": {"accepted": ["fluent"]}
   }
 }

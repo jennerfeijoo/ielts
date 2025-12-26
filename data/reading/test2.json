@@ -1,125 +1,916 @@
 {
   "id": "reading-test2",
   "module": "reading",
-  "title": "Test 2 – Reading",
+  "title": "Test 2 – Academic Reading",
   "timeLimitSeconds": 3600,
   "sections": [
     {
       "id": "R1",
-      "title": "Passage 1 – Test 2",
+      "title": "Passage 1",
       "materialHtml": "assets/passages/test2/passage1.html",
       "questions": [
-        { "key": "1", "label": "Q1", "shortLabel": "1", "type": "text", "hint": "See passage.", "prompt": "Question 1", "groupId": "1-5" },
-        { "key": "2", "label": "Q2", "shortLabel": "2", "type": "text", "hint": "See passage.", "prompt": "Question 2", "groupId": "1-5" },
-        { "key": "3", "label": "Q3", "shortLabel": "3", "type": "text", "hint": "See passage.", "prompt": "Question 3", "groupId": "1-5" },
-        { "key": "4", "label": "Q4", "shortLabel": "4", "type": "text", "hint": "See passage.", "prompt": "Question 4", "groupId": "1-5" },
-        { "key": "5", "label": "Q5", "shortLabel": "5", "type": "text", "hint": "See passage.", "prompt": "Question 5", "groupId": "1-5" },
-        { "key": "6", "label": "Q6", "shortLabel": "6", "type": "text", "hint": "See passage.", "prompt": "Question 6", "groupId": "6-13" },
-        { "key": "7", "label": "Q7", "shortLabel": "7", "type": "text", "hint": "See passage.", "prompt": "Question 7", "groupId": "6-13" },
-        { "key": "8", "label": "Q8", "shortLabel": "8", "type": "text", "hint": "See passage.", "prompt": "Question 8", "groupId": "6-13" },
-        { "key": "9", "label": "Q9", "shortLabel": "9", "type": "text", "hint": "See passage.", "prompt": "Question 9", "groupId": "6-13" },
-        { "key": "10", "label": "Q10", "shortLabel": "10", "type": "text", "hint": "See passage.", "prompt": "Question 10", "groupId": "6-13" },
-        { "key": "11", "label": "Q11", "shortLabel": "11", "type": "text", "hint": "See passage.", "prompt": "Question 11", "groupId": "6-13" },
-        { "key": "12", "label": "Q12", "shortLabel": "12", "type": "text", "hint": "See passage.", "prompt": "Question 12", "groupId": "6-13" },
-        { "key": "13", "label": "Q13", "shortLabel": "13", "type": "text", "hint": "See passage.", "prompt": "Question 13", "groupId": "6-13" }
+        {
+          "key": "1",
+          "label": "Q1",
+          "shortLabel": "1",
+          "type": "text",
+          "hint": "ONE WORD ONLY",
+          "prompt": "The teenagers who found the scrolls were tending their ______.",
+          "groupId": "R1-G1-5",
+          "groupTitle": "Questions 1–5",
+          "groupInstructions": "Complete the notes below. Choose ONE WORD ONLY from the passage for each answer."
+        },
+        {
+          "key": "2",
+          "label": "Q2",
+          "shortLabel": "2",
+          "type": "text",
+          "hint": "ONE WORD ONLY",
+          "prompt": "The scrolls were stored in large ______.",
+          "groupId": "R1-G1-5",
+          "groupTitle": "Questions 1–5",
+          "groupInstructions": "Complete the notes below. Choose ONE WORD ONLY from the passage for each answer."
+        },
+        {
+          "key": "3",
+          "label": "Q3",
+          "shortLabel": "3",
+          "type": "text",
+          "hint": "ONE WORD ONLY",
+          "prompt": "Most of the manuscripts are in ______.",
+          "groupId": "R1-G1-5",
+          "groupTitle": "Questions 1–5",
+          "groupInstructions": "Complete the notes below. Choose ONE WORD ONLY from the passage for each answer."
+        },
+        {
+          "key": "4",
+          "label": "Q4",
+          "shortLabel": "4",
+          "type": "text",
+          "hint": "ONE WORD ONLY",
+          "prompt": "Some scrolls include translations of the Bible into ______.",
+          "groupId": "R1-G1-5",
+          "groupTitle": "Questions 1–5",
+          "groupInstructions": "Complete the notes below. Choose ONE WORD ONLY from the passage for each answer."
+        },
+        {
+          "key": "5",
+          "label": "Q5",
+          "shortLabel": "5",
+          "type": "text",
+          "hint": "ONE WORD ONLY",
+          "prompt": "Scroll 3Q15 was made from a combination of copper and ______.",
+          "groupId": "R1-G1-5",
+          "groupTitle": "Questions 1–5",
+          "groupInstructions": "Complete the notes below. Choose ONE WORD ONLY from the passage for each answer."
+        },
+        {
+          "key": "6",
+          "label": "Q6",
+          "shortLabel": "6",
+          "type": "tfng",
+          "prompt": "The remains of the Qumran settlement were damaged by Roman soldiers.",
+          "groupId": "R1-G6-13",
+          "groupTitle": "Questions 6–13"
+        },
+        {
+          "key": "7",
+          "label": "Q7",
+          "shortLabel": "7",
+          "type": "tfng",
+          "prompt": "The Essenes were an important group of musicians.",
+          "groupId": "R1-G6-13",
+          "groupTitle": "Questions 6–13"
+        },
+        {
+          "key": "8",
+          "label": "Q8",
+          "shortLabel": "8",
+          "type": "tfng",
+          "prompt": "The majority of the scrolls are written using the alphabet that is still used today.",
+          "groupId": "R1-G6-13",
+          "groupTitle": "Questions 6–13"
+        },
+        {
+          "key": "9",
+          "label": "Q9",
+          "shortLabel": "9",
+          "type": "tfng",
+          "prompt": "The only entire book of the Hebrew Bible found at Qumran was the Book of Isaiah.",
+          "groupId": "R1-G6-13",
+          "groupTitle": "Questions 6–13"
+        },
+        {
+          "key": "10",
+          "label": "Q10",
+          "shortLabel": "10",
+          "type": "tfng",
+          "prompt": "The Copper Scroll has remained untranslated.",
+          "groupId": "R1-G6-13",
+          "groupTitle": "Questions 6–13"
+        },
+        {
+          "key": "11",
+          "label": "Q11",
+          "shortLabel": "11",
+          "type": "tfng",
+          "prompt": "Yigael Yadin bought some of the scrolls after seeing an advertisement in The Wall Street Journal.",
+          "groupId": "R1-G6-13",
+          "groupTitle": "Questions 6–13"
+        },
+        {
+          "key": "12",
+          "label": "Q12",
+          "shortLabel": "12",
+          "type": "tfng",
+          "prompt": "Eshbal Ratson and Jonathan Ben-Dov worked on restoring and deciphering a scroll for twelve months.",
+          "groupId": "R1-G6-13",
+          "groupTitle": "Questions 6–13"
+        },
+        {
+          "key": "13",
+          "label": "Q13",
+          "shortLabel": "13",
+          "type": "tfng",
+          "prompt": "All known Dead Sea Scrolls have now been translated.",
+          "groupId": "R1-G6-13",
+          "groupTitle": "Questions 6–13"
+        }
+      ],
+      "groups": [
+        {
+          "id": "R1-G1-5",
+          "title": "Questions 1–5",
+          "instructions": "Complete the notes below. Choose ONE WORD ONLY from the passage for each answer."
+        },
+        {
+          "id": "R1-G6-13",
+          "title": "Questions 6–13",
+          "instructions": "Questions 6–13"
+        }
       ]
     },
     {
       "id": "R2",
-      "title": "Passage 2 – Test 2",
+      "title": "Passage 2",
       "materialHtml": "assets/passages/test2/passage2.html",
       "questions": [
-        { "key": "14", "label": "Q14", "shortLabel": "14", "type": "text", "hint": "See passage.", "prompt": "Question 14", "groupId": "14-18" },
-        { "key": "15", "label": "Q15", "shortLabel": "15", "type": "text", "hint": "See passage.", "prompt": "Question 15", "groupId": "14-18" },
-        { "key": "16", "label": "Q16", "shortLabel": "16", "type": "text", "hint": "See passage.", "prompt": "Question 16", "groupId": "14-18" },
-        { "key": "17", "label": "Q17", "shortLabel": "17", "type": "text", "hint": "See passage.", "prompt": "Question 17", "groupId": "14-18" },
-        { "key": "18", "label": "Q18", "shortLabel": "18", "type": "text", "hint": "See passage.", "prompt": "Question 18", "groupId": "14-18" },
-        { "key": "19", "label": "Q19", "shortLabel": "19", "type": "text", "hint": "See passage.", "prompt": "Question 19", "groupId": "19-23" },
-        { "key": "20", "label": "Q20", "shortLabel": "20", "type": "text", "hint": "See passage.", "prompt": "Question 20", "groupId": "19-23" },
-        { "key": "21", "label": "Q21", "shortLabel": "21", "type": "text", "hint": "See passage.", "prompt": "Question 21", "groupId": "19-23" },
-        { "key": "22", "label": "Q22", "shortLabel": "22", "type": "text", "hint": "See passage.", "prompt": "Question 22", "groupId": "19-23" },
-        { "key": "23", "label": "Q23", "shortLabel": "23", "type": "text", "hint": "See passage.", "prompt": "Question 23", "groupId": "19-23" },
-        { "key": "24", "label": "Q24", "shortLabel": "24", "type": "text", "hint": "See passage.", "prompt": "Question 24", "groupId": "24-26" },
-        { "key": "25", "label": "Q25", "shortLabel": "25", "type": "text", "hint": "See passage.", "prompt": "Question 25", "groupId": "24-26" },
-        { "key": "26", "label": "Q26", "shortLabel": "26", "type": "text", "hint": "See passage.", "prompt": "Question 26", "groupId": "24-26" }
+        {
+          "key": "14",
+          "label": "Q14",
+          "shortLabel": "14",
+          "type": "matching",
+          "hint": "Write the correct letter, A–E.",
+          "prompt": "a reference to a type of tomato that can resist a dangerous infection",
+          "allowedLetters": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E"
+          ],
+          "note": "Sections: A–E",
+          "groupId": "R2-G14-18",
+          "groupTitle": "Questions 14–18"
+        },
+        {
+          "key": "15",
+          "label": "Q15",
+          "shortLabel": "15",
+          "type": "matching",
+          "hint": "Write the correct letter, A–E.",
+          "prompt": "an explanation of how problems can arise from focusing only on a certain type of tomato plant",
+          "allowedLetters": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E"
+          ],
+          "groupId": "R2-G14-18",
+          "groupTitle": "Questions 14–18"
+        },
+        {
+          "key": "16",
+          "label": "Q16",
+          "shortLabel": "16",
+          "type": "matching",
+          "hint": "Write the correct letter, A–E.",
+          "prompt": "a number of examples of plants that are not cultivated at present but could be useful as food sources",
+          "allowedLetters": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E"
+          ],
+          "groupId": "R2-G14-18",
+          "groupTitle": "Questions 14–18"
+        },
+        {
+          "key": "17",
+          "label": "Q17",
+          "shortLabel": "17",
+          "type": "matching",
+          "hint": "Write the correct letter, A–E.",
+          "prompt": "a comparison between the early domestication of the tomato and more recent research",
+          "allowedLetters": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E"
+          ],
+          "groupId": "R2-G14-18",
+          "groupTitle": "Questions 14–18"
+        },
+        {
+          "key": "18",
+          "label": "Q18",
+          "shortLabel": "18",
+          "type": "matching",
+          "hint": "Write the correct letter, A–E.",
+          "prompt": "a personal reaction to the flavour of a tomato that has been genetically edited",
+          "allowedLetters": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E"
+          ],
+          "groupId": "R2-G14-18",
+          "groupTitle": "Questions 14–18"
+        },
+        {
+          "key": "19",
+          "label": "Q19",
+          "shortLabel": "19",
+          "type": "matching",
+          "hint": "Write the correct letter, A–D.",
+          "prompt": "Domestication of certain plants could allow them to adapt to future environmental challenges.",
+          "allowedLetters": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "note": "Researchers: A Jorg Kudla, B Caixia Gao, C Joyce Van Eck, D Jonathan Jones",
+          "groupId": "R2-G19-23",
+          "groupTitle": "Questions 19–23"
+        },
+        {
+          "key": "20",
+          "label": "Q20",
+          "shortLabel": "20",
+          "type": "matching",
+          "hint": "Write the correct letter, A–D.",
+          "prompt": "The idea of growing and eating unusual plants may not be accepted on a large scale.",
+          "allowedLetters": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "groupId": "R2-G19-23",
+          "groupTitle": "Questions 19–23"
+        },
+        {
+          "key": "21",
+          "label": "Q21",
+          "shortLabel": "21",
+          "type": "matching",
+          "hint": "Write the correct letter, A–D.",
+          "prompt": "It is not advisable for the future direction of certain research to be made public.",
+          "allowedLetters": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "groupId": "R2-G19-23",
+          "groupTitle": "Questions 19–23"
+        },
+        {
+          "key": "22",
+          "label": "Q22",
+          "shortLabel": "22",
+          "type": "matching",
+          "hint": "Write the correct letter, A–D.",
+          "prompt": "Present efforts to domesticate one wild fruit are limited by the costs involved.",
+          "allowedLetters": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "groupId": "R2-G19-23",
+          "groupTitle": "Questions 19–23"
+        },
+        {
+          "key": "23",
+          "label": "Q23",
+          "shortLabel": "23",
+          "type": "matching",
+          "hint": "Write the correct letter, A–D.",
+          "prompt": "Humans only make use of a small proportion of the plant food available on Earth.",
+          "allowedLetters": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "groupId": "R2-G19-23",
+          "groupTitle": "Questions 19–23"
+        },
+        {
+          "key": "24",
+          "label": "Q24",
+          "shortLabel": "24",
+          "type": "text",
+          "hint": "ONE WORD ONLY",
+          "prompt": "An undesirable trait such as loss of ______ may be caused by a mutation in a tomato gene.",
+          "groupId": "R2-G24-26",
+          "groupTitle": "Questions 24–26"
+        },
+        {
+          "key": "25",
+          "label": "Q25",
+          "shortLabel": "25",
+          "type": "text",
+          "hint": "ONE WORD ONLY",
+          "prompt": "By modifying one gene, researchers made the tomato three times its original ______.",
+          "groupId": "R2-G24-26",
+          "groupTitle": "Questions 24–26"
+        },
+        {
+          "key": "26",
+          "label": "Q26",
+          "shortLabel": "26",
+          "type": "text",
+          "hint": "ONE WORD ONLY",
+          "prompt": "A type of tomato not badly affected by ______ was produced by a team of researchers in China.",
+          "groupId": "R2-G24-26",
+          "groupTitle": "Questions 24–26"
+        }
+      ],
+      "groups": [
+        {
+          "id": "R2-G14-18",
+          "title": "Questions 14–18",
+          "instructions": "Questions 14–18"
+        },
+        {
+          "id": "R2-G19-23",
+          "title": "Questions 19–23",
+          "instructions": "Questions 19–23"
+        },
+        {
+          "id": "R2-G24-26",
+          "title": "Questions 24–26",
+          "instructions": "Questions 24–26"
+        }
       ]
     },
     {
       "id": "R3",
-      "title": "Passage 3 – Test 2",
+      "title": "Passage 3",
       "materialHtml": "assets/passages/test2/passage3.html",
-      "questionGroups": {
-        "37-40": {
-          "title": "Questions 37–40",
-          "optionsBox": [
-            { "id": "A", "text": "Option A" },
-            { "id": "B", "text": "Option B" },
-            { "id": "C", "text": "Option C" },
-            { "id": "D", "text": "Option D" },
-            { "id": "E", "text": "Option E" },
-            { "id": "F", "text": "Option F" },
-            { "id": "G", "text": "Option G" }
-          ]
-        }
-      },
       "questions": [
-        { "key": "27", "label": "Q27", "shortLabel": "27", "type": "text", "hint": "See passage.", "prompt": "Question 27", "groupId": "27-31" },
-        { "key": "28", "label": "Q28", "shortLabel": "28", "type": "text", "hint": "See passage.", "prompt": "Question 28", "groupId": "27-31" },
-        { "key": "29", "label": "Q29", "shortLabel": "29", "type": "text", "hint": "See passage.", "prompt": "Question 29", "groupId": "27-31" },
-        { "key": "30", "label": "Q30", "shortLabel": "30", "type": "text", "hint": "See passage.", "prompt": "Question 30", "groupId": "27-31" },
-        { "key": "31", "label": "Q31", "shortLabel": "31", "type": "text", "hint": "See passage.", "prompt": "Question 31", "groupId": "27-31" },
-        { "key": "32", "label": "Q32", "shortLabel": "32", "type": "text", "hint": "See passage.", "prompt": "Question 32", "groupId": "32-36" },
-        { "key": "33", "label": "Q33", "shortLabel": "33", "type": "text", "hint": "See passage.", "prompt": "Question 33", "groupId": "32-36" },
-        { "key": "34", "label": "Q34", "shortLabel": "34", "type": "text", "hint": "See passage.", "prompt": "Question 34", "groupId": "32-36" },
-        { "key": "35", "label": "Q35", "shortLabel": "35", "type": "text", "hint": "See passage.", "prompt": "Question 35", "groupId": "32-36" },
-        { "key": "36", "label": "Q36", "shortLabel": "36", "type": "text", "hint": "See passage.", "prompt": "Question 36", "groupId": "32-36" },
-        { "key": "37", "label": "Q37", "shortLabel": "37", "type": "matching", "hint": "Choose the correct letter, A–G.", "prompt": "Question 37", "allowedLetters": ["A","B","C","D","E","F","G"], "groupId": "37-40" },
-        { "key": "38", "label": "Q38", "shortLabel": "38", "type": "matching", "hint": "Choose the correct letter, A–G.", "prompt": "Question 38", "allowedLetters": ["A","B","C","D","E","F","G"], "groupId": "37-40" },
-        { "key": "39", "label": "Q39", "shortLabel": "39", "type": "matching", "hint": "Choose the correct letter, A–G.", "prompt": "Question 39", "allowedLetters": ["A","B","C","D","E","F","G"], "groupId": "37-40" },
-        { "key": "40", "label": "Q40", "shortLabel": "40", "type": "matching", "hint": "Choose the correct letter, A–G.", "prompt": "Question 40", "allowedLetters": ["A","B","C","D","E","F","G"], "groupId": "37-40" }
+        {
+          "key": "27",
+          "label": "Q27",
+          "shortLabel": "27",
+          "type": "multipleChoice",
+          "hint": "Choose the correct letter, A, B, C or D.",
+          "prompt": "What is the main point of the first paragraph?",
+          "options": [
+            "Innovative behavior allows an individual to pass information on to others.",
+            "Some discoveries happen by chance, but there is often a reason for chance discoveries.",
+            "People and animals may be innovative when they are under pressure.",
+            "Individuals who are innovative may have more opportunities for survival."
+          ],
+          "groupId": "R3-G27-31",
+          "groupTitle": "Questions 27–31"
+        },
+        {
+          "key": "28",
+          "label": "Q28",
+          "shortLabel": "28",
+          "type": "multipleChoice",
+          "hint": "Choose the correct letter, A, B, C or D.",
+          "prompt": "What does the example of the Japanese macaques illustrate?",
+          "options": [
+            "Animals are able to adapt their behavior in order to survive.",
+            "Problems can be solved by imitation rather than by trial and error.",
+            "A solution to a problem can be spread from one group to another.",
+            "Animals can learn new skills from observation of a parent."
+          ],
+          "groupId": "R3-G27-31",
+          "groupTitle": "Questions 27–31"
+        },
+        {
+          "key": "29",
+          "label": "Q29",
+          "shortLabel": "29",
+          "type": "multipleChoice",
+          "hint": "Choose the correct letter, A, B, C or D.",
+          "prompt": "What is the writer doing in the fourth paragraph?",
+          "options": [
+            "explaining a controversial view about innovation",
+            "giving an example of theory about innovation",
+            "suggesting that a certain situation is likely to lead to innovation",
+            "comparing the approaches of two scientists"
+          ],
+          "groupId": "R3-G27-31",
+          "groupTitle": "Questions 27–31"
+        },
+        {
+          "key": "30",
+          "label": "Q30",
+          "shortLabel": "30",
+          "type": "multipleChoice",
+          "hint": "Choose the correct letter, A, B, C or D.",
+          "prompt": "What is the key to success in Osvath’s experiment?",
+          "options": [
+            "the nature of the chimpanzees’ underlying motivation",
+            "the way that the chimpanzees are encouraged to manipulate the objects",
+            "the design of the chimpanzees’ environment",
+            "the timing of the chimpanzees’ exposure to the objects"
+          ],
+          "groupId": "R3-G27-31",
+          "groupTitle": "Questions 27–31"
+        },
+        {
+          "key": "31",
+          "label": "Q31",
+          "shortLabel": "31",
+          "type": "multipleChoice",
+          "hint": "Choose the correct letter, A, B, C or D.",
+          "prompt": "What does Reader suggest about the birds that use a leaf as a tool?",
+          "options": [
+            "The birds are experimenting with objects they find in the forest.",
+            "The birds are copying the behavior of other birds.",
+            "The birds can create a tool to suit their purposes.",
+            "The birds have learned by chance that the leaf can be used in this way."
+          ],
+          "groupId": "R3-G27-31",
+          "groupTitle": "Questions 27–31"
+        },
+        {
+          "key": "32",
+          "label": "Q32",
+          "shortLabel": "32",
+          "type": "ynng",
+          "prompt": "The banana was the first fruit to be domesticated.",
+          "groupId": "R3-G32-36",
+          "groupTitle": "Questions 32–36"
+        },
+        {
+          "key": "33",
+          "label": "Q33",
+          "shortLabel": "33",
+          "type": "ynng",
+          "prompt": "Primitive humans were not able to domesticate animals.",
+          "groupId": "R3-G32-36",
+          "groupTitle": "Questions 32–36"
+        },
+        {
+          "key": "34",
+          "label": "Q34",
+          "shortLabel": "34",
+          "type": "ynng",
+          "prompt": "It is difficult to know how much the process of animal domestication required conscious thought.",
+          "groupId": "R3-G32-36",
+          "groupTitle": "Questions 32–36"
+        },
+        {
+          "key": "35",
+          "label": "Q35",
+          "shortLabel": "35",
+          "type": "ynng",
+          "prompt": "Animals could have helped to domesticate other animals.",
+          "groupId": "R3-G32-36",
+          "groupTitle": "Questions 32–36"
+        },
+        {
+          "key": "36",
+          "label": "Q36",
+          "shortLabel": "36",
+          "type": "ynng",
+          "prompt": "All animals can benefit from the process of domestication.",
+          "groupId": "R3-G32-36",
+          "groupTitle": "Questions 32–36"
+        },
+        {
+          "key": "37",
+          "label": "Q37",
+          "shortLabel": "37",
+          "groupId": "R3-G37-40",
+          "groupTitle": "Questions 37–40",
+          "groupInstructions": "Complete the summary using the list of words, A–G, below. Write the correct letter, A–G, in boxes 37–40 on your answer sheet.",
+          "type": "matching",
+          "hint": "Choose the correct letter, A–G.",
+          "prompt": "The traditional view of scientific discovery is that breakthroughs happen when a single great mind has sudden ______ .",
+          "allowedLetters": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G"
+          ],
+          "optionsBox": {
+            "title": "A–G",
+            "items": [
+              {
+                "letter": "A",
+                "text": "invention"
+              },
+              {
+                "letter": "B",
+                "text": "goals"
+              },
+              {
+                "letter": "C",
+                "text": "compromise"
+              },
+              {
+                "letter": "D",
+                "text": "mistakes"
+              },
+              {
+                "letter": "E",
+                "text": "luck"
+              },
+              {
+                "letter": "F",
+                "text": "inspiration"
+              },
+              {
+                "letter": "G",
+                "text": "experiments"
+              }
+            ]
+          }
+        },
+        {
+          "key": "38",
+          "label": "Q38",
+          "shortLabel": "38",
+          "groupId": "R3-G37-40",
+          "groupTitle": "Questions 37–40",
+          "groupInstructions": "Complete the summary using the list of words, A–G, below. Write the correct letter, A–G, in boxes 37–40 on your answer sheet.",
+          "type": "matching",
+          "hint": "Choose the correct letter, A–G.",
+          "prompt": "In some cases, this process involves ______ , such as Nicholson’s theory about proto-elements.",
+          "allowedLetters": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G"
+          ],
+          "optionsBox": {
+            "title": "A–G",
+            "items": [
+              {
+                "letter": "A",
+                "text": "invention"
+              },
+              {
+                "letter": "B",
+                "text": "goals"
+              },
+              {
+                "letter": "C",
+                "text": "compromise"
+              },
+              {
+                "letter": "D",
+                "text": "mistakes"
+              },
+              {
+                "letter": "E",
+                "text": "luck"
+              },
+              {
+                "letter": "F",
+                "text": "inspiration"
+              },
+              {
+                "letter": "G",
+                "text": "experiments"
+              }
+            ]
+          }
+        },
+        {
+          "key": "39",
+          "label": "Q39",
+          "shortLabel": "39",
+          "groupId": "R3-G37-40",
+          "groupTitle": "Questions 37–40",
+          "groupInstructions": "Complete the summary using the list of words, A–G, below. Write the correct letter, A–G, in boxes 37–40 on your answer sheet.",
+          "type": "matching",
+          "hint": "Choose the correct letter, A–G.",
+          "prompt": "There is also often an element of ______ , for example, the coincidence of ideas that led to the invention of the Post-It note.",
+          "allowedLetters": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G"
+          ],
+          "optionsBox": {
+            "title": "A–G",
+            "items": [
+              {
+                "letter": "A",
+                "text": "invention"
+              },
+              {
+                "letter": "B",
+                "text": "goals"
+              },
+              {
+                "letter": "C",
+                "text": "compromise"
+              },
+              {
+                "letter": "D",
+                "text": "mistakes"
+              },
+              {
+                "letter": "E",
+                "text": "luck"
+              },
+              {
+                "letter": "F",
+                "text": "inspiration"
+              },
+              {
+                "letter": "G",
+                "text": "experiments"
+              }
+            ]
+          }
+        },
+        {
+          "key": "40",
+          "label": "Q40",
+          "shortLabel": "40",
+          "groupId": "R3-G37-40",
+          "groupTitle": "Questions 37–40",
+          "groupInstructions": "Complete the summary using the list of words, A–G, below. Write the correct letter, A–G, in boxes 37–40 on your answer sheet.",
+          "type": "matching",
+          "hint": "Choose the correct letter, A–G.",
+          "prompt": "With both the Law of Natural Selection and the Law of Effect, there may be no clear ______ involved, but merely a process of variation and selection.",
+          "allowedLetters": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G"
+          ],
+          "optionsBox": {
+            "title": "A–G",
+            "items": [
+              {
+                "letter": "A",
+                "text": "invention"
+              },
+              {
+                "letter": "B",
+                "text": "goals"
+              },
+              {
+                "letter": "C",
+                "text": "compromise"
+              },
+              {
+                "letter": "D",
+                "text": "mistakes"
+              },
+              {
+                "letter": "E",
+                "text": "luck"
+              },
+              {
+                "letter": "F",
+                "text": "inspiration"
+              },
+              {
+                "letter": "G",
+                "text": "experiments"
+              }
+            ]
+          }
+        }
+      ],
+      "groups": [
+        {
+          "id": "R3-G27-31",
+          "title": "Questions 27–31",
+          "instructions": "Questions 27–31"
+        },
+        {
+          "id": "R3-G32-36",
+          "title": "Questions 32–36",
+          "instructions": "Questions 32–36"
+        },
+        {
+          "id": "R3-G37-40",
+          "title": "Questions 37–40",
+          "instructions": "Complete the summary using the list of words, A–G, below. Write the correct letter, A–G, in boxes 37–40 on your answer sheet.",
+          "optionsBox": {
+            "title": "A–G",
+            "items": [
+              {
+                "letter": "A",
+                "text": "invention"
+              },
+              {
+                "letter": "B",
+                "text": "goals"
+              },
+              {
+                "letter": "C",
+                "text": "compromise"
+              },
+              {
+                "letter": "D",
+                "text": "mistakes"
+              },
+              {
+                "letter": "E",
+                "text": "luck"
+              },
+              {
+                "letter": "F",
+                "text": "inspiration"
+              },
+              {
+                "letter": "G",
+                "text": "experiments"
+              }
+            ]
+          }
+        }
       ]
     }
   ],
   "answerKey": {
-    "1": { "accepted": [] },
-    "2": { "accepted": [] },
-    "3": { "accepted": [] },
-    "4": { "accepted": [] },
-    "5": { "accepted": [] },
-    "6": { "accepted": [] },
-    "7": { "accepted": [] },
-    "8": { "accepted": [] },
-    "9": { "accepted": [] },
-    "10": { "accepted": [] },
-    "11": { "accepted": [] },
-    "12": { "accepted": [] },
-    "13": { "accepted": [] },
-    "14": { "accepted": [] },
-    "15": { "accepted": [] },
-    "16": { "accepted": [] },
-    "17": { "accepted": [] },
-    "18": { "accepted": [] },
-    "19": { "accepted": [] },
-    "20": { "accepted": [] },
-    "21": { "accepted": [] },
-    "22": { "accepted": [] },
-    "23": { "accepted": [] },
-    "24": { "accepted": [] },
-    "25": { "accepted": [] },
-    "26": { "accepted": [] },
-    "27": { "accepted": [] },
-    "28": { "accepted": [] },
-    "29": { "accepted": [] },
-    "30": { "accepted": [] },
-    "31": { "accepted": [] },
-    "32": { "accepted": [] },
-    "33": { "accepted": [] },
-    "34": { "accepted": [] },
-    "35": { "accepted": [] },
-    "36": { "accepted": [] },
-    "37": { "accepted": [] },
-    "38": { "accepted": [] },
-    "39": { "accepted": [] },
-    "40": { "accepted": [] }
+    "1": {
+      "accepted": [
+        "goats"
+      ]
+    },
+    "2": {
+      "accepted": [
+        "jars"
+      ]
+    },
+    "3": {
+      "accepted": [
+        "hebrew"
+      ]
+    },
+    "4": {
+      "accepted": [
+        "greek"
+      ]
+    },
+    "5": {
+      "accepted": [
+        "tin"
+      ]
+    },
+    "6": {
+      "accepted": "TRUE"
+    },
+    "7": {
+      "accepted": "FALSE"
+    },
+    "8": {
+      "accepted": "NOT GIVEN"
+    },
+    "9": {
+      "accepted": "TRUE"
+    },
+    "10": {
+      "accepted": "FALSE"
+    },
+    "11": {
+      "accepted": "TRUE"
+    },
+    "12": {
+      "accepted": "TRUE"
+    },
+    "13": {
+      "accepted": "FALSE"
+    },
+    "14": {
+      "accepted": "C"
+    },
+    "15": {
+      "accepted": "B"
+    },
+    "16": {
+      "accepted": "E"
+    },
+    "17": {
+      "accepted": "A"
+    },
+    "18": {
+      "accepted": "C"
+    },
+    "19": {
+      "accepted": "B"
+    },
+    "20": {
+      "accepted": "D"
+    },
+    "21": {
+      "accepted": "A"
+    },
+    "22": {
+      "accepted": "C"
+    },
+    "23": {
+      "accepted": "A"
+    },
+    "24": {
+      "accepted": [
+        "flavour",
+        "flavor"
+      ]
+    },
+    "25": {
+      "accepted": [
+        "size"
+      ]
+    },
+    "26": {
+      "accepted": [
+        "salt"
+      ]
+    },
+    "27": {
+      "accepted": "D"
+    },
+    "28": {
+      "accepted": "A"
+    },
+    "29": {
+      "accepted": "A"
+    },
+    "30": {
+      "accepted": "C"
+    },
+    "31": {
+      "accepted": "A"
+    },
+    "32": {
+      "accepted": "NO"
+    },
+    "33": {
+      "accepted": "NOT GIVEN"
+    },
+    "34": {
+      "accepted": "YES"
+    },
+    "35": {
+      "accepted": "NO"
+    },
+    "36": {
+      "accepted": "NOT GIVEN"
+    },
+    "37": {
+      "accepted": [
+        "F"
+      ]
+    },
+    "38": {
+      "accepted": [
+        "D"
+      ]
+    },
+    "39": {
+      "accepted": [
+        "E"
+      ]
+    },
+    "40": {
+      "accepted": [
+        "B"
+      ]
+    }
   }
 }
