@@ -1,0 +1,131 @@
+{
+  "id": "listening-test2",
+  "module": "listening",
+  "title": "Test 2 – Listening",
+  "timeLimitSeconds": 1800,
+  "sections": [
+    {
+      "id": "L1",
+      "title": "PART 1 Questions 1–10",
+      "instructions": "Complete the notes below. Write ONE WORD AND/OR A NUMBER for each answer.",
+      "audioFile": null,
+      "audioDuration": 90,
+      "sheetHtml": "assets/sheets/test2/listening_part1.html",
+      "questions": [
+        { "key": "1", "type": "text", "hint": "ONE WORD ONLY" },
+        { "key": "2", "type": "text", "hint": "ONE WORD ONLY" },
+        { "key": "3", "type": "text", "hint": "ONE WORD ONLY" },
+        { "key": "4", "type": "text", "hint": "ONE WORD ONLY" },
+        { "key": "5", "type": "text", "hint": "ONE WORD ONLY" },
+        { "key": "6", "type": "text", "hint": "ONE WORD ONLY" },
+        { "key": "7", "type": "text", "hint": "ONE WORD ONLY" },
+        { "key": "8", "type": "text", "hint": "ONE WORD ONLY" },
+        { "key": "9", "type": "text", "hint": "ONE WORD ONLY" },
+        { "key": "10", "type": "text", "hint": "NUMBER ONLY" }
+      ]
+    },
+    {
+      "id": "L2",
+      "title": "PART 2 Questions 11–20",
+      "instructions": "Questions 11–14: Choose the correct letter, A, B or C.\nQuestions 15–20: Choose TWO letters, A–E.",
+      "audioFile": null,
+      "audioDuration": 120,
+      "sheetHtml": "assets/sheets/test2/listening_part2.html",
+      "questions": [
+        { "key": "11", "type": "single_letter", "hint": "ONE LETTER (A–C)" },
+        { "key": "12", "type": "single_letter", "hint": "ONE LETTER (A–C)" },
+        { "key": "13", "type": "single_letter", "hint": "ONE LETTER (A–C)" },
+        { "key": "14", "type": "single_letter", "hint": "ONE LETTER (A–C)" },
+        { "key": "15", "type": "single_letter", "hint": "ONE LETTER (A–E)" },
+        { "key": "16", "type": "single_letter", "hint": "ONE LETTER (A–E)" },
+        { "key": "17", "type": "single_letter", "hint": "ONE LETTER (A–E)" },
+        { "key": "18", "type": "single_letter", "hint": "ONE LETTER (A–E)" },
+        { "key": "19", "type": "single_letter", "hint": "ONE LETTER (A–E)" },
+        { "key": "20", "type": "single_letter", "hint": "ONE LETTER (A–E)" }
+      ]
+    },
+    {
+      "id": "L3",
+      "title": "PART 3 Questions 21–30",
+      "instructions": "Questions 21–22: Choose TWO letters, A–E.\nQuestions 23–27: Choose the correct letter, A–G.\nQuestions 28–30: Choose the correct letter, A, B or C.",
+      "audioFile": null,
+      "audioDuration": 180,
+      "sheetHtml": "assets/sheets/test2/listening_part3.html",
+      "questions": [
+        { "key": "21", "type": "single_letter", "hint": "ONE LETTER (A–E)" },
+        { "key": "22", "type": "single_letter", "hint": "ONE LETTER (A–E)" },
+        { "key": "23", "type": "single_letter", "hint": "ONE LETTER (A–G)" },
+        { "key": "24", "type": "single_letter", "hint": "ONE LETTER (A–G)" },
+        { "key": "25", "type": "single_letter", "hint": "ONE LETTER (A–G)" },
+        { "key": "26", "type": "single_letter", "hint": "ONE LETTER (A–G)" },
+        { "key": "27", "type": "single_letter", "hint": "ONE LETTER (A–G)" },
+        { "key": "28", "type": "single_letter", "hint": "ONE LETTER (A–C)" },
+        { "key": "29", "type": "single_letter", "hint": "ONE LETTER (A–C)" },
+        { "key": "30", "type": "single_letter", "hint": "ONE LETTER (A–C)" }
+      ]
+    },
+    {
+      "id": "L4",
+      "title": "PART 4 Questions 31–40",
+      "instructions": "Complete the notes below. Write ONE WORD ONLY for each answer.",
+      "audioFile": null,
+      "audioDuration": 240,
+      "sheetHtml": "assets/sheets/test2/listening_part4.html",
+      "questions": [
+        { "key": "31", "type": "text", "hint": "ONE WORD ONLY" },
+        { "key": "32", "type": "text", "hint": "ONE WORD ONLY" },
+        { "key": "33", "type": "text", "hint": "ONE WORD ONLY" },
+        { "key": "34", "type": "text", "hint": "ONE WORD ONLY" },
+        { "key": "35", "type": "text", "hint": "ONE WORD ONLY" },
+        { "key": "36", "type": "text", "hint": "ONE WORD ONLY" },
+        { "key": "37", "type": "text", "hint": "ONE WORD ONLY" },
+        { "key": "38", "type": "text", "hint": "ONE WORD ONLY" },
+        { "key": "39", "type": "text", "hint": "ONE WORD ONLY" },
+        { "key": "40", "type": "text", "hint": "ONE WORD ONLY" }
+      ]
+    }
+  ],
+  "answerGroups": [
+    { "id": "21-22", "keys": ["21", "22"], "acceptedSet": [], "expectedCount": 2 }
+  ],
+  "answerKey": {
+    "1": { "accepted": [] },
+    "2": { "accepted": [] },
+    "3": { "accepted": [] },
+    "4": { "accepted": [] },
+    "5": { "accepted": [] },
+    "6": { "accepted": [] },
+    "7": { "accepted": [] },
+    "8": { "accepted": [] },
+    "9": { "accepted": [] },
+    "10": { "accepted": [] },
+    "11": { "accepted": [] },
+    "12": { "accepted": [] },
+    "13": { "accepted": [] },
+    "14": { "accepted": [] },
+    "15": { "accepted": [] },
+    "16": { "accepted": [] },
+    "17": { "accepted": [] },
+    "18": { "accepted": [] },
+    "19": { "accepted": [] },
+    "20": { "accepted": [] },
+    "23": { "accepted": [] },
+    "24": { "accepted": [] },
+    "25": { "accepted": [] },
+    "26": { "accepted": [] },
+    "27": { "accepted": [] },
+    "28": { "accepted": [] },
+    "29": { "accepted": [] },
+    "30": { "accepted": [] },
+    "31": { "accepted": [] },
+    "32": { "accepted": [] },
+    "33": { "accepted": [] },
+    "34": { "accepted": [] },
+    "35": { "accepted": [] },
+    "36": { "accepted": [] },
+    "37": { "accepted": [] },
+    "38": { "accepted": [] },
+    "39": { "accepted": [] },
+    "40": { "accepted": [] }
+  }
+}

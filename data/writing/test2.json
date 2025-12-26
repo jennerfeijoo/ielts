@@ -1,0 +1,24 @@
+{
+  "id": "writing-test2",
+  "module": "writing",
+  "title": "Test 2 – Writing",
+  "timeLimitSeconds": 3600,
+  "tasks": [
+    {
+      "id": "W1",
+      "taskNumber": 1,
+      "title": "WRITING TASK 1",
+      "instructions": "You should spend about 20 minutes on this task.",
+      "promptNote": "Use the official Test 2 Task 1 prompt and visuals from your materials.",
+      "requirements": "Write at least 150 words."
+    },
+    {
+      "id": "W2",
+      "taskNumber": 2,
+      "title": "WRITING TASK 2",
+      "instructions": "You should spend about 40 minutes on this task.",
+      "promptNote": "Use the official Test 2 Task 2 prompt from your materials.",
+      "requirements": "Write at least 250 words."
+    }
+  ]
+}

@@ -56,7 +56,7 @@ export async function bootModule({ moduleName, manifestPath }) {
 
   // manifestPath is relative to runner_common.js (js/)
   const manifestUrl = new URL(manifestPath, import.meta.url);
-  const appBaseUrl = new URL("..", manifestUrl); // site root (…/ielts/)
+  const appBaseUrl = new URL("..", import.meta.url); // site root (…/ielts/)
   setStatus("Loading manifest...");
 
   const manifest = await loadJSON(manifestUrl);
@@ -218,7 +218,14 @@ export async function bootModule({ moduleName, manifestPath }) {
 
       // Prefill current stored answer
       const current = getResponseValue(key);
-      if (typeof field.value !== "undefined" && field.value !== current) {
+      const fieldType = field.getAttribute("type");
+      if (fieldType === "radio") {
+        const val = normalizeTextValue(current);
+        field.checked = val !== "" && String(field.value) === val;
+      } else if (fieldType === "checkbox") {
+        const list = normalizeListValue(current);
+        field.checked = list.includes(String(field.value));
+      } else if (typeof field.value !== "undefined" && field.value !== current) {
         field.value = current;
       }
 
@@ -226,9 +233,17 @@ export async function bootModule({ moduleName, manifestPath }) {
       if (field.dataset.bound === "1") return;
       field.dataset.bound = "1";
 
-      field.addEventListener("input", () => {
-        const v = (typeof field.value === "string") ? field.value : "";
-        setResponseValue(key, v);
+      const handler = () => {
+        const type = field.getAttribute("type");
+        if (type === "radio") {
+          if (field.checked) setResponseValue(key, field.value);
+        } else if (type === "checkbox") {
+          const values = collectCheckboxValues(key);
+          setResponseValue(key, values);
+        } else {
+          const v = (typeof field.value === "string") ? field.value : "";
+          setResponseValue(key, v);
+        }
 
         // Update nav highlighting (answered state)
         const cur = engine.getCurrent();
@@ -248,8 +263,35 @@ export async function bootModule({ moduleName, manifestPath }) {
           flags
         );
         updateFlagBtn();
-      });
+      };
+
+      const evt = (field.tagName === "SELECT" || fieldType === "radio" || fieldType === "checkbox")
+        ? "change"
+        : "input";
+      field.addEventListener(evt, handler);
     });
+  }
+
+  function normalizeTextValue(val) {
+    if (Array.isArray(val)) return val.map(String).join(",");
+    if (val == null) return "";
+    return String(val);
+  }
+
+  function normalizeListValue(val) {
+    if (Array.isArray(val)) return val.map(String);
+    if (typeof val === "string") {
+      if (val.includes(",")) return val.split(",").map(v => v.trim()).filter(Boolean);
+      if (val.trim()) return [val.trim()];
+    }
+    return [];
+  }
+
+  function collectCheckboxValues(key) {
+    if (!el.question) return [];
+    const selector = `[data-q="${cssEscape(key)}"][type="checkbox"]`;
+    const boxes = Array.from(el.question.querySelectorAll(selector));
+    return boxes.filter(b => b.checked).map(b => b.value);
   }
 
   function highlightActiveBlank(activeKey) {
@@ -300,6 +342,75 @@ export async function bootModule({ moduleName, manifestPath }) {
   }
 
   // ---------- render ----------
+  const renderGroup = (groupId, section) => {
+    if (!el.question) return;
+    const groupQuestions = questionsForCurrentSection().filter((q) => q.groupId === groupId);
+    if (!groupQuestions.length) {
+      return;
+    }
+
+    el.question.innerHTML = "";
+
+    const groupMeta =
+      section?.questionGroups?.[groupId] ??
+      groupQuestions.find((q) => q.groupMeta)?.groupMeta ??
+      null;
+
+    if (groupMeta?.title) {
+      const title = document.createElement("div");
+      title.className = "h1";
+      title.style.fontSize = "18px";
+      title.textContent = groupMeta.title;
+      el.question.appendChild(title);
+    }
+
+    if (Array.isArray(groupMeta?.optionsBox) && groupMeta.optionsBox.length) {
+      const box = document.createElement("div");
+      box.className = "sheet-box";
+      groupMeta.optionsBox.forEach((opt) => {
+        const row = document.createElement("div");
+        row.className = "opt";
+        if (typeof opt === "string") {
+          row.textContent = opt;
+        } else {
+          const label = document.createElement("strong");
+          label.textContent = opt.id ?? opt.value ?? "";
+          row.appendChild(label);
+          row.appendChild(document.createTextNode(` ${opt.text ?? ""}`));
+        }
+        box.appendChild(row);
+      });
+      el.question.appendChild(box);
+    }
+
+    groupQuestions.forEach((q) => {
+      const holder = document.createElement("div");
+      holder.style.marginBottom = "10px";
+      renderQuestion(holder, q, engine, {
+        onAnswerChange: () => {
+          updateFlagBtn();
+          const cur2 = engine.getCurrent();
+          const nav2 = questionsForCurrentSection();
+          renderNav(
+            el.qnav,
+            nav2,
+            engine.responses,
+            cur2.key,
+            (pickedKey) => {
+              const idx = engine.questionFlat.findIndex((qq) => qq.key === pickedKey);
+              if (idx >= 0) {
+                engine.goToIndex(idx);
+                renderAll();
+              }
+            },
+            flags
+          );
+        },
+      });
+      el.question.appendChild(holder);
+    });
+  };
+
   const renderAll = async () => {
     if (!engine || !currentTest) return;
 
@@ -339,27 +450,31 @@ export async function bootModule({ moduleName, manifestPath }) {
     } else {
       clearSheetCacheIfNeeded(section);
 
-      renderQuestion(el.question, cur, engine, {
-        onAnswerChange: () => {
-          updateFlagBtn();
-          const cur2 = engine.getCurrent();
-          const nav2 = questionsForCurrentSection();
-          renderNav(
-            el.qnav,
-            nav2,
-            engine.responses,
-            cur2.key,
-            (pickedKey) => {
-              const idx = engine.questionFlat.findIndex((q) => q.key === pickedKey);
-              if (idx >= 0) {
-                engine.goToIndex(idx);
-                renderAll();
-              }
-            },
-            flags
-          );
-        },
-      });
+      if (cur.groupId) {
+        renderGroup(cur.groupId, section);
+      } else {
+        renderQuestion(el.question, cur, engine, {
+          onAnswerChange: () => {
+            updateFlagBtn();
+            const cur2 = engine.getCurrent();
+            const nav2 = questionsForCurrentSection();
+            renderNav(
+              el.qnav,
+              nav2,
+              engine.responses,
+              cur2.key,
+              (pickedKey) => {
+                const idx = engine.questionFlat.findIndex((q) => q.key === pickedKey);
+                if (idx >= 0) {
+                  engine.goToIndex(idx);
+                  renderAll();
+                }
+              },
+              flags
+            );
+          },
+        });
+      }
     }
 
     updateFlagBtn();

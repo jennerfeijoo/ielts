@@ -4,6 +4,11 @@
       "id": "test1",
       "title": "Test 1",
       "path": "data/writing/test1.json"
+    },
+    {
+      "id": "test2",
+      "title": "Test 2",
+      "path": "data/writing/test2.json"
     }
   ]
 }

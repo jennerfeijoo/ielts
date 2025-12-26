@@ -6,218 +6,64 @@
   "sections": [
     {
       "id": "L1",
-      "sheetHtml": "assets/sheets/test1/listening_part1.html",
-
       "title": "PART 1 Questions 1–10",
       "instructions": "Complete the notes below. Write ONE WORD AND/OR A NUMBER for each answer.",
       "audioFile": "assets/audio/ELT_IELTS17_t1_audio1.mp3",
       "audioDuration": 90,
+      "sheetHtml": "assets/sheets/test1/listening_part1.html",
       "questions": [
-        {
-          "key": "1",
-          "type": "text",
-          "prompt": "making sure the beach does not have 1 __________ on it",
-          "hint": "ONE WORD ONLY"
-        },
-        {
-          "key": "2",
-          "type": "text",
-          "prompt": "no 2 __________",
-          "hint": "ONE WORD ONLY"
-        },
-        {
-          "key": "3",
-          "type": "text",
-          "prompt": "next task is taking action to attract 3 __________ to the place",
-          "hint": "ONE WORD ONLY"
-        },
-        {
-          "key": "4",
-          "type": "text",
-          "prompt": "identifying types of 4 __________",
-          "hint": "ONE WORD ONLY"
-        },
-        {
-          "key": "5",
-          "type": "text",
-          "prompt": "building a new 5 __________",
-          "hint": "ONE WORD ONLY"
-        },
-        {
-          "key": "6",
-          "type": "text",
-          "prompt": "walk across the sands and reach the 6 __________",
-          "hint": "ONE WORD ONLY"
-        },
-        {
-          "key": "7",
-          "type": "text",
-          "prompt": "wear appropriate 7 __________",
-          "hint": "ONE WORD ONLY"
-        },
-        {
-          "key": "8",
-          "type": "text",
-          "prompt": "suitable for 8 __________ to participate in",
-          "hint": "ONE WORD ONLY"
-        },
-        {
-          "key": "9",
-          "type": "text",
-          "prompt": "making 9 __________ out of wood",
-          "hint": "ONE WORD ONLY"
-        },
-        {
-          "key": "10",
-          "type": "text",
-          "prompt": "cost of session (no camping): 10 £ __________",
-          "hint": "NUMBER ONLY"
-        }
+        { "key": "1", "type": "text", "hint": "ONE WORD ONLY" },
+        { "key": "2", "type": "text", "hint": "ONE WORD ONLY" },
+        { "key": "3", "type": "text", "hint": "ONE WORD ONLY" },
+        { "key": "4", "type": "text", "hint": "ONE WORD ONLY" },
+        { "key": "5", "type": "text", "hint": "ONE WORD ONLY" },
+        { "key": "6", "type": "text", "hint": "ONE WORD ONLY" },
+        { "key": "7", "type": "text", "hint": "ONE WORD ONLY" },
+        { "key": "8", "type": "text", "hint": "ONE WORD ONLY" },
+        { "key": "9", "type": "text", "hint": "ONE WORD ONLY" },
+        { "key": "10", "type": "text", "hint": "NUMBER ONLY" }
       ]
     },
-{
-  "id": "L2A",
-  "title": "PART 2 Questions 11–14",
-  "instructions": "Questions 11–14: Choose the correct letter, A, B or C.",
-  "audioFile": "assets/audio/ELT_IELTS17_t1_audio2.mp3",
-  "audioDuration": 120,
-  "questions": [
     {
-      "key": "11",
-      "type": "multipleChoice",
-      "prompt": "What is the maximum number of people who can stand on each side of the boat?",
-      "options": ["A 9", "B 15", "C 18"]
+      "id": "L2",
+      "title": "PART 2 Questions 11–20",
+      "instructions": "Questions 11–14: Choose the correct letter, A, B or C.\nQuestions 15–16: Choose TWO letters, A–E.\nQuestions 17–18: Choose TWO letters, A–E.\nQuestions 19–20: Choose TWO letters, A–E.",
+      "audioFile": "assets/audio/ELT_IELTS17_t1_audio2.mp3",
+      "audioDuration": 120,
+      "sheetHtml": "assets/sheets/test1/listening_part2_11-20.html",
+      "questions": [
+        { "key": "11", "type": "single_letter", "hint": "ONE LETTER (A–C)" },
+        { "key": "12", "type": "single_letter", "hint": "ONE LETTER (A–C)" },
+        { "key": "13", "type": "single_letter", "hint": "ONE LETTER (A–C)" },
+        { "key": "14", "type": "single_letter", "hint": "ONE LETTER (A–C)" },
+        { "key": "15", "type": "single_letter", "hint": "ONE LETTER (A–E)" },
+        { "key": "16", "type": "single_letter", "hint": "ONE LETTER (A–E)" },
+        { "key": "17", "type": "single_letter", "hint": "ONE LETTER (A–E)" },
+        { "key": "18", "type": "single_letter", "hint": "ONE LETTER (A–E)" },
+        { "key": "19", "type": "single_letter", "hint": "ONE LETTER (A–E)" },
+        { "key": "20", "type": "single_letter", "hint": "ONE LETTER (A–E)" }
+      ]
     },
     {
-      "key": "12",
-      "type": "multipleChoice",
-      "prompt": "What colour are the tour boats?",
-      "options": ["A dark red", "B jet black", "C light green"]
+      "id": "L3",
+      "title": "PART 3 Questions 21–30",
+      "instructions": "Questions 21–26: Choose the correct letter, A, B or C.\nQuestions 27–30: Choose FOUR answers from the box and write the correct letter, A–F, next to questions 27–30.",
+      "audioFile": "assets/audio/ELT_IELTS17_t1_audio3.mp3",
+      "audioDuration": 180,
+      "sheetHtml": "assets/sheets/test1/listening_part3_21-30.html",
+      "questions": [
+        { "key": "21", "type": "single_letter", "hint": "ONE LETTER (A–C)" },
+        { "key": "22", "type": "single_letter", "hint": "ONE LETTER (A–C)" },
+        { "key": "23", "type": "single_letter", "hint": "ONE LETTER (A–C)" },
+        { "key": "24", "type": "single_letter", "hint": "ONE LETTER (A–C)" },
+        { "key": "25", "type": "single_letter", "hint": "ONE LETTER (A–C)" },
+        { "key": "26", "type": "single_letter", "hint": "ONE LETTER (A–C)" },
+        { "key": "27", "type": "single_letter", "hint": "ONE LETTER (A–F)" },
+        { "key": "28", "type": "single_letter", "hint": "ONE LETTER (A–F)" },
+        { "key": "29", "type": "single_letter", "hint": "ONE LETTER (A–F)" },
+        { "key": "30", "type": "single_letter", "hint": "ONE LETTER (A–F)" }
+      ]
     },
-    {
-      "key": "13",
-      "type": "multipleChoice",
-      "prompt": "Which lunchbox is suitable for someone who doesn't eat meat or fish?",
-      "options": ["A Lunchbox 1", "B Lunchbox 2", "C Lunchbox 3"]
-    },
-    {
-      "key": "14",
-      "type": "multipleChoice",
-      "prompt": "What should people do with their litter?",
-      "options": ["A take it home", "B hand it to a member of staff", "C put it in the bins provided on the boat"]
-    }
-  ]
-},
-{
-  "id": "L2B",
-  "title": "PART 2 Questions 15–20",
-  "instructions": "Questions 15–16: Choose TWO letters, A–E.\nQuestions 17–18: Choose TWO letters, A–E.\nQuestions 19–20: Choose TWO letters, A–E.",
-  "audioFile": "assets/audio/ELT_IELTS17_t1_audio2.mp3",
-  "audioDuration": 120,
-  "questions": [
-    {
-      "key": "15",
-      "type": "multipleChoice",
-      "prompt": "Which TWO features of the lighthouse does Lou mention? (Choose TWO)",
-      "options": ["A why it was built", "B who built it", "C how long it took to build", "D who staffed it", "E what it was built with"],
-      "multipleAnswers": true
-    },
-    {
-      "key": "16",
-      "type": "multipleChoice",
-      "prompt": "Which TWO features of the lighthouse does Lou mention? (Choose the other answer)",
-      "options": ["A why it was built", "B who built it", "C how long it took to build", "D who staffed it", "E what it was built with"],
-      "multipleAnswers": true
-    },
-    {
-      "key": "17",
-      "type": "multipleChoice",
-      "prompt": "Which TWO types of creature might come close to the boat? (Choose TWO)",
-      "options": ["A sea eagles", "B fur seals", "C dolphins", "D whales", "E penguins"],
-      "multipleAnswers": true
-    },
-    {
-      "key": "18",
-      "type": "multipleChoice",
-      "prompt": "Which TWO types of creature might come close to the boat? (Choose the other answer)",
-      "options": ["A sea eagles", "B fur seals", "C dolphins", "D whales", "E penguins"],
-      "multipleAnswers": true
-    },
-    {
-      "key": "19",
-      "type": "multipleChoice",
-      "prompt": "Which TWO points does Lou make about the caves? (Choose TWO)",
-      "options": ["A Only large tourist boats can visit them", "B The entrances to them are often blocked", "C It is too dangerous for individuals to go near them", "D Someone will explain what is inside them", "E They cannot be reached on foot"],
-      "multipleAnswers": true
-    },
-    {
-      "key": "20",
-      "type": "multipleChoice",
-      "prompt": "Which TWO points does Lou make about the caves? (Choose the other answer)",
-      "options": ["A Only large tourist boats can visit them", "B The entrances to them are often blocked", "C It is too dangerous for individuals to go near them", "D Someone will explain what is inside them", "E They cannot be reached on foot"],
-      "multipleAnswers": true
-    }
-  ]
-},
-{
-  "id": "L3A",
-  "title": "PART 3 Questions 21–26",
-  "instructions": "Questions 21–26: Choose the correct letter, A, B or C.",
-  "audioFile": "assets/audio/ELT_IELTS17_t1_audio3.mp3",
-  "audioDuration": 180,
-  "questions": [
-    {
-      "key": "21",
-      "type": "multipleChoice",
-      "prompt": "What problem did both Diana and Tim have when arranging their work experience?",
-      "options": ["A making initial contact with suitable farms", "B organising transport to and from the farm", "C finding a placement for the required length of time"]
-    },
-    {
-      "key": "22",
-      "type": "multipleChoice",
-      "prompt": "Tim was pleased to be able to help",
-      "options": ["A a lamb that had a broken leg", "B a sheep that was having difficulty giving birth", "C a newly born lamb that was having trouble feeding"]
-    },
-    {
-      "key": "23",
-      "type": "multipleChoice",
-      "prompt": "Diana says the sheep on her farm",
-      "options": ["A were of various different varieties", "B were mainly reared for their meat", "C had better quality wool than sheep on the hills"]
-    },
-    {
-      "key": "24",
-      "type": "multipleChoice",
-      "prompt": "What did the students learn about adding supplements to chicken feed?",
-      "options": ["A These should only be given if specially needed", "B It is worth paying extra for the most effective ones", "C The amount given at one time should be limited"]
-    },
-    {
-      "key": "25",
-      "type": "multipleChoice",
-      "prompt": "What happened when Diana was working with dairy cows?",
-      "options": ["A She identified some cows incorrectly", "B She accidentally threw some milk away", "C She made a mistake when storing milk"]
-    },
-    {
-      "key": "26",
-      "type": "multipleChoice",
-      "prompt": "What did both farmers mention about vets and farming?",
-      "options": ["A Vets are failing to cope with some aspects of animal health", "B There needs to be a fundamental change in the training of vets", "C Some jobs could be done by the farmer rather than by a vet"]
-    }
-  ]
-},
-{
-  "id": "L3B",
-  "title": "PART 3 Questions 27–30",
-  "instructions": "Choose FOUR answers from the box and write the correct letter, A–F, next to questions 27–30.",
-  "audioFile": "assets/audio/ELT_IELTS17_t1_audio3.mp3",
-  "audioDuration": 180,
-  "sheetHtml": "assets/sheets/test1/listening_part3b_27-30.html",
-  "questions": [
-    { "key": "27", "type": "text", "hint": "ONE LETTER (A–F)" },
-    { "key": "28", "type": "text", "hint": "ONE LETTER (A–F)" },
-    { "key": "29", "type": "text", "hint": "ONE LETTER (A–F)" },
-    { "key": "30", "type": "text", "hint": "ONE LETTER (A–F)" }
-  ]
-},
     {
       "id": "L4",
       "title": "PART 4 Questions 31–40",
@@ -226,68 +72,23 @@
       "sheetHtml": "assets/sheets/test1/listening_part4.html",
       "audioDuration": 240,
       "questions": [
-        {
-          "key": "31",
-          "type": "text",
-          "prompt": "Mazes are a type of 31 __________",
-          "hint": "ONE WORD ONLY"
-        },
-        {
-          "key": "32",
-          "type": "text",
-          "prompt": "32 __________ is needed to navigate through a maze",
-          "hint": "ONE WORD ONLY"
-        },
-        {
-          "key": "33",
-          "type": "text",
-          "prompt": "the word 'maze' is derived from a word meaning a feeling of 33 __________",
-          "hint": "ONE WORD ONLY"
-        },
-        {
-          "key": "34",
-          "type": "text",
-          "prompt": "they have frequently been used in 34 __________ and prayer",
-          "hint": "ONE WORD ONLY"
-        },
-        {
-          "key": "35",
-          "type": "text",
-          "prompt": "Ancient carvings on 35 __________ have been found across many cultures",
-          "hint": "ONE WORD ONLY"
-        },
-        {
-          "key": "36",
-          "type": "text",
-          "prompt": "Ancient Greeks used the symbol on 36 __________",
-          "hint": "ONE WORD ONLY"
-        },
-        {
-          "key": "37",
-          "type": "text",
-          "prompt": "The largest surviving example of a turf labyrinth once had a big 37 __________ at its centre",
-          "hint": "ONE WORD ONLY"
-        },
-        {
-          "key": "38",
-          "type": "text",
-          "prompt": "walking a maze can reduce a person's 38 __________ rate",
-          "hint": "ONE WORD ONLY"
-        },
-        {
-          "key": "39",
-          "type": "text",
-          "prompt": "patients who can't walk can use 'finger labyrinths' made from 39 __________",
-          "hint": "ONE WORD ONLY"
-        },
-        {
-          "key": "40",
-          "type": "text",
-          "prompt": "research has shown that Alzheimer's sufferers experience less 40 __________",
-          "hint": "ONE WORD ONLY"
-        }
+        { "key": "31", "type": "text", "hint": "ONE WORD ONLY" },
+        { "key": "32", "type": "text", "hint": "ONE WORD ONLY" },
+        { "key": "33", "type": "text", "hint": "ONE WORD ONLY" },
+        { "key": "34", "type": "text", "hint": "ONE WORD ONLY" },
+        { "key": "35", "type": "text", "hint": "ONE WORD ONLY" },
+        { "key": "36", "type": "text", "hint": "ONE WORD ONLY" },
+        { "key": "37", "type": "text", "hint": "ONE WORD ONLY" },
+        { "key": "38", "type": "text", "hint": "ONE WORD ONLY" },
+        { "key": "39", "type": "text", "hint": "ONE WORD ONLY" },
+        { "key": "40", "type": "text", "hint": "ONE WORD ONLY" }
       ]
     }
+  ],
+  "answerGroups": [
+    { "id": "15-16", "keys": ["15", "16"], "acceptedSet": ["A", "D"], "expectedCount": 2 },
+    { "id": "17-18", "keys": ["17", "18"], "acceptedSet": ["B", "C"], "expectedCount": 2 },
+    { "id": "19-20", "keys": ["19", "20"], "acceptedSet": ["D", "E"], "expectedCount": 2 }
   ],
   "answerKey": {
     "1": { "accepted": ["litter"] },
@@ -304,12 +105,6 @@
     "12": { "accepted": "C" },
     "13": { "accepted": "B" },
     "14": { "accepted": "B" },
-    "15": { "accepted": ["A", "D"] },
-    "16": { "accepted": ["A", "D"] },
-    "17": { "accepted": ["B", "C"] },
-    "18": { "accepted": ["B", "C"] },
-    "19": { "accepted": ["D", "E"] },
-    "20": { "accepted": ["D", "E"] },
     "21": { "accepted": "A" },
     "22": { "accepted": "B" },
     "23": { "accepted": "B" },
