@@ -6,7 +6,7 @@ const STORAGE_KEY = "ielts:writing:v1";
 const el = {
   promptSelect: document.getElementById("promptSelect"),
   taskSelect: document.getElementById("taskSelect"),
-  taskViewer: document.getElementById("taskViewer"),
+  taskViewer: document.getElementById("taskViewer") || document.getElementById("promptBox"),
   taskImage: document.getElementById("taskImage"),
   taskImageHint: document.getElementById("taskImageHint"),
   essay: document.getElementById("essay"),
@@ -19,6 +19,17 @@ const el = {
 let sets = null;
 let timer = null;
 let state = { setPath: null, taskIndex: 0, essay: "" };
+
+const appBaseUrl = new URL("..", import.meta.url);
+const resolveAsset = (p) => {
+  const raw = String(p ?? "").trim();
+  if (!raw) return "";
+  try {
+    return new URL(raw, appBaseUrl).href;
+  } catch {
+    return "";
+  }
+};
 
 function countWords(s) {
   const x = String(s ?? "").trim();
@@ -51,35 +62,11 @@ function downloadText(filename, text) {
   setTimeout(() => URL.revokeObjectURL(url), 500);
 }
 
-/**
- * Resolve an asset path from a Writing JSON field.
- * Writing module lives in /modules/, so a site-root relative asset like:
- *   "assets/images/x.png"
- * must be referenced as:
- *   "../assets/images/x.png"
- */
-function resolveAssetPath(p) {
-  const raw = String(p ?? "").trim();
-  if (!raw) return "";
-  if (/^https?:\/\//i.test(raw)) return raw;
-
-  // remove any leading "./" or "/" so we can safely prefix "../"
-  const normalized = raw.replace(/^\.?\//, "").replace(/^\/+/, "");
-  return `../${normalized}`;
-}
-
 async function init() {
-  // Hard guard: if HTML ids mismatch, fail fast with a clearer error
-  if (!el.taskViewer) throw new Error("Missing #taskViewer in modules/writing.html");
-  if (!el.promptSelect) throw new Error("Missing #promptSelect in modules/writing.html");
-  if (!el.taskSelect) throw new Error("Missing #taskSelect in modules/writing.html");
-  if (!el.essay) throw new Error("Missing #essay in modules/writing.html");
-  if (!el.wordCount) throw new Error("Missing #wordCount in modules/writing.html");
-  if (!el.timer) throw new Error("Missing #timer in modules/writing.html");
-  if (!el.resetBtn) throw new Error("Missing #resetBtn in modules/writing.html");
-  if (!el.exportBtn) throw new Error("Missing #exportBtn in modules/writing.html");
-  if (!el.taskImage) throw new Error("Missing #taskImage in modules/writing.html");
-  if (!el.taskImageHint) throw new Error("Missing #taskImageHint in modules/writing.html");
+  if (!el.promptSelect || !el.taskSelect || !el.essay || !el.wordCount || !el.timer || !el.resetBtn || !el.exportBtn) {
+    console.warn("Writing module: required elements missing; aborting init.");
+    return;
+  }
 
   load();
   sets = await loadJSON("../data/writing/sets.json");
@@ -145,31 +132,35 @@ function renderTask(setJson) {
     parts.push(`<div class="small" style="margin-top:10px"><strong>Requirement:</strong> ${t.requirements}</div>`);
   }
 
-  el.taskViewer.innerHTML = parts.join("");
+  if (el.taskViewer) {
+    el.taskViewer.innerHTML = parts.join("");
+  }
 
   // ---- Image rendering ----
-  const imgSrc = resolveAssetPath(t.imageUrl);
-  if (imgSrc) {
-    el.taskImage.style.display = "block";
-    el.taskImage.src = imgSrc;
-    el.taskImage.alt = t.imageAlt ?? "Writing Task figure";
+  if (el.taskImage && el.taskImageHint) {
+    const imgSrc = resolveAsset(t.imageUrl);
+    if (imgSrc) {
+      el.taskImage.style.display = "block";
+      el.taskImage.src = imgSrc;
+      el.taskImage.alt = t.imageAlt ?? "Writing Task figure";
 
-    el.taskImageHint.style.display = "none";
-    el.taskImageHint.textContent = "";
+      el.taskImageHint.style.display = "none";
+      el.taskImageHint.textContent = "";
 
-    // reset handler and set a fresh one (prevents stacking)
-    el.taskImage.onerror = () => {
+      // reset handler and set a fresh one (prevents stacking)
+      el.taskImage.onerror = () => {
+        el.taskImage.style.display = "none";
+        el.taskImageHint.style.display = "block";
+        el.taskImageHint.textContent = `Image failed to load: ${t.imageUrl}`;
+      };
+    } else {
+      el.taskImage.removeAttribute("src");
       el.taskImage.style.display = "none";
-      el.taskImageHint.style.display = "block";
-      el.taskImageHint.textContent = `Image failed to load: ${t.imageUrl}`;
-    };
-  } else {
-    el.taskImage.removeAttribute("src");
-    el.taskImage.style.display = "none";
-    el.taskImage.onerror = null;
+      el.taskImage.onerror = null;
 
-    el.taskImageHint.style.display = "none";
-    el.taskImageHint.textContent = "";
+      el.taskImageHint.style.display = "none";
+      el.taskImageHint.textContent = "";
+    }
   }
 
   // Response box
@@ -187,14 +178,14 @@ function renderTask(setJson) {
   if ((t.timeLimitSeconds ?? 0) > 0) timer.start();
 }
 
-el.promptSelect.addEventListener("change", async () => {
+el.promptSelect?.addEventListener("change", async () => {
   state.taskIndex = 0;
   state.essay = "";
   save();
   await loadSet(el.promptSelect.value);
 });
 
-el.taskSelect.addEventListener("change", async () => {
+el.taskSelect?.addEventListener("change", async () => {
   const setJson = await loadJSON(`../${el.promptSelect.value}`);
   state.taskIndex = Number(el.taskSelect.value);
   state.essay = "";
@@ -202,13 +193,13 @@ el.taskSelect.addEventListener("change", async () => {
   renderTask(setJson);
 });
 
-el.essay.addEventListener("input", () => {
+el.essay?.addEventListener("input", () => {
   state.essay = el.essay.value;
   el.wordCount.textContent = String(countWords(state.essay));
   save();
 });
 
-el.resetBtn.addEventListener("click", () => {
+el.resetBtn?.addEventListener("click", () => {
   if (!confirm("Reset writing response?")) return;
   state.essay = "";
   el.essay.value = "";
@@ -216,7 +207,7 @@ el.resetBtn.addEventListener("click", () => {
   save();
 });
 
-el.exportBtn.addEventListener("click", () => {
+el.exportBtn?.addEventListener("click", () => {
   const words = countWords(state.essay);
   downloadText("ielts-writing.txt", `WORDS: ${words}\n\n${state.essay}`);
 });

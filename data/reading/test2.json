@@ -1,0 +1,125 @@
+{
+  "id": "reading-test2",
+  "module": "reading",
+  "title": "Test 2 – Reading",
+  "timeLimitSeconds": 3600,
+  "sections": [
+    {
+      "id": "R1",
+      "title": "Passage 1 – Test 2",
+      "materialHtml": "assets/passages/test2/passage1.html",
+      "questions": [
+        { "key": "1", "label": "Q1", "shortLabel": "1", "type": "text", "hint": "See passage.", "prompt": "Question 1", "groupId": "1-5" },
+        { "key": "2", "label": "Q2", "shortLabel": "2", "type": "text", "hint": "See passage.", "prompt": "Question 2", "groupId": "1-5" },
+        { "key": "3", "label": "Q3", "shortLabel": "3", "type": "text", "hint": "See passage.", "prompt": "Question 3", "groupId": "1-5" },
+        { "key": "4", "label": "Q4", "shortLabel": "4", "type": "text", "hint": "See passage.", "prompt": "Question 4", "groupId": "1-5" },
+        { "key": "5", "label": "Q5", "shortLabel": "5", "type": "text", "hint": "See passage.", "prompt": "Question 5", "groupId": "1-5" },
+        { "key": "6", "label": "Q6", "shortLabel": "6", "type": "text", "hint": "See passage.", "prompt": "Question 6", "groupId": "6-13" },
+        { "key": "7", "label": "Q7", "shortLabel": "7", "type": "text", "hint": "See passage.", "prompt": "Question 7", "groupId": "6-13" },
+        { "key": "8", "label": "Q8", "shortLabel": "8", "type": "text", "hint": "See passage.", "prompt": "Question 8", "groupId": "6-13" },
+        { "key": "9", "label": "Q9", "shortLabel": "9", "type": "text", "hint": "See passage.", "prompt": "Question 9", "groupId": "6-13" },
+        { "key": "10", "label": "Q10", "shortLabel": "10", "type": "text", "hint": "See passage.", "prompt": "Question 10", "groupId": "6-13" },
+        { "key": "11", "label": "Q11", "shortLabel": "11", "type": "text", "hint": "See passage.", "prompt": "Question 11", "groupId": "6-13" },
+        { "key": "12", "label": "Q12", "shortLabel": "12", "type": "text", "hint": "See passage.", "prompt": "Question 12", "groupId": "6-13" },
+        { "key": "13", "label": "Q13", "shortLabel": "13", "type": "text", "hint": "See passage.", "prompt": "Question 13", "groupId": "6-13" }
+      ]
+    },
+    {
+      "id": "R2",
+      "title": "Passage 2 – Test 2",
+      "materialHtml": "assets/passages/test2/passage2.html",
+      "questions": [
+        { "key": "14", "label": "Q14", "shortLabel": "14", "type": "text", "hint": "See passage.", "prompt": "Question 14", "groupId": "14-18" },
+        { "key": "15", "label": "Q15", "shortLabel": "15", "type": "text", "hint": "See passage.", "prompt": "Question 15", "groupId": "14-18" },
+        { "key": "16", "label": "Q16", "shortLabel": "16", "type": "text", "hint": "See passage.", "prompt": "Question 16", "groupId": "14-18" },
+        { "key": "17", "label": "Q17", "shortLabel": "17", "type": "text", "hint": "See passage.", "prompt": "Question 17", "groupId": "14-18" },
+        { "key": "18", "label": "Q18", "shortLabel": "18", "type": "text", "hint": "See passage.", "prompt": "Question 18", "groupId": "14-18" },
+        { "key": "19", "label": "Q19", "shortLabel": "19", "type": "text", "hint": "See passage.", "prompt": "Question 19", "groupId": "19-23" },
+        { "key": "20", "label": "Q20", "shortLabel": "20", "type": "text", "hint": "See passage.", "prompt": "Question 20", "groupId": "19-23" },
+        { "key": "21", "label": "Q21", "shortLabel": "21", "type": "text", "hint": "See passage.", "prompt": "Question 21", "groupId": "19-23" },
+        { "key": "22", "label": "Q22", "shortLabel": "22", "type": "text", "hint": "See passage.", "prompt": "Question 22", "groupId": "19-23" },
+        { "key": "23", "label": "Q23", "shortLabel": "23", "type": "text", "hint": "See passage.", "prompt": "Question 23", "groupId": "19-23" },
+        { "key": "24", "label": "Q24", "shortLabel": "24", "type": "text", "hint": "See passage.", "prompt": "Question 24", "groupId": "24-26" },
+        { "key": "25", "label": "Q25", "shortLabel": "25", "type": "text", "hint": "See passage.", "prompt": "Question 25", "groupId": "24-26" },
+        { "key": "26", "label": "Q26", "shortLabel": "26", "type": "text", "hint": "See passage.", "prompt": "Question 26", "groupId": "24-26" }
+      ]
+    },
+    {
+      "id": "R3",
+      "title": "Passage 3 – Test 2",
+      "materialHtml": "assets/passages/test2/passage3.html",
+      "questionGroups": {
+        "37-40": {
+          "title": "Questions 37–40",
+          "optionsBox": [
+            { "id": "A", "text": "Option A" },
+            { "id": "B", "text": "Option B" },
+            { "id": "C", "text": "Option C" },
+            { "id": "D", "text": "Option D" },
+            { "id": "E", "text": "Option E" },
+            { "id": "F", "text": "Option F" },
+            { "id": "G", "text": "Option G" }
+          ]
+        }
+      },
+      "questions": [
+        { "key": "27", "label": "Q27", "shortLabel": "27", "type": "text", "hint": "See passage.", "prompt": "Question 27", "groupId": "27-31" },
+        { "key": "28", "label": "Q28", "shortLabel": "28", "type": "text", "hint": "See passage.", "prompt": "Question 28", "groupId": "27-31" },
+        { "key": "29", "label": "Q29", "shortLabel": "29", "type": "text", "hint": "See passage.", "prompt": "Question 29", "groupId": "27-31" },
+        { "key": "30", "label": "Q30", "shortLabel": "30", "type": "text", "hint": "See passage.", "prompt": "Question 30", "groupId": "27-31" },
+        { "key": "31", "label": "Q31", "shortLabel": "31", "type": "text", "hint": "See passage.", "prompt": "Question 31", "groupId": "27-31" },
+        { "key": "32", "label": "Q32", "shortLabel": "32", "type": "text", "hint": "See passage.", "prompt": "Question 32", "groupId": "32-36" },
+        { "key": "33", "label": "Q33", "shortLabel": "33", "type": "text", "hint": "See passage.", "prompt": "Question 33", "groupId": "32-36" },
+        { "key": "34", "label": "Q34", "shortLabel": "34", "type": "text", "hint": "See passage.", "prompt": "Question 34", "groupId": "32-36" },
+        { "key": "35", "label": "Q35", "shortLabel": "35", "type": "text", "hint": "See passage.", "prompt": "Question 35", "groupId": "32-36" },
+        { "key": "36", "label": "Q36", "shortLabel": "36", "type": "text", "hint": "See passage.", "prompt": "Question 36", "groupId": "32-36" },
+        { "key": "37", "label": "Q37", "shortLabel": "37", "type": "matching", "hint": "Choose the correct letter, A–G.", "prompt": "Question 37", "allowedLetters": ["A","B","C","D","E","F","G"], "groupId": "37-40" },
+        { "key": "38", "label": "Q38", "shortLabel": "38", "type": "matching", "hint": "Choose the correct letter, A–G.", "prompt": "Question 38", "allowedLetters": ["A","B","C","D","E","F","G"], "groupId": "37-40" },
+        { "key": "39", "label": "Q39", "shortLabel": "39", "type": "matching", "hint": "Choose the correct letter, A–G.", "prompt": "Question 39", "allowedLetters": ["A","B","C","D","E","F","G"], "groupId": "37-40" },
+        { "key": "40", "label": "Q40", "shortLabel": "40", "type": "matching", "hint": "Choose the correct letter, A–G.", "prompt": "Question 40", "allowedLetters": ["A","B","C","D","E","F","G"], "groupId": "37-40" }
+      ]
+    }
+  ],
+  "answerKey": {
+    "1": { "accepted": [] },
+    "2": { "accepted": [] },
+    "3": { "accepted": [] },
+    "4": { "accepted": [] },
+    "5": { "accepted": [] },
+    "6": { "accepted": [] },
+    "7": { "accepted": [] },
+    "8": { "accepted": [] },
+    "9": { "accepted": [] },
+    "10": { "accepted": [] },
+    "11": { "accepted": [] },
+    "12": { "accepted": [] },
+    "13": { "accepted": [] },
+    "14": { "accepted": [] },
+    "15": { "accepted": [] },
+    "16": { "accepted": [] },
+    "17": { "accepted": [] },
+    "18": { "accepted": [] },
+    "19": { "accepted": [] },
+    "20": { "accepted": [] },
+    "21": { "accepted": [] },
+    "22": { "accepted": [] },
+    "23": { "accepted": [] },
+    "24": { "accepted": [] },
+    "25": { "accepted": [] },
+    "26": { "accepted": [] },
+    "27": { "accepted": [] },
+    "28": { "accepted": [] },
+    "29": { "accepted": [] },
+    "30": { "accepted": [] },
+    "31": { "accepted": [] },
+    "32": { "accepted": [] },
+    "33": { "accepted": [] },
+    "34": { "accepted": [] },
+    "35": { "accepted": [] },
+    "36": { "accepted": [] },
+    "37": { "accepted": [] },
+    "38": { "accepted": [] },
+    "39": { "accepted": [] },
+    "40": { "accepted": [] }
+  }
+}
