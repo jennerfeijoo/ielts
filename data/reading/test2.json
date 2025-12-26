@@ -15,7 +15,10 @@
           "shortLabel": "1",
           "type": "text",
           "hint": "ONE WORD ONLY",
-          "prompt": "The teenagers who found the scrolls were tending their ______."
+          "prompt": "The teenagers who found the scrolls were tending their ______.",
+          "groupId": "R1-G1-5",
+          "groupTitle": "Questions 1–5",
+          "groupInstructions": "Complete the notes below. Choose ONE WORD ONLY from the passage for each answer."
         },
         {
           "key": "2",
@@ -23,7 +26,10 @@
           "shortLabel": "2",
           "type": "text",
           "hint": "ONE WORD ONLY",
-          "prompt": "The scrolls were stored in large ______."
+          "prompt": "The scrolls were stored in large ______.",
+          "groupId": "R1-G1-5",
+          "groupTitle": "Questions 1–5",
+          "groupInstructions": "Complete the notes below. Choose ONE WORD ONLY from the passage for each answer."
         },
         {
           "key": "3",
@@ -31,7 +37,10 @@
           "shortLabel": "3",
           "type": "text",
           "hint": "ONE WORD ONLY",
-          "prompt": "Most of the manuscripts are in ______."
+          "prompt": "Most of the manuscripts are in ______.",
+          "groupId": "R1-G1-5",
+          "groupTitle": "Questions 1–5",
+          "groupInstructions": "Complete the notes below. Choose ONE WORD ONLY from the passage for each answer."
         },
         {
           "key": "4",
@@ -39,7 +48,10 @@
           "shortLabel": "4",
           "type": "text",
           "hint": "ONE WORD ONLY",
-          "prompt": "Some scrolls include translations of the Bible into ______."
+          "prompt": "Some scrolls include translations of the Bible into ______.",
+          "groupId": "R1-G1-5",
+          "groupTitle": "Questions 1–5",
+          "groupInstructions": "Complete the notes below. Choose ONE WORD ONLY from the passage for each answer."
         },
         {
           "key": "5",
@@ -47,63 +59,94 @@
           "shortLabel": "5",
           "type": "text",
           "hint": "ONE WORD ONLY",
-          "prompt": "Scroll 3Q15 was made from a combination of copper and ______."
+          "prompt": "Scroll 3Q15 was made from a combination of copper and ______.",
+          "groupId": "R1-G1-5",
+          "groupTitle": "Questions 1–5",
+          "groupInstructions": "Complete the notes below. Choose ONE WORD ONLY from the passage for each answer."
         },
         {
           "key": "6",
           "label": "Q6",
           "shortLabel": "6",
           "type": "tfng",
-          "prompt": "The remains of the Qumran settlement were damaged by Roman soldiers."
+          "prompt": "The remains of the Qumran settlement were damaged by Roman soldiers.",
+          "groupId": "R1-G6-13",
+          "groupTitle": "Questions 6–13"
         },
         {
           "key": "7",
           "label": "Q7",
           "shortLabel": "7",
           "type": "tfng",
-          "prompt": "The Essenes were an important group of musicians."
+          "prompt": "The Essenes were an important group of musicians.",
+          "groupId": "R1-G6-13",
+          "groupTitle": "Questions 6–13"
         },
         {
           "key": "8",
           "label": "Q8",
           "shortLabel": "8",
           "type": "tfng",
-          "prompt": "The majority of the scrolls are written using the alphabet that is still used today."
+          "prompt": "The majority of the scrolls are written using the alphabet that is still used today.",
+          "groupId": "R1-G6-13",
+          "groupTitle": "Questions 6–13"
         },
         {
           "key": "9",
           "label": "Q9",
           "shortLabel": "9",
           "type": "tfng",
-          "prompt": "The only entire book of the Hebrew Bible found at Qumran was the Book of Isaiah."
+          "prompt": "The only entire book of the Hebrew Bible found at Qumran was the Book of Isaiah.",
+          "groupId": "R1-G6-13",
+          "groupTitle": "Questions 6–13"
         },
         {
           "key": "10",
           "label": "Q10",
           "shortLabel": "10",
           "type": "tfng",
-          "prompt": "The Copper Scroll has remained untranslated."
+          "prompt": "The Copper Scroll has remained untranslated.",
+          "groupId": "R1-G6-13",
+          "groupTitle": "Questions 6–13"
         },
         {
           "key": "11",
           "label": "Q11",
           "shortLabel": "11",
           "type": "tfng",
-          "prompt": "Yigael Yadin bought some of the scrolls after seeing an advertisement in The Wall Street Journal."
+          "prompt": "Yigael Yadin bought some of the scrolls after seeing an advertisement in The Wall Street Journal.",
+          "groupId": "R1-G6-13",
+          "groupTitle": "Questions 6–13"
         },
         {
           "key": "12",
           "label": "Q12",
           "shortLabel": "12",
           "type": "tfng",
-          "prompt": "Eshbal Ratson and Jonathan Ben-Dov worked on restoring and deciphering a scroll for twelve months."
+          "prompt": "Eshbal Ratson and Jonathan Ben-Dov worked on restoring and deciphering a scroll for twelve months.",
+          "groupId": "R1-G6-13",
+          "groupTitle": "Questions 6–13"
         },
         {
           "key": "13",
           "label": "Q13",
           "shortLabel": "13",
           "type": "tfng",
-          "prompt": "All known Dead Sea Scrolls have now been translated."
+          "prompt": "All known Dead Sea Scrolls have now been translated.",
+          "groupId": "R1-G6-13",
+          "groupTitle": "Questions 6–13"
+        }
+      ],
+      "groups": [
+        {
+          "id": "R1-G1-5",
+          "title": "Questions 1–5",
+          "instructions": "Complete the notes below. Choose ONE WORD ONLY from the passage for each answer."
+        },
+        {
+          "id": "R1-G6-13",
+          "title": "Questions 6–13",
+          "instructions": "Questions 6–13"
         }
       ]
     },
@@ -126,7 +169,9 @@
             "D",
             "E"
           ],
-          "note": "Sections: A–E"
+          "note": "Sections: A–E",
+          "groupId": "R2-G14-18",
+          "groupTitle": "Questions 14–18"
         },
         {
           "key": "15",
@@ -141,7 +186,9 @@
             "C",
             "D",
             "E"
-          ]
+          ],
+          "groupId": "R2-G14-18",
+          "groupTitle": "Questions 14–18"
         },
         {
           "key": "16",
@@ -156,7 +203,9 @@
             "C",
             "D",
             "E"
-          ]
+          ],
+          "groupId": "R2-G14-18",
+          "groupTitle": "Questions 14–18"
         },
         {
           "key": "17",
@@ -171,7 +220,9 @@
             "C",
             "D",
             "E"
-          ]
+          ],
+          "groupId": "R2-G14-18",
+          "groupTitle": "Questions 14–18"
         },
         {
           "key": "18",
@@ -186,7 +237,9 @@
             "C",
             "D",
             "E"
-          ]
+          ],
+          "groupId": "R2-G14-18",
+          "groupTitle": "Questions 14–18"
         },
         {
           "key": "19",
@@ -201,7 +254,9 @@
             "C",
             "D"
           ],
-          "note": "Researchers: A Jorg Kudla, B Caixia Gao, C Joyce Van Eck, D Jonathan Jones"
+          "note": "Researchers: A Jorg Kudla, B Caixia Gao, C Joyce Van Eck, D Jonathan Jones",
+          "groupId": "R2-G19-23",
+          "groupTitle": "Questions 19–23"
         },
         {
           "key": "20",
@@ -215,7 +270,9 @@
             "B",
             "C",
             "D"
-          ]
+          ],
+          "groupId": "R2-G19-23",
+          "groupTitle": "Questions 19–23"
         },
         {
           "key": "21",
@@ -229,7 +286,9 @@
             "B",
             "C",
             "D"
-          ]
+          ],
+          "groupId": "R2-G19-23",
+          "groupTitle": "Questions 19–23"
         },
         {
           "key": "22",
@@ -243,7 +302,9 @@
             "B",
             "C",
             "D"
-          ]
+          ],
+          "groupId": "R2-G19-23",
+          "groupTitle": "Questions 19–23"
         },
         {
           "key": "23",
@@ -257,7 +318,9 @@
             "B",
             "C",
             "D"
-          ]
+          ],
+          "groupId": "R2-G19-23",
+          "groupTitle": "Questions 19–23"
         },
         {
           "key": "24",
@@ -265,7 +328,9 @@
           "shortLabel": "24",
           "type": "text",
           "hint": "ONE WORD ONLY",
-          "prompt": "An undesirable trait such as loss of ______ may be caused by a mutation in a tomato gene."
+          "prompt": "An undesirable trait such as loss of ______ may be caused by a mutation in a tomato gene.",
+          "groupId": "R2-G24-26",
+          "groupTitle": "Questions 24–26"
         },
         {
           "key": "25",
@@ -273,7 +338,9 @@
           "shortLabel": "25",
           "type": "text",
           "hint": "ONE WORD ONLY",
-          "prompt": "By modifying one gene, researchers made the tomato three times its original ______."
+          "prompt": "By modifying one gene, researchers made the tomato three times its original ______.",
+          "groupId": "R2-G24-26",
+          "groupTitle": "Questions 24–26"
         },
         {
           "key": "26",
@@ -281,7 +348,26 @@
           "shortLabel": "26",
           "type": "text",
           "hint": "ONE WORD ONLY",
-          "prompt": "A type of tomato not badly affected by ______ was produced by a team of researchers in China."
+          "prompt": "A type of tomato not badly affected by ______ was produced by a team of researchers in China.",
+          "groupId": "R2-G24-26",
+          "groupTitle": "Questions 24–26"
+        }
+      ],
+      "groups": [
+        {
+          "id": "R2-G14-18",
+          "title": "Questions 14–18",
+          "instructions": "Questions 14–18"
+        },
+        {
+          "id": "R2-G19-23",
+          "title": "Questions 19–23",
+          "instructions": "Questions 19–23"
+        },
+        {
+          "id": "R2-G24-26",
+          "title": "Questions 24–26",
+          "instructions": "Questions 24–26"
         }
       ]
     },
@@ -302,7 +388,9 @@
             "Some discoveries happen by chance, but there is often a reason for chance discoveries.",
             "People and animals may be innovative when they are under pressure.",
             "Individuals who are innovative may have more opportunities for survival."
-          ]
+          ],
+          "groupId": "R3-G27-31",
+          "groupTitle": "Questions 27–31"
         },
         {
           "key": "28",
@@ -316,7 +404,9 @@
             "Problems can be solved by imitation rather than by trial and error.",
             "A solution to a problem can be spread from one group to another.",
             "Animals can learn new skills from observation of a parent."
-          ]
+          ],
+          "groupId": "R3-G27-31",
+          "groupTitle": "Questions 27–31"
         },
         {
           "key": "29",
@@ -330,7 +420,9 @@
             "giving an example of theory about innovation",
             "suggesting that a certain situation is likely to lead to innovation",
             "comparing the approaches of two scientists"
-          ]
+          ],
+          "groupId": "R3-G27-31",
+          "groupTitle": "Questions 27–31"
         },
         {
           "key": "30",
@@ -344,7 +436,9 @@
             "the way that the chimpanzees are encouraged to manipulate the objects",
             "the design of the chimpanzees’ environment",
             "the timing of the chimpanzees’ exposure to the objects"
-          ]
+          ],
+          "groupId": "R3-G27-31",
+          "groupTitle": "Questions 27–31"
         },
         {
           "key": "31",
@@ -358,50 +452,62 @@
             "The birds are copying the behavior of other birds.",
             "The birds can create a tool to suit their purposes.",
             "The birds have learned by chance that the leaf can be used in this way."
-          ]
+          ],
+          "groupId": "R3-G27-31",
+          "groupTitle": "Questions 27–31"
         },
         {
           "key": "32",
           "label": "Q32",
           "shortLabel": "32",
           "type": "ynng",
-          "prompt": "The banana was the first fruit to be domesticated."
+          "prompt": "The banana was the first fruit to be domesticated.",
+          "groupId": "R3-G32-36",
+          "groupTitle": "Questions 32–36"
         },
         {
           "key": "33",
           "label": "Q33",
           "shortLabel": "33",
           "type": "ynng",
-          "prompt": "Primitive humans were not able to domesticate animals."
+          "prompt": "Primitive humans were not able to domesticate animals.",
+          "groupId": "R3-G32-36",
+          "groupTitle": "Questions 32–36"
         },
         {
           "key": "34",
           "label": "Q34",
           "shortLabel": "34",
           "type": "ynng",
-          "prompt": "It is difficult to know how much the process of animal domestication required conscious thought."
+          "prompt": "It is difficult to know how much the process of animal domestication required conscious thought.",
+          "groupId": "R3-G32-36",
+          "groupTitle": "Questions 32–36"
         },
         {
           "key": "35",
           "label": "Q35",
           "shortLabel": "35",
           "type": "ynng",
-          "prompt": "Animals could have helped to domesticate other animals."
+          "prompt": "Animals could have helped to domesticate other animals.",
+          "groupId": "R3-G32-36",
+          "groupTitle": "Questions 32–36"
         },
         {
           "key": "36",
           "label": "Q36",
           "shortLabel": "36",
           "type": "ynng",
-          "prompt": "All animals can benefit from the process of domestication."
+          "prompt": "All animals can benefit from the process of domestication.",
+          "groupId": "R3-G32-36",
+          "groupTitle": "Questions 32–36"
         },
         {
           "key": "37",
           "label": "Q37",
           "shortLabel": "37",
-        "groupId": "R3-G37-40",
-        "groupTitle": "The origins of creative behaviour",
-        "groupInstructions": "Complete the summary using the list of words, A–G, below. Write the correct letter, A–G, in boxes 37–40 on your answer sheet.",
+          "groupId": "R3-G37-40",
+          "groupTitle": "Questions 37–40",
+          "groupInstructions": "Complete the summary using the list of words, A–G, below. Write the correct letter, A–G, in boxes 37–40 on your answer sheet.",
           "type": "matching",
           "hint": "Choose the correct letter, A–G.",
           "prompt": "The traditional view of scientific discovery is that breakthroughs happen when a single great mind has sudden ______ .",
@@ -452,9 +558,9 @@
           "key": "38",
           "label": "Q38",
           "shortLabel": "38",
-        "groupId": "R3-G37-40",
-        "groupTitle": "The origins of creative behaviour",
-        "groupInstructions": "Complete the summary using the list of words, A–G, below. Write the correct letter, A–G, in boxes 37–40 on your answer sheet.",
+          "groupId": "R3-G37-40",
+          "groupTitle": "Questions 37–40",
+          "groupInstructions": "Complete the summary using the list of words, A–G, below. Write the correct letter, A–G, in boxes 37–40 on your answer sheet.",
           "type": "matching",
           "hint": "Choose the correct letter, A–G.",
           "prompt": "In some cases, this process involves ______ , such as Nicholson’s theory about proto-elements.",
@@ -505,9 +611,9 @@
           "key": "39",
           "label": "Q39",
           "shortLabel": "39",
-        "groupId": "R3-G37-40",
-        "groupTitle": "The origins of creative behaviour",
-        "groupInstructions": "Complete the summary using the list of words, A–G, below. Write the correct letter, A–G, in boxes 37–40 on your answer sheet.",
+          "groupId": "R3-G37-40",
+          "groupTitle": "Questions 37–40",
+          "groupInstructions": "Complete the summary using the list of words, A–G, below. Write the correct letter, A–G, in boxes 37–40 on your answer sheet.",
           "type": "matching",
           "hint": "Choose the correct letter, A–G.",
           "prompt": "There is also often an element of ______ , for example, the coincidence of ideas that led to the invention of the Post-It note.",
@@ -558,9 +664,9 @@
           "key": "40",
           "label": "Q40",
           "shortLabel": "40",
-        "groupId": "R3-G37-40",
-        "groupTitle": "The origins of creative behaviour",
-        "groupInstructions": "Complete the summary using the list of words, A–G, below. Write the correct letter, A–G, in boxes 37–40 on your answer sheet.",
+          "groupId": "R3-G37-40",
+          "groupTitle": "Questions 37–40",
+          "groupInstructions": "Complete the summary using the list of words, A–G, below. Write the correct letter, A–G, in boxes 37–40 on your answer sheet.",
           "type": "matching",
           "hint": "Choose the correct letter, A–G.",
           "prompt": "With both the Law of Natural Selection and the Law of Effect, there may be no clear ______ involved, but merely a process of variation and selection.",
@@ -573,6 +679,56 @@
             "F",
             "G"
           ],
+          "optionsBox": {
+            "title": "A–G",
+            "items": [
+              {
+                "letter": "A",
+                "text": "invention"
+              },
+              {
+                "letter": "B",
+                "text": "goals"
+              },
+              {
+                "letter": "C",
+                "text": "compromise"
+              },
+              {
+                "letter": "D",
+                "text": "mistakes"
+              },
+              {
+                "letter": "E",
+                "text": "luck"
+              },
+              {
+                "letter": "F",
+                "text": "inspiration"
+              },
+              {
+                "letter": "G",
+                "text": "experiments"
+              }
+            ]
+          }
+        }
+      ],
+      "groups": [
+        {
+          "id": "R3-G27-31",
+          "title": "Questions 27–31",
+          "instructions": "Questions 27–31"
+        },
+        {
+          "id": "R3-G32-36",
+          "title": "Questions 32–36",
+          "instructions": "Questions 32–36"
+        },
+        {
+          "id": "R3-G37-40",
+          "title": "Questions 37–40",
+          "instructions": "Complete the summary using the list of words, A–G, below. Write the correct letter, A–G, in boxes 37–40 on your answer sheet.",
           "optionsBox": {
             "title": "A–G",
             "items": [
