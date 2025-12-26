@@ -23,6 +23,17 @@ let sets = null;
 let timer = null;
 let state = { setPath: null, taskIndex: 0, essay: "" };
 
+const appBaseUrl = new URL("..", import.meta.url);
+const resolveAsset = (p) => {
+  const raw = String(p ?? "").trim();
+  if (!raw) return "";
+  try {
+    return new URL(raw, appBaseUrl).href;
+  } catch {
+    return "";
+  }
+};
+
 function countWords(s) {
   const x = String(s ?? "").trim();
   if (!x) return 0;
@@ -134,7 +145,9 @@ function renderTask(setJson) {
     parts.push(`<div class="small" style="margin-top:6px">${t.additionalInstructions}</div>`);
   }
 
-  el.taskViewer.innerHTML = parts.join("");
+  if (el.taskViewer) {
+    el.taskViewer.innerHTML = parts.join("");
+  }
 
   // Image (Task 1)
   const imgSrc = resolveAsset(t.imageUrl);

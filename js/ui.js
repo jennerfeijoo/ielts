@@ -693,7 +693,10 @@ if (opts?.moduleName === "reading" && opts?.section && q.groupId) {
   }
 
   if (type === "matching" || type === "headings" || type === "dropdown") {
-    const select = makeSelect(selectValues);
+    const allowed = (type === "matching" && Array.isArray(q.allowedLetters) && q.allowedLetters.length)
+      ? q.allowedLetters
+      : selectValues;
+    const select = makeSelect(allowed, "Select...");
     body.appendChild(select);
     clearBtn.addEventListener("click", () => {
       select.value = "";

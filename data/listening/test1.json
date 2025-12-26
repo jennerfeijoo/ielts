@@ -6,73 +6,22 @@
   "sections": [
     {
       "id": "L1",
-      "sheetHtml": "assets/sheets/test1/listening_part1.html",
-
       "title": "PART 1 Questions 1–10",
       "instructions": "Complete the notes below. Write ONE WORD AND/OR A NUMBER for each answer.",
       "audioFile": "assets/audio/ELT_IELTS17_t1_audio1.mp3",
       "audioDuration": 90,
+      "sheetHtml": "assets/sheets/test1/listening_part1.html",
       "questions": [
-        {
-          "key": "1",
-          "type": "text",
-          "prompt": "making sure the beach does not have 1 __________ on it",
-          "hint": "ONE WORD ONLY"
-        },
-        {
-          "key": "2",
-          "type": "text",
-          "prompt": "no 2 __________",
-          "hint": "ONE WORD ONLY"
-        },
-        {
-          "key": "3",
-          "type": "text",
-          "prompt": "next task is taking action to attract 3 __________ to the place",
-          "hint": "ONE WORD ONLY"
-        },
-        {
-          "key": "4",
-          "type": "text",
-          "prompt": "identifying types of 4 __________",
-          "hint": "ONE WORD ONLY"
-        },
-        {
-          "key": "5",
-          "type": "text",
-          "prompt": "building a new 5 __________",
-          "hint": "ONE WORD ONLY"
-        },
-        {
-          "key": "6",
-          "type": "text",
-          "prompt": "walk across the sands and reach the 6 __________",
-          "hint": "ONE WORD ONLY"
-        },
-        {
-          "key": "7",
-          "type": "text",
-          "prompt": "wear appropriate 7 __________",
-          "hint": "ONE WORD ONLY"
-        },
-        {
-          "key": "8",
-          "type": "text",
-          "prompt": "suitable for 8 __________ to participate in",
-          "hint": "ONE WORD ONLY"
-        },
-        {
-          "key": "9",
-          "type": "text",
-          "prompt": "making 9 __________ out of wood",
-          "hint": "ONE WORD ONLY"
-        },
-        {
-          "key": "10",
-          "type": "text",
-          "prompt": "cost of session (no camping): 10 £ __________",
-          "hint": "NUMBER ONLY"
-        }
+        { "key": "1", "type": "text", "hint": "ONE WORD ONLY" },
+        { "key": "2", "type": "text", "hint": "ONE WORD ONLY" },
+        { "key": "3", "type": "text", "hint": "ONE WORD ONLY" },
+        { "key": "4", "type": "text", "hint": "ONE WORD ONLY" },
+        { "key": "5", "type": "text", "hint": "ONE WORD ONLY" },
+        { "key": "6", "type": "text", "hint": "ONE WORD ONLY" },
+        { "key": "7", "type": "text", "hint": "ONE WORD ONLY" },
+        { "key": "8", "type": "text", "hint": "ONE WORD ONLY" },
+        { "key": "9", "type": "text", "hint": "ONE WORD ONLY" },
+        { "key": "10", "type": "text", "hint": "NUMBER ONLY" }
       ]
     },
 {
@@ -180,33 +129,25 @@
       "options": ["A These should only be given if specially needed", "B It is worth paying extra for the most effective ones", "C The amount given at one time should be limited"]
     },
     {
-      "key": "25",
-      "type": "multipleChoice",
-      "prompt": "What happened when Diana was working with dairy cows?",
-      "options": ["A She identified some cows incorrectly", "B She accidentally threw some milk away", "C She made a mistake when storing milk"]
+      "id": "L3",
+      "title": "PART 3 Questions 21–30",
+      "instructions": "Questions 21–26: Choose the correct letter, A, B or C.\nQuestions 27–30: Choose FOUR answers from the box and write the correct letter, A–F, next to questions 27–30.",
+      "audioFile": "assets/audio/ELT_IELTS17_t1_audio3.mp3",
+      "audioDuration": 180,
+      "sheetHtml": "assets/sheets/test1/listening_part3_21-30.html",
+      "questions": [
+        { "key": "21", "type": "single_letter", "hint": "ONE LETTER (A–C)" },
+        { "key": "22", "type": "single_letter", "hint": "ONE LETTER (A–C)" },
+        { "key": "23", "type": "single_letter", "hint": "ONE LETTER (A–C)" },
+        { "key": "24", "type": "single_letter", "hint": "ONE LETTER (A–C)" },
+        { "key": "25", "type": "single_letter", "hint": "ONE LETTER (A–C)" },
+        { "key": "26", "type": "single_letter", "hint": "ONE LETTER (A–C)" },
+        { "key": "27", "type": "single_letter", "hint": "ONE LETTER (A–F)" },
+        { "key": "28", "type": "single_letter", "hint": "ONE LETTER (A–F)" },
+        { "key": "29", "type": "single_letter", "hint": "ONE LETTER (A–F)" },
+        { "key": "30", "type": "single_letter", "hint": "ONE LETTER (A–F)" }
+      ]
     },
-    {
-      "key": "26",
-      "type": "multipleChoice",
-      "prompt": "What did both farmers mention about vets and farming?",
-      "options": ["A Vets are failing to cope with some aspects of animal health", "B There needs to be a fundamental change in the training of vets", "C Some jobs could be done by the farmer rather than by a vet"]
-    }
-  ]
-},
-{
-  "id": "L3B",
-  "title": "PART 3 Questions 27–30",
-  "instructions": "Choose FOUR answers from the box and write the correct letter, A–F, next to questions 27–30.",
-  "audioFile": "assets/audio/ELT_IELTS17_t1_audio3.mp3",
-  "audioDuration": 180,
-  "sheetHtml": "assets/sheets/test1/listening_part3b_27-30.html",
-  "questions": [
-    { "key": "27", "type": "text", "hint": "ONE LETTER (A–F)" },
-    { "key": "28", "type": "text", "hint": "ONE LETTER (A–F)" },
-    { "key": "29", "type": "text", "hint": "ONE LETTER (A–F)" },
-    { "key": "30", "type": "text", "hint": "ONE LETTER (A–F)" }
-  ]
-},
     {
       "id": "L4",
       "title": "PART 4 Questions 31–40",
@@ -215,66 +156,16 @@
       "sheetHtml": "assets/sheets/test1/listening_part4.html",
       "audioDuration": 240,
       "questions": [
-        {
-          "key": "31",
-          "type": "text",
-          "prompt": "Mazes are a type of 31 __________",
-          "hint": "ONE WORD ONLY"
-        },
-        {
-          "key": "32",
-          "type": "text",
-          "prompt": "32 __________ is needed to navigate through a maze",
-          "hint": "ONE WORD ONLY"
-        },
-        {
-          "key": "33",
-          "type": "text",
-          "prompt": "the word 'maze' is derived from a word meaning a feeling of 33 __________",
-          "hint": "ONE WORD ONLY"
-        },
-        {
-          "key": "34",
-          "type": "text",
-          "prompt": "they have frequently been used in 34 __________ and prayer",
-          "hint": "ONE WORD ONLY"
-        },
-        {
-          "key": "35",
-          "type": "text",
-          "prompt": "Ancient carvings on 35 __________ have been found across many cultures",
-          "hint": "ONE WORD ONLY"
-        },
-        {
-          "key": "36",
-          "type": "text",
-          "prompt": "Ancient Greeks used the symbol on 36 __________",
-          "hint": "ONE WORD ONLY"
-        },
-        {
-          "key": "37",
-          "type": "text",
-          "prompt": "The largest surviving example of a turf labyrinth once had a big 37 __________ at its centre",
-          "hint": "ONE WORD ONLY"
-        },
-        {
-          "key": "38",
-          "type": "text",
-          "prompt": "walking a maze can reduce a person's 38 __________ rate",
-          "hint": "ONE WORD ONLY"
-        },
-        {
-          "key": "39",
-          "type": "text",
-          "prompt": "patients who can't walk can use 'finger labyrinths' made from 39 __________",
-          "hint": "ONE WORD ONLY"
-        },
-        {
-          "key": "40",
-          "type": "text",
-          "prompt": "research has shown that Alzheimer's sufferers experience less 40 __________",
-          "hint": "ONE WORD ONLY"
-        }
+        { "key": "31", "type": "text", "hint": "ONE WORD ONLY" },
+        { "key": "32", "type": "text", "hint": "ONE WORD ONLY" },
+        { "key": "33", "type": "text", "hint": "ONE WORD ONLY" },
+        { "key": "34", "type": "text", "hint": "ONE WORD ONLY" },
+        { "key": "35", "type": "text", "hint": "ONE WORD ONLY" },
+        { "key": "36", "type": "text", "hint": "ONE WORD ONLY" },
+        { "key": "37", "type": "text", "hint": "ONE WORD ONLY" },
+        { "key": "38", "type": "text", "hint": "ONE WORD ONLY" },
+        { "key": "39", "type": "text", "hint": "ONE WORD ONLY" },
+        { "key": "40", "type": "text", "hint": "ONE WORD ONLY" }
       ]
     }
   ],

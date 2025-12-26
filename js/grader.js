@@ -17,7 +17,7 @@ function normalizeMultipleChoiceResponse(val) {
 }
 
 function normByType(val, type) {
-  if (type === "single_letter" || type === "tfng" || type === "ynng") return normalizeLetter(val);
+  if (type === "single_letter" || type === "matching" || type === "tfng" || type === "ynng") return normalizeLetter(val);
   if (type === "multi_letter") return Array.isArray(val) ? val.map(normalizeLetter).sort() : [];
   if (type === "multipleChoice") {
     const list = normalizeMultipleChoiceResponse(val);
@@ -28,7 +28,7 @@ function normByType(val, type) {
 
 function acceptedNormalized(accepted, type) {
   const arr = toAcceptedArray(accepted);
-  if (type === "single_letter" || type === "tfng" || type === "ynng") return arr.map(normalizeLetter);
+  if (type === "single_letter" || type === "matching" || type === "tfng" || type === "ynng") return arr.map(normalizeLetter);
   if (type === "multi_letter") return arr.map(normalizeLetter).sort();
   if (type === "multipleChoice") return arr.map(normalizeLetter);
   return arr.map(normalizeText);
@@ -58,6 +58,38 @@ export function gradeModule(testJson, responses) {
   let raw = 0;
   let max = 0;
   const details = [];
+  const groupedKeys = new Set();
+
+  for (const group of groups) {
+    const keys = Array.isArray(group.keys) ? group.keys.map(String) : [];
+    keys.forEach(k => groupedKeys.add(k));
+
+    const acceptedSet = new Set((group.acceptedSet ?? []).map(normalizeLetter).filter(Boolean));
+    const userSet = new Set();
+    for (const k of keys) {
+      const val = normalizeLetter(responses?.[k]);
+      if (val) userSet.add(val);
+    }
+
+    let gained = 0;
+    for (const val of userSet) {
+      if (acceptedSet.has(val)) gained += 1;
+    }
+
+    const expectedCount = group.expectedCount ?? acceptedSet.size;
+    const groupScore = Math.min(gained, expectedCount);
+    max += expectedCount;
+    raw += groupScore;
+
+    details.push({
+      key: group.id ?? keys.join("-"),
+      type: "answerGroup",
+      gained: groupScore,
+      max: expectedCount,
+      user: Array.from(userSet),
+      accepted: Array.from(acceptedSet)
+    });
+  }
 
   // 1) Score grouped questions (e.g., "Choose TWO letters" where order doesn't matter)
   for (const g of groups) {
