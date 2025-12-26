@@ -20,10 +20,11 @@ export async function bootModule({ moduleName, manifestPath }) {
     status: document.getElementById("status"),
     results: document.getElementById("results"),
 
-    // Reading: iframe (materialFrame or pdfFrame depending on module page)
+    // Reading: iframe (passage)
     materialFrame:
       document.getElementById("materialFrame") ??
-      document.getElementById("pdfFrame"),
+      document.getElementById("pdfFrame") ??
+      null,
 
     // Listening: audio
     audioFile: document.getElementById("audioFile"),
@@ -32,54 +33,25 @@ export async function bootModule({ moduleName, manifestPath }) {
     audioLink: document.getElementById("audioLink"),
   };
 
-  // ---- status helpers (base + extra) ----
-  let statusBase = "";
-  let statusExtra = "";
-  const refreshStatus = () => {
-    if (!el.status) return;
-    const parts = [statusBase, statusExtra].filter(Boolean);
-    el.status.textContent = parts.join(" • ");
-  };
   const setStatus = (msg) => {
-    statusBase = msg ?? "";
-    refreshStatus();
-  };
-  const setStatusExtra = (msg) => {
-    statusExtra = msg ?? "";
-    refreshStatus();
+    if (el.status) el.status.textContent = msg ?? "";
   };
 
   if (!el.testSelect || !el.sectionSelect || !el.qnav || !el.question) {
-    console.error("Missing required layout elements for module boot.");
     setStatus("Unable to start: missing required layout elements.");
     return;
   }
 
-  // ------------------------------------------------------------
-  // IMPORTANT: Resolve ALL paths from SITE ROOT, not from /data/.
-  // manifestPath is usually "../data/manifest.json" from modules/*.html
-  // We resolve it relative to this JS module URL and then compute site root:
-  //   manifestUrl: .../ielts/data/manifest.json
-  //   appBaseUrl : .../ielts/
-  // ------------------------------------------------------------
+  // manifestPath is resolved relative to THIS FILE (js/runner_common.js)
   const manifestUrl = new URL(manifestPath, import.meta.url);
+
+  // IMPORTANT:
+  // manifestUrl is .../ielts/data/manifest.json
+  // appBaseUrl must be .../ielts/ (site root), not .../ielts/data/
   const appBaseUrl = new URL("..", manifestUrl);
 
-  const logFetchFail = (label, url, err) => {
-    console.error(`[${label}] failed`, url, err);
-    setStatusExtra(`${label} failed (see console)`);
-  };
-
   setStatus("Loading manifest...");
-
-  let manifest;
-  try {
-    manifest = await loadJSON(manifestUrl);
-  } catch (err) {
-    logFetchFail("manifest", manifestUrl.href, err);
-    setStatus(`Error loading manifest`);
-    return;
-  }
+  const manifest = await loadJSON(manifestUrl);
 
   const tests = manifest?.[moduleName] ?? [];
   if (!tests.length) {
@@ -87,23 +59,23 @@ export async function bootModule({ moduleName, manifestPath }) {
     return;
   }
 
-  // ---------- helpers ----------
-  const resolveSite = (p) => {
+  // ---------------- helpers ----------------
+  const resolveAsset = (p) => {
     if (!p) return null;
     if (/^https?:\/\//i.test(p)) return p;
-    // resolve relative to site root (/ielts/)
     return new URL(p, appBaseUrl).href;
   };
 
+  // If you ever store audio as just "file.mp3" without a folder,
+  // normalize it to assets/audio/file.mp3.
   const normalizeAudioPath = (raw) => {
     if (!raw) return null;
     if (/^https?:\/\//i.test(raw)) return raw;
-    // If it's just "file.mp3" (no folder), assume assets/audio/
     if (!raw.includes("/")) return `assets/audio/${raw}`;
     return raw;
   };
 
-  // ---------- state ----------
+  // ---------------- state ----------------
   let currentTest = null;
   let engine = null;
   let timer = null;
@@ -137,41 +109,24 @@ export async function bootModule({ moduleName, manifestPath }) {
     el.flagBtn.classList.toggle("danger", on);
   };
 
-  const updateTimerBadge = (remaining) => {
-    if (!el.timer) return;
-    if (remaining <= 300) el.timer.classList.add("danger");
-    else el.timer.classList.remove("danger");
-  };
-
   const getCurrentSectionId = () => engine?.getCurrent()?.sectionId ?? null;
 
   const getSectionById = (secId) =>
     (currentTest?.sections ?? []).find((s) => s.id === secId) ?? null;
 
-  // --- Load the per-section material (reading passage / listening sheet) + audio ---
   const syncSectionResources = () => {
     if (!engine || !currentTest) return;
 
     const secId = getCurrentSectionId();
     const section = getSectionById(secId);
 
-    // Reading & Listening "sheet": iframe
-    // - For Reading: section.materialHtml (passage)
-    // - For Listening sheet-mode: section.sheetHtml (form/table HTML)
+    // Reading: passage iframe
     if (el.materialFrame) {
-      const src =
-        resolveSite(section?.sheetHtml ?? null) ??
-        resolveSite(section?.materialHtml ?? null);
-
-      if (src) {
-        if (el.materialFrame.src !== src) el.materialFrame.src = src;
-      } else {
-        // Clear if no material configured
-        el.materialFrame.removeAttribute("src");
-      }
+      const src = resolveAsset(section?.materialHtml ?? null);
+      if (src && el.materialFrame.src !== src) el.materialFrame.src = src;
     }
 
-    // Listening audio
+    // Listening: audio
     if (el.audio) {
       const raw =
         section?.audioFile ??
@@ -179,10 +134,9 @@ export async function bootModule({ moduleName, manifestPath }) {
         (Array.isArray(section?.audioFiles) ? section.audioFiles[0] : null) ??
         null;
 
-      const audioUrl = resolveSite(normalizeAudioPath(raw));
+      const audioUrl = resolveAsset(normalizeAudioPath(raw));
 
       if (audioUrl) {
-        // Avoid reloads if same audio
         if (el.audio.src !== audioUrl) {
           el.audio.src = audioUrl;
           el.audio.preload = "auto";
@@ -193,18 +147,15 @@ export async function bootModule({ moduleName, manifestPath }) {
           el.audioLink.textContent = "Open audio URL";
           el.audioLinkWrap.style.display = "block";
         }
-        setStatusExtra("Audio ready");
       } else {
         el.audio.removeAttribute("src");
         if (el.audioLinkWrap) el.audioLinkWrap.style.display = "none";
-        setStatusExtra("");
       }
     }
   };
 
   const questionsForCurrentSection = () => {
     const secId = getCurrentSectionId();
-    if (!secId || !engine) return [];
     return engine.questionFlat.filter((q) => q.sectionId === secId);
   };
 
@@ -213,21 +164,13 @@ export async function bootModule({ moduleName, manifestPath }) {
 
     syncSectionResources();
 
-    // Keep section select synced
+    // keep section select synced to current question's sectionId
     const secId = getCurrentSectionId();
     if (secId) el.sectionSelect.value = secId;
 
     const cur = engine.getCurrent();
-    if (!cur) {
-      setStatus("No current question (engine state invalid).");
-      return;
-    }
-
     const navQs = questionsForCurrentSection();
 
-    // IMPORTANT: ui.renderNav in your project expects:
-    // renderNav(navEl, questions, responses, currentKey, onPick, flags)
-    // And calls onPick(pickedKey).
     renderNav(
       el.qnav,
       navQs,
@@ -245,7 +188,6 @@ export async function bootModule({ moduleName, manifestPath }) {
 
     renderQuestion(el.question, cur, engine, {
       onAnswerChange: () => {
-        // Refresh nav + flag state
         updateFlagBtn();
         const cur2 = engine.getCurrent();
         const nav2 = questionsForCurrentSection();
@@ -253,7 +195,7 @@ export async function bootModule({ moduleName, manifestPath }) {
           el.qnav,
           nav2,
           engine.responses,
-          cur2?.key,
+          cur2.key,
           (pickedKey) => {
             const idx = engine.questionFlat.findIndex((q) => q.key === pickedKey);
             if (idx >= 0) {
@@ -304,39 +246,28 @@ export async function bootModule({ moduleName, manifestPath }) {
     el.sectionSelect.innerHTML = "";
     (currentTest.sections ?? []).forEach((s, idx) => {
       const opt = document.createElement("option");
-      opt.value = s.id; // IMPORTANT: value is section.id
+      opt.value = s.id; // IMPORTANT: use section.id, not index
       opt.textContent = s.title ?? `Section ${idx + 1}`;
       el.sectionSelect.appendChild(opt);
     });
 
-    // Sync select to current section
     const secId = getCurrentSectionId();
     if (secId) el.sectionSelect.value = secId;
   };
 
   const loadTest = async (path) => {
     setStatus("Loading test...");
-    setStatusExtra("");
 
-    // tests[].path in manifest already starts with "data/..."
+    // path in manifest is relative to site root (appBaseUrl)
     const testUrl = new URL(path, appBaseUrl);
-
-    try {
-      currentTest = await loadJSON(testUrl);
-    } catch (err) {
-      logFetchFail("test JSON", testUrl.href, err);
-      setStatus("Failed to load test JSON");
-      return;
-    }
+    currentTest = await loadJSON(testUrl);
 
     const storageKey = `ielts:${moduleName}:${currentTest.id ?? path}`;
     flagsKey = `${storageKey}:flags`;
 
     engine = new ExamEngine(currentTest, storageKey);
     engine.markStarted();
-
-    // Ensure sectionIndex matches qIndex after load
-    engine.goToIndex(engine.qIndex);
+    engine.goToIndex(engine.qIndex); // keep sectionIndex aligned
 
     flags = loadFlags(flagsKey);
 
@@ -344,9 +275,8 @@ export async function bootModule({ moduleName, manifestPath }) {
     timer?.stop();
     timer = new CountdownTimer(
       currentTest.timeLimitSeconds ?? 0,
-      (remaining) => {
+      () => {
         if (el.timer) el.timer.textContent = timer.format();
-        updateTimerBadge(remaining);
       },
       () => {
         engine.submit();
@@ -355,8 +285,6 @@ export async function bootModule({ moduleName, manifestPath }) {
     );
 
     if (el.timer) el.timer.textContent = timer.format();
-    updateTimerBadge(timer.remaining ?? 0);
-
     if ((currentTest.timeLimitSeconds ?? 0) > 0) timer.start();
 
     populateSections();
@@ -365,7 +293,7 @@ export async function bootModule({ moduleName, manifestPath }) {
     renderAll();
   };
 
-  // ---------- wire UI ----------
+  // ---------------- wire UI ----------------
   populateTests();
   await loadTest(el.testSelect.value);
 
@@ -374,8 +302,7 @@ export async function bootModule({ moduleName, manifestPath }) {
   });
 
   el.sectionSelect.addEventListener("change", () => {
-    if (!engine) return;
-    const secId = el.sectionSelect.value;
+    const secId = el.sectionSelect.value; // section.id
     const firstIdx = engine.questionFlat.findIndex((q) => q.sectionId === secId);
     if (firstIdx >= 0) {
       engine.goToIndex(firstIdx);
@@ -415,20 +342,17 @@ export async function bootModule({ moduleName, manifestPath }) {
     renderResults(false);
   });
 
-  // Local audio override
   el.audioFile?.addEventListener("change", (e) => {
     const f = e.target.files?.[0];
     if (!f || !el.audio) return;
     el.audio.src = blobURLFromFile(f);
     el.audio.load();
-    setStatusExtra("Local audio loaded");
   });
 
   if (el.audio) {
     el.audio.addEventListener("error", () => {
       const code = el.audio?.error?.code ?? "unknown";
-      setStatusExtra(`Audio error (code ${code})`);
-      setStatus("Check MP3 URL/path (case-sensitive on GitHub Pages).");
+      setStatus(`Audio error (code ${code}). Check the MP3 URL/path.`);
     });
   }
 }
