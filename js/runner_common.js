@@ -20,8 +20,10 @@ export async function bootModule({ moduleName, manifestPath }) {
     status: document.getElementById("status"),
     results: document.getElementById("results"),
 
-    // Reading: iframe
-    materialFrame: document.getElementById("materialFrame") ?? document.getElementById("pdfFrame"),
+    // Reading: iframe (materialFrame or pdfFrame depending on module page)
+    materialFrame:
+      document.getElementById("materialFrame") ??
+      document.getElementById("pdfFrame"),
 
     // Listening: audio
     audioFile: document.getElementById("audioFile"),
@@ -30,29 +32,53 @@ export async function bootModule({ moduleName, manifestPath }) {
     audioLink: document.getElementById("audioLink"),
   };
 
+  // ---- status helpers (base + extra) ----
+  let statusBase = "";
+  let statusExtra = "";
+  const refreshStatus = () => {
+    if (!el.status) return;
+    const parts = [statusBase, statusExtra].filter(Boolean);
+    el.status.textContent = parts.join(" • ");
+  };
   const setStatus = (msg) => {
-    if (el.status) el.status.textContent = msg ?? "";
+    statusBase = msg ?? "";
+    refreshStatus();
+  };
+  const setStatusExtra = (msg) => {
+    statusExtra = msg ?? "";
+    refreshStatus();
   };
 
   if (!el.testSelect || !el.sectionSelect || !el.qnav || !el.question) {
+    console.error("Missing required layout elements for module boot.");
     setStatus("Unable to start: missing required layout elements.");
     return;
   }
 
-  // Resolve manifest URL relative to this module file (js/)
+  // ------------------------------------------------------------
+  // IMPORTANT: Resolve ALL paths from SITE ROOT, not from /data/.
+  // manifestPath is usually "../data/manifest.json" from modules/*.html
+  // We resolve it relative to this JS module URL and then compute site root:
+  //   manifestUrl: .../ielts/data/manifest.json
+  //   appBaseUrl : .../ielts/
+  // ------------------------------------------------------------
   const manifestUrl = new URL(manifestPath, import.meta.url);
-
-  // IMPORTANT: site root must be derived from the manifest location (…/ielts/data/manifest.json -> …/ielts/)
   const appBaseUrl = new URL("..", manifestUrl);
+
+  const logFetchFail = (label, url, err) => {
+    console.error(`[${label}] failed`, url, err);
+    setStatusExtra(`${label} failed (see console)`);
+  };
 
   setStatus("Loading manifest...");
 
   let manifest;
   try {
     manifest = await loadJSON(manifestUrl);
-  } catch (e) {
-    setStatus(`Failed to load manifest: ${e?.message ?? e}`);
-    throw e;
+  } catch (err) {
+    logFetchFail("manifest", manifestUrl.href, err);
+    setStatus(`Error loading manifest`);
+    return;
   }
 
   const tests = manifest?.[moduleName] ?? [];
@@ -62,9 +88,10 @@ export async function bootModule({ moduleName, manifestPath }) {
   }
 
   // ---------- helpers ----------
-  const resolveAsset = (p) => {
+  const resolveSite = (p) => {
     if (!p) return null;
     if (/^https?:\/\//i.test(p)) return p;
+    // resolve relative to site root (/ielts/)
     return new URL(p, appBaseUrl).href;
   };
 
@@ -97,7 +124,9 @@ export async function bootModule({ moduleName, manifestPath }) {
 
   const saveFlags = () => {
     if (!flagsKey) return;
-    try { localStorage.setItem(flagsKey, JSON.stringify(Array.from(flags))); } catch {}
+    try {
+      localStorage.setItem(flagsKey, JSON.stringify(Array.from(flags)));
+    } catch {}
   };
 
   const updateFlagBtn = () => {
@@ -108,29 +137,41 @@ export async function bootModule({ moduleName, manifestPath }) {
     el.flagBtn.classList.toggle("danger", on);
   };
 
-  const goToQuestionKey = (key) => {
-    if (!engine || !key) return;
-    const idx = engine.questionFlat.findIndex(q => q.key === key);
-    if (idx >= 0) engine.goToIndex(idx);
+  const updateTimerBadge = (remaining) => {
+    if (!el.timer) return;
+    if (remaining <= 300) el.timer.classList.add("danger");
+    else el.timer.classList.remove("danger");
   };
 
   const getCurrentSectionId = () => engine?.getCurrent()?.sectionId ?? null;
 
-  const getSectionById = (secId) => (currentTest?.sections ?? []).find(s => s.id === secId) ?? null;
+  const getSectionById = (secId) =>
+    (currentTest?.sections ?? []).find((s) => s.id === secId) ?? null;
 
+  // --- Load the per-section material (reading passage / listening sheet) + audio ---
   const syncSectionResources = () => {
     if (!engine || !currentTest) return;
 
     const secId = getCurrentSectionId();
     const section = getSectionById(secId);
 
-    // Reading: passage iframe
+    // Reading & Listening "sheet": iframe
+    // - For Reading: section.materialHtml (passage)
+    // - For Listening sheet-mode: section.sheetHtml (form/table HTML)
     if (el.materialFrame) {
-      const src = resolveAsset(section?.materialHtml ?? null);
-      if (src) el.materialFrame.src = src;
+      const src =
+        resolveSite(section?.sheetHtml ?? null) ??
+        resolveSite(section?.materialHtml ?? null);
+
+      if (src) {
+        if (el.materialFrame.src !== src) el.materialFrame.src = src;
+      } else {
+        // Clear if no material configured
+        el.materialFrame.removeAttribute("src");
+      }
     }
 
-    // Listening: audio
+    // Listening audio
     if (el.audio) {
       const raw =
         section?.audioFile ??
@@ -138,8 +179,10 @@ export async function bootModule({ moduleName, manifestPath }) {
         (Array.isArray(section?.audioFiles) ? section.audioFiles[0] : null) ??
         null;
 
-      const audioUrl = resolveAsset(normalizeAudioPath(raw));
+      const audioUrl = resolveSite(normalizeAudioPath(raw));
+
       if (audioUrl) {
+        // Avoid reloads if same audio
         if (el.audio.src !== audioUrl) {
           el.audio.src = audioUrl;
           el.audio.preload = "auto";
@@ -150,17 +193,19 @@ export async function bootModule({ moduleName, manifestPath }) {
           el.audioLink.textContent = "Open audio URL";
           el.audioLinkWrap.style.display = "block";
         }
+        setStatusExtra("Audio ready");
       } else {
         el.audio.removeAttribute("src");
         if (el.audioLinkWrap) el.audioLinkWrap.style.display = "none";
+        setStatusExtra("");
       }
     }
   };
 
   const questionsForCurrentSection = () => {
     const secId = getCurrentSectionId();
-    if (!secId) return [];
-    return engine.questionFlat.filter(q => q.sectionId === secId);
+    if (!secId || !engine) return [];
+    return engine.questionFlat.filter((q) => q.sectionId === secId);
   };
 
   const renderAll = () => {
@@ -168,33 +213,39 @@ export async function bootModule({ moduleName, manifestPath }) {
 
     syncSectionResources();
 
-    // Keep section select synced to the current sectionId
+    // Keep section select synced
     const secId = getCurrentSectionId();
     if (secId) el.sectionSelect.value = secId;
 
     const cur = engine.getCurrent();
     if (!cur) {
-      setStatus("No current question (engine state invalid). Try Reset or clear localStorage for this test.");
+      setStatus("No current question (engine state invalid).");
       return;
     }
 
     const navQs = questionsForCurrentSection();
 
-    // FIX: renderNav calls onPick(idx, q). We must accept (idx, q) here.
+    // IMPORTANT: ui.renderNav in your project expects:
+    // renderNav(navEl, questions, responses, currentKey, onPick, flags)
+    // And calls onPick(pickedKey).
     renderNav(
       el.qnav,
       navQs,
       engine.responses,
       cur.key,
-      (_idx, q) => {
-        goToQuestionKey(q.key);
-        renderAll();
+      (pickedKey) => {
+        const idx = engine.questionFlat.findIndex((q) => q.key === pickedKey);
+        if (idx >= 0) {
+          engine.goToIndex(idx);
+          renderAll();
+        }
       },
       flags
     );
 
     renderQuestion(el.question, cur, engine, {
       onAnswerChange: () => {
+        // Refresh nav + flag state
         updateFlagBtn();
         const cur2 = engine.getCurrent();
         const nav2 = questionsForCurrentSection();
@@ -203,20 +254,23 @@ export async function bootModule({ moduleName, manifestPath }) {
           nav2,
           engine.responses,
           cur2?.key,
-          (_idx, q) => {
-            goToQuestionKey(q.key);
-            renderAll();
+          (pickedKey) => {
+            const idx = engine.questionFlat.findIndex((q) => q.key === pickedKey);
+            if (idx >= 0) {
+              engine.goToIndex(idx);
+              renderAll();
+            }
           },
           flags
         );
-      }
+      },
     });
 
     updateFlagBtn();
 
     setStatus(
       `Section ${engine.sectionIndex + 1}/${(currentTest.sections ?? []).length} • ` +
-      `Q ${engine.qIndex + 1}/${engine.getTotalQuestions()}`
+        `Q ${engine.qIndex + 1}/${engine.getTotalQuestions()}`
     );
   };
 
@@ -255,18 +309,24 @@ export async function bootModule({ moduleName, manifestPath }) {
       el.sectionSelect.appendChild(opt);
     });
 
+    // Sync select to current section
     const secId = getCurrentSectionId();
     if (secId) el.sectionSelect.value = secId;
   };
 
   const loadTest = async (path) => {
     setStatus("Loading test...");
+    setStatusExtra("");
+
+    // tests[].path in manifest already starts with "data/..."
+    const testUrl = new URL(path, appBaseUrl);
+
     try {
-      const testUrl = new URL(path, appBaseUrl);
       currentTest = await loadJSON(testUrl);
-    } catch (e) {
-      setStatus(`Failed to load test JSON: ${e?.message ?? e}`);
-      throw e;
+    } catch (err) {
+      logFetchFail("test JSON", testUrl.href, err);
+      setStatus("Failed to load test JSON");
+      return;
     }
 
     const storageKey = `ielts:${moduleName}:${currentTest.id ?? path}`;
@@ -274,17 +334,29 @@ export async function bootModule({ moduleName, manifestPath }) {
 
     engine = new ExamEngine(currentTest, storageKey);
     engine.markStarted();
+
+    // Ensure sectionIndex matches qIndex after load
     engine.goToIndex(engine.qIndex);
 
     flags = loadFlags(flagsKey);
 
+    // timer
     timer?.stop();
     timer = new CountdownTimer(
       currentTest.timeLimitSeconds ?? 0,
-      () => { if (el.timer) el.timer.textContent = timer.format(); },
-      () => { engine.submit(); renderResults(true); }
+      (remaining) => {
+        if (el.timer) el.timer.textContent = timer.format();
+        updateTimerBadge(remaining);
+      },
+      () => {
+        engine.submit();
+        renderResults(true);
+      }
     );
+
     if (el.timer) el.timer.textContent = timer.format();
+    updateTimerBadge(timer.remaining ?? 0);
+
     if ((currentTest.timeLimitSeconds ?? 0) > 0) timer.start();
 
     populateSections();
@@ -302,16 +374,24 @@ export async function bootModule({ moduleName, manifestPath }) {
   });
 
   el.sectionSelect.addEventListener("change", () => {
-    const secId = el.sectionSelect.value; // section.id
-    const firstIdx = engine.questionFlat.findIndex(q => q.sectionId === secId);
+    if (!engine) return;
+    const secId = el.sectionSelect.value;
+    const firstIdx = engine.questionFlat.findIndex((q) => q.sectionId === secId);
     if (firstIdx >= 0) {
       engine.goToIndex(firstIdx);
       renderAll();
     }
   });
 
-  el.prevBtn?.addEventListener("click", () => { engine.prev(); renderAll(); });
-  el.nextBtn?.addEventListener("click", () => { engine.next(); renderAll(); });
+  el.prevBtn?.addEventListener("click", () => {
+    engine.prev();
+    renderAll();
+  });
+
+  el.nextBtn?.addEventListener("click", () => {
+    engine.next();
+    renderAll();
+  });
 
   el.flagBtn?.addEventListener("click", () => {
     const k = engine.getCurrent()?.key;
@@ -335,17 +415,20 @@ export async function bootModule({ moduleName, manifestPath }) {
     renderResults(false);
   });
 
+  // Local audio override
   el.audioFile?.addEventListener("change", (e) => {
     const f = e.target.files?.[0];
     if (!f || !el.audio) return;
     el.audio.src = blobURLFromFile(f);
     el.audio.load();
+    setStatusExtra("Local audio loaded");
   });
 
   if (el.audio) {
     el.audio.addEventListener("error", () => {
       const code = el.audio?.error?.code ?? "unknown";
-      setStatus(`Audio error (code ${code}). Check the MP3 URL/path.`);
+      setStatusExtra(`Audio error (code ${code})`);
+      setStatus("Check MP3 URL/path (case-sensitive on GitHub Pages).");
     });
   }
 }
