@@ -19,11 +19,13 @@ export async function bootModule({ moduleName, manifestPath }) {
     timer: document.getElementById("timer"),
     status: document.getElementById("status"),
     results: document.getElementById("results"),
+    groupTitle: document.getElementById("groupTitle"),
 
     // Reading: iframe (passage)
     materialFrame:
       document.getElementById("materialFrame") ??
       document.getElementById("pdfFrame") ??
+      document.getElementById("sheetFrame") ??
       null,
 
     // Listening: audio
@@ -64,6 +66,40 @@ export async function bootModule({ moduleName, manifestPath }) {
     if (!p) return null;
     if (/^https?:\/\//i.test(p)) return p;
     return new URL(p, appBaseUrl).href;
+  };
+
+  const normalizeSections = (test) => {
+    if (!test || typeof test !== "object") return test;
+    let sections = test.sections;
+
+    if (sections && !Array.isArray(sections) && typeof sections === "object") {
+      sections = Object.entries(sections).map(([id, sec], idx) => ({
+        id: sec?.id ?? id ?? `S${idx + 1}`,
+        title: sec?.title ?? `Section ${idx + 1}`,
+        ...sec,
+        questions: Array.isArray(sec?.questions) ? sec.questions : []
+      }));
+    }
+
+    if (!Array.isArray(sections) || sections.length === 0) {
+      if (Array.isArray(test.questions)) {
+        sections = [{
+          id: "S1",
+          title: test.title ?? "Section 1",
+          questions: test.questions
+        }];
+      } else {
+        sections = [];
+      }
+    }
+
+    test.sections = sections.map((sec, idx) => ({
+      id: sec?.id ?? `S${idx + 1}`,
+      title: sec?.title ?? `Section ${idx + 1}`,
+      ...sec,
+      questions: Array.isArray(sec?.questions) ? sec.questions : []
+    }));
+    return test;
   };
 
   // If you ever store audio as just "file.mp3" without a folder,
@@ -122,7 +158,9 @@ export async function bootModule({ moduleName, manifestPath }) {
 
     // Reading: passage iframe
     if (el.materialFrame) {
-      const src = resolveAsset(section?.materialHtml ?? null);
+      const src =
+        resolveAsset(section?.materialHtml ?? null) ??
+        resolveAsset(section?.sheetHtml ?? null);
       if (src && el.materialFrame.src !== src) el.materialFrame.src = src;
     }
 
@@ -164,11 +202,25 @@ export async function bootModule({ moduleName, manifestPath }) {
 
     syncSectionResources();
 
+    const cur = engine.getCurrent();
+    if (!cur) {
+      setStatus("No questions available for this test.");
+      if (el.question) el.question.innerHTML = "<div class=\"notice\">No questions were found.</div>";
+      return;
+    }
+
+    if (el.groupTitle) {
+      const secId = getCurrentSectionId();
+      const section = getSectionById(secId);
+      const title = section?.instructions ?? section?.title ?? "";
+      el.groupTitle.textContent = title;
+      el.groupTitle.style.display = title ? "block" : "none";
+    }
+
     // keep section select synced to current question's sectionId
     const secId = getCurrentSectionId();
     if (secId) el.sectionSelect.value = secId;
 
-    const cur = engine.getCurrent();
     const navQs = questionsForCurrentSection();
 
     renderNav(
@@ -177,7 +229,8 @@ export async function bootModule({ moduleName, manifestPath }) {
       engine.responses,
       cur.key,
       (pickedKey) => {
-        const idx = engine.questionFlat.findIndex((q) => q.key === pickedKey);
+        const key = pickedKey?.key ?? pickedKey;
+        const idx = engine.questionFlat.findIndex((q) => q.key === key);
         if (idx >= 0) {
           engine.goToIndex(idx);
           renderAll();
@@ -187,6 +240,8 @@ export async function bootModule({ moduleName, manifestPath }) {
     );
 
     renderQuestion(el.question, cur, engine, {
+      moduleName,
+      section: getSectionById(cur.sectionId),
       onAnswerChange: () => {
         updateFlagBtn();
         const cur2 = engine.getCurrent();
@@ -197,7 +252,8 @@ export async function bootModule({ moduleName, manifestPath }) {
           engine.responses,
           cur2.key,
           (pickedKey) => {
-            const idx = engine.questionFlat.findIndex((q) => q.key === pickedKey);
+            const key = pickedKey?.key ?? pickedKey;
+            const idx = engine.questionFlat.findIndex((q) => q.key === key);
             if (idx >= 0) {
               engine.goToIndex(idx);
               renderAll();
@@ -260,7 +316,7 @@ export async function bootModule({ moduleName, manifestPath }) {
 
     // path in manifest is relative to site root (appBaseUrl)
     const testUrl = new URL(path, appBaseUrl);
-    currentTest = await loadJSON(testUrl);
+    currentTest = normalizeSections(await loadJSON(testUrl));
 
     const storageKey = `ielts:${moduleName}:${currentTest.id ?? path}`;
     flagsKey = `${storageKey}:flags`;

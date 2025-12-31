@@ -397,7 +397,7 @@ export function renderNav(navEl, questions, responses, currentKey, onPick, flagg
     if (flagged && typeof flagged.has === "function" && flagged.has(String(key))) btn.classList.add("flagged");
 
     btn.addEventListener("click", () => {
-      if (typeof onPick === "function") onPick(idx, q);
+      if (typeof onPick === "function") onPick(key, q);
     });
 
     navEl.appendChild(btn);
