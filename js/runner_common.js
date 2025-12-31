@@ -19,11 +19,13 @@ export async function bootModule({ moduleName, manifestPath }) {
     timer: document.getElementById("timer"),
     status: document.getElementById("status"),
     results: document.getElementById("results"),
+    groupTitle: document.getElementById("groupTitle"),
 
     // Reading: iframe (passage)
     materialFrame:
       document.getElementById("materialFrame") ??
       document.getElementById("pdfFrame") ??
+      document.getElementById("sheetFrame") ??
       null,
 
     // Listening: audio
@@ -122,7 +124,9 @@ export async function bootModule({ moduleName, manifestPath }) {
 
     // Reading: passage iframe
     if (el.materialFrame) {
-      const src = resolveAsset(section?.materialHtml ?? null);
+      const src =
+        resolveAsset(section?.materialHtml ?? null) ??
+        resolveAsset(section?.sheetHtml ?? null);
       if (src && el.materialFrame.src !== src) el.materialFrame.src = src;
     }
 
@@ -164,6 +168,14 @@ export async function bootModule({ moduleName, manifestPath }) {
 
     syncSectionResources();
 
+    if (el.groupTitle) {
+      const secId = getCurrentSectionId();
+      const section = getSectionById(secId);
+      const title = section?.instructions ?? section?.title ?? "";
+      el.groupTitle.textContent = title;
+      el.groupTitle.style.display = title ? "block" : "none";
+    }
+
     // keep section select synced to current question's sectionId
     const secId = getCurrentSectionId();
     if (secId) el.sectionSelect.value = secId;
@@ -187,6 +199,8 @@ export async function bootModule({ moduleName, manifestPath }) {
     );
 
     renderQuestion(el.question, cur, engine, {
+      moduleName,
+      section: getSectionById(cur.sectionId),
       onAnswerChange: () => {
         updateFlagBtn();
         const cur2 = engine.getCurrent();
